@@ -1,0 +1,53 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+.selfInf{
+  display: flex;
+  align-items: center;
+  .avatar{
+    img{
+      width: 3.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+  .name{
+    margin-left: 0.4rem;
+    font-size: .8rem;
+    @include ellipsis;
+  }
+}
+.list-scroll{
+  padding-top: 0.8rem;
+  overflow-y: scroll;
+  height: 100vh;
+  .item-wrapper{
+
+    .title{
+      color: $color-grey;
+      font-size: .8rem;
+      padding: 0.6rem;
+    }
+    i{
+      font-size: 1.6rem;
+    }
+    .subtitle-wrapper{
+      display: flex;
+      padding: 0.6rem 0.8rem;
+      align-items: center;
+      box-sizing: border-box;
+      width: 100%;
+      .subtitle{
+        padding-left: 0.8rem;
+        @include ellipsis;
+      }
+      &:hover,&.active{
+        cursor: pointer;
+        color: $color-theme;
+        background-color: white;
+      }
+      &.active{
+        border-right: 0.125rem solid $color-theme;
+      }
+    }
+  }
+}

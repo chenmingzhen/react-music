@@ -1,0 +1,77 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.playlist-wrapper {
+  width: 100%;
+  padding: 0 15rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+
+  .playlist-item {
+    cursor: pointer;
+    margin: 1.2rem .5rem;
+    display: flex;
+    flex-direction: column;
+    .img-wrap {
+      position: relative;
+      width: 14.375rem;
+      padding-top: 100%;
+      border-radius: .5rem;
+      overflow: hidden;
+      &:hover {
+        .desc-wrapper {
+          transform: translateY(0);
+        }
+        .play-icon-wrapper{
+          opacity: 1;
+        }
+      }
+      .desc-wrapper{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-color: rgba(0,0,0,.4);
+        transform: translateY(-100%);
+        transition: all .4s;
+        color: white;
+        font-size: 1rem;
+      }
+      img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .play-icon-wrapper{
+        position: absolute;
+        right: .3rem;
+        bottom: .3rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        opacity: 0;
+        transition: all .4s;
+        i{
+          position: absolute;
+          font-size: 3rem;
+          top: -2rem;
+          left: -1rem;
+          color:$color-theme ;
+        }
+      }
+    }
+
+    > .text {
+      margin-top: 1rem;
+      width: 14.375rem;
+      @include ellipsis;
+      color: $nameColor;
+      font-size: 1rem;
+    }
+  }
+}

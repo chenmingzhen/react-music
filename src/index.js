@@ -1,17 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import '../src/assets/sass/index.scss';
+import App from './App.js';
 import * as serviceWorker from './serviceWorker';
+import 'antd/dist/antd.css';
+import {
+    BrowserRouter
+} from "react-router-dom";
+import {Provider} from 'react-redux';
+import store from "./store";
+
+//resize fontsize
+// default fontsize 16
+(function () {
+    function a() {
+        let b = document.documentElement.clientWidth;
+        b = b > 750 ? 750 : b;
+        const c = b / 750 * 16;
+        document.getElementsByTagName('html')[0].style.fontSize = c + 'px';
+    }
+
+    a();
+    window.onresize = a;
+})();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.Fragment>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </React.Fragment>,
+    document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

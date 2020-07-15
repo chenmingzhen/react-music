@@ -1,0 +1,135 @@
+@import "./src/assets/sass/variable";
+
+.header-wrapper {
+  height: 6vh;
+  display: flex;
+
+  .header-left {
+    background: $bgColor;
+    flex-basis: 10%;
+    padding-top: 10px;
+    padding-left: .4rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+
+    .navigation {
+      display: flex;
+
+      .dot {
+        box-sizing: border-box;
+        margin-left: 5px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        width: 1rem;
+        height: 1rem;
+        text-align: center;
+        cursor: pointer;
+
+        i.last-icon {
+          font-size: 10px;
+        }
+
+        i {
+          visibility: hidden;
+        }
+
+        &:hover {
+          i {
+            visibility: visible;
+          }
+        }
+      }
+    }
+
+    .arrow-wrapper {
+      margin-right: 0.48rem;
+      margin-top: 0.48rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .arrow-left {
+        margin-right: .4rem;
+        margin-bottom: .05rem;
+        transform: rotate(180deg);
+      }
+
+      .arrow-left:hover, .arrow-right:hover {
+        i {
+          border-radius: 50%;
+          cursor: pointer;
+          background: $tipsHoverColor;
+        }
+      }
+    }
+  }
+
+  .header-right {
+    background: hsla(0, 0%, 97.3%, .95);
+    flex: 1;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+
+    .title-wrapper {
+      margin-left: 0.8rem;
+      display: flex;
+
+      >span {
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-right: 1.7rem;
+        color: $nameColor;
+
+        &:hover {
+          color: $nameHoverColor;
+        }
+      }
+
+    }
+
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+
+      .search {
+        background-color: $bgColor;
+        padding: 0.4rem .6rem;
+        border-radius: 0.4rem;
+
+        input {
+          margin-left: 1rem;
+          border: none;
+          background-color: transparent;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+
+      > i.change-skin {
+        margin: 0 .8rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        width: 37px;
+        height: 37px;
+        text-align: center;
+        &:hover{
+          background-color: $tipsHoverColor;
+          border-radius: 50%;
+          color: white;
+        }
+      }
+    }
+  }
+}

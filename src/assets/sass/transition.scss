@@ -1,0 +1,23 @@
+.rightIn-enter ,.rightIn-appear{
+  transform: translateX(100%);
+}
+.rightIn-enter-active,.rightIn-appear-active{
+  transform: translateX(0);
+  transition: transform .4s;
+}
+.rightIn-enter-done{
+  transform: translateX(0);
+}
+
+
+.rightIn-exit{
+  transform: translateX(0);
+}
+
+.rightIn-exit-active{
+  transform: translateX(100%);
+  transition: transform .4s ;
+}
+.rightIn-exit-done {
+  transform: translateX(100%);
+}

@@ -1,0 +1,25 @@
+//显示部分内容
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin ellipsis2($line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  // 显示的行数
+  -webkit-line-clamp: $line;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // 单词断开的方式
+  word-break: keep-all;
+}
+
+// 不换行
+@mixin no-wrap {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

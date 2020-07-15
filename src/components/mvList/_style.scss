@@ -1,0 +1,92 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.mv-list-wrapper {
+  width: 100%;
+  padding: 0 15rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .mv-item {
+    box-sizing: border-box;
+    display: flex;
+    align-content: center;
+    justify-content: left;
+    flex-direction: column;
+    width: 25%;
+    padding: 1.25rem 0;
+
+    .img-wrapper {
+      position: relative;
+      width: 16.875rem;
+      height: 0;
+      padding-top: 9.375rem;
+      cursor: pointer;
+
+      &:hover {
+        .play-icon-wrapper {
+          opacity: 1;
+        }
+      }
+
+      > img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        border-radius: .3rem;
+      }
+
+      .playCount-wrapper {
+        position: absolute;
+        top: .2rem;
+        right: .5rem;
+        display: flex;
+        align-items: center;
+        color: white;
+
+        > i {
+
+        }
+
+        > .playCount {
+          /*不知到为何出现margin bottom=1*/
+          margin-bottom: 0;
+          padding-left: .5rem;
+        }
+      }
+
+      .play-icon-wrapper {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity .4s;
+
+        > i {
+          font-size: 2.5rem;
+          color: $color-theme;
+        }
+      }
+    }
+
+    .name {
+      margin-top: 1rem;
+      width: 90%;
+      font-size: 1.2rem;
+      @include ellipsis;
+      color: $nameColor;
+      margin-bottom: 0.3rem;
+    }
+
+    .singer {
+      color: $tipsColor;
+      width: 90%;
+      @include ellipsis;
+    }
+  }
+}

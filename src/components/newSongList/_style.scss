@@ -1,0 +1,69 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.new-song-list-wrapper {
+  width: 100%;
+  padding: 0 15rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .new-song-list-item-wrapper {
+    box-sizing: border-box;
+    display: flex;
+    align-content: center;
+    justify-content: left;
+    width: 50%;
+    padding: 1.25rem 0;
+    &:hover{
+      background-color: rgba(0,0,0,.1);
+      cursor: pointer;
+      .img-wrapper{
+        i{
+          opacity: 1;
+        }
+      }
+    }
+    .rank {
+      font-size: 1rem;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .img-wrapper {
+      position: relative;
+      width: 6.25rem;
+      height: 0;
+      padding-top: 6.25rem;
+      >i{
+        font-size: 2rem;
+        color: $color-theme;
+        position: absolute;
+        top: 25%;
+        left: 35%;
+        opacity: 0;
+        transition: all .4s;
+      }
+      img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+
+    .text-wrapper {
+      padding-left: 1.25rem;
+      .name {
+        font-size: 1.2rem;
+        @include ellipsis
+      }
+
+      .singer {
+        @include ellipsis
+      }
+    }
+  }
+}
