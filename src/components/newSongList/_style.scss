@@ -14,6 +14,7 @@
     justify-content: left;
     width: 50%;
     padding: 1.25rem 0;
+    overflow: hidden;
     &:hover{
       background-color: rgba(0,0,0,.1);
       cursor: pointer;
@@ -35,6 +36,7 @@
       width: 6.25rem;
       height: 0;
       padding-top: 6.25rem;
+      flex: 0 0 6.25rem;
       >i{
         font-size: 2rem;
         color: $color-theme;

@@ -7,7 +7,7 @@
   .header-left {
     background: $bgColor;
     flex-basis: 10%;
-    padding-top: 10px;
+    padding-top: 0.625rem;
     padding-left: .4rem;
     box-sizing: border-box;
     display: flex;
@@ -18,7 +18,7 @@
 
       .dot {
         box-sizing: border-box;
-        margin-left: 5px;
+        margin-left: 0.3125rem;
 
         &:first-child {
           margin-left: 0;
@@ -34,7 +34,7 @@
         cursor: pointer;
 
         i.last-icon {
-          font-size: 10px;
+          font-size: 0.625rem;
         }
 
         i {
@@ -121,8 +121,8 @@
         margin: 0 .8rem;
         font-size: 1.5rem;
         cursor: pointer;
-        width: 37px;
-        height: 37px;
+        width: 2.3125rem;
+        height: 2.3125rem;
         text-align: center;
         &:hover{
           background-color: $tipsHoverColor;

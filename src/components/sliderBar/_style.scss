@@ -3,6 +3,7 @@
 .selfInf{
   display: flex;
   align-items: center;
+  height: 15%;
   .avatar{
     img{
       width: 3.5rem;
@@ -11,6 +12,7 @@
     }
   }
   .name{
+    cursor: pointer;
     margin-left: 0.4rem;
     font-size: .8rem;
     @include ellipsis;
@@ -19,7 +21,7 @@
 .list-scroll{
   padding-top: 0.8rem;
   overflow-y: scroll;
-  height: 100vh;
+  height: 85%;
   .item-wrapper{
 
     .title{

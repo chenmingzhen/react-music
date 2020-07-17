@@ -15,11 +15,10 @@ import store from "./store";
 (function () {
     function a() {
         let b = document.documentElement.clientWidth;
-        b = b > 750 ? 750 : b;
-        const c = b / 750 * 16;
+        b = b > 1920 ? 1920 : b;
+        const c = b / 1920 * 16;
         document.getElementsByTagName('html')[0].style.fontSize = c + 'px';
     }
-
     a();
     window.onresize = a;
 })();

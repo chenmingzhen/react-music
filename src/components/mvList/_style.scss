@@ -19,7 +19,7 @@
 
     .img-wrapper {
       position: relative;
-      width: 16.875rem;
+      width: 85%;
       height: 0;
       padding-top: 9.375rem;
       cursor: pointer;
@@ -48,9 +48,6 @@
         align-items: center;
         color: white;
 
-        > i {
-
-        }
 
         > .playCount {
           /*不知到为何出现margin bottom=1*/

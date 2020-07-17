@@ -22,7 +22,7 @@ export default class Content extends React.PureComponent {
 
     render() {
         return (
-            <div>
+            <div style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
                 <div className="banner-wrapper">
                     <Carousel autoplay>
                         {

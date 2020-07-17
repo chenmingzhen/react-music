@@ -19,7 +19,7 @@ import './assets/sass/transition.scss';
 
 const antIcon = <LoadingOutlined style={{fontSize: 48, color: 'red'}} spin/>;
 
-const Recommend = lazy(() => import("./pages/recommend"));
+const Discovery = lazy(() => import("./pages/discovery"));
 
 function App(props) {
     if (!props.loading) {
@@ -39,8 +39,8 @@ function App(props) {
                         <Suspense
                             fallback={<div className={'loading-wrapper'}><Spin tip={'loading'} indicator={antIcon}/>
                             </div>}>
-                            <Route path='/recommend' exact component={Recommend}/>
-                            <Redirect to="/recommend"/>
+                            <Route path='/discovery' exact component={Discovery}/>
+                            <Redirect to="/discovery"/>
                         </Suspense>
                     </Switch>
                 </div>
