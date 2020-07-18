@@ -1,0 +1,136 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.self-playlist-wrapper {
+  padding: 1.25rem 0;
+
+  > .detail-wrapper {
+    display: flex;
+    padding: 0 2.5rem;
+
+    > .img-wrapper {
+      width: 12rem;
+      padding-top: 12rem;
+      height: 0;
+      position: relative;
+      flex: 0 0 auto;
+
+      > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.625rem;
+      }
+    }
+
+    > .text-wrapper {
+      padding-left: 3rem;
+
+      > .title-wrapper {
+        display: flex;
+        align-items: center;
+
+        > .list {
+          color: $color-theme;
+          border: 0.1rem solid $color-theme;
+          padding: 0 0.3rem;
+          border-radius: 0.5rem;
+        }
+
+        > .name {
+          padding-left: 1rem;
+          font-size: 2rem;
+        }
+      }
+
+      > .creator-wrapper {
+        display: flex;
+        align-items: center;
+        margin-top: .4rem;
+
+        > .img-wrapper {
+          position: relative;
+          width: 2.2rem;
+          padding-top: 2.2rem;
+          height: 0;
+
+          img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+
+        > .name {
+          margin-left: .5rem;
+          cursor: pointer;
+          color: $color-blue;
+        }
+
+        > .time {
+          margin-left: .5rem;
+        }
+      }
+
+      > .play-all {
+        margin-top: .4rem;
+        background-color: $color-theme;
+        width: 7rem;
+        text-align: center;
+        color: white;
+        border-radius: 1.25rem;
+        padding: .2rem .5rem;
+        cursor: pointer;
+      }
+
+      > .tag, > .count, > .resume {
+        margin-top: .3rem;
+      }
+
+      > .count {
+
+      }
+
+      > .resume {
+        @include ellipsis2(2);
+        width: 100%;
+      }
+
+    }
+  }
+
+  > .select-wrapper {
+    margin-top: 2rem;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    color: $nameColor;
+
+    > .song, > .comment {
+      padding-bottom: .5rem;
+      cursor: pointer;
+
+      &.active {
+        color: $color-theme;
+        border-bottom: 0.15rem solid $color-theme;
+      }
+    }
+
+    > .song {
+
+    }
+
+    > .comment {
+      margin-left: 1.8rem;
+    }
+  }
+}

@@ -1,22 +1,25 @@
 @import "./src/assets/sass/variable";
 @import "./src/assets/sass/mixin";
 
-.skin-wrapper{
+.skin-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:$color-theme-bg ;
-  .theme-wrapper{
+  background-color: $color-theme-bg;
+
+  .theme-wrapper {
     display: flex;
     flex-direction: column;
     padding: 0 .5rem;
-    .theme-icon{
+
+    .theme-icon {
       cursor: pointer;
       border-radius: 50%;
       width: 2rem;
       height: 2rem;
     }
-    .name{
+
+    .name {
       padding-top: .4rem;
       color: $nameColor;
     }

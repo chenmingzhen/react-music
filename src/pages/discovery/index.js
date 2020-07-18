@@ -23,11 +23,11 @@ class Recommend extends React.PureComponent {
             <Suspense fallback={<React.Fragment/>}>
                 <div>
                     <Banner/>
-                    <div className={'title'}>推荐歌单</div>
+                    <div className={'recommend-title'}>推荐歌单</div>
                     <PlayList/>
-                    <div className={'title'}>最新音乐</div>
+                    <div className={'recommend-title'}>最新音乐</div>
                     <NewSongList/>
-                    <div className={'title'}>推荐mv</div>
+                    <div className={'recommend-title'}>推荐mv</div>
                     <MvList/>
                 </div>
             </Suspense>

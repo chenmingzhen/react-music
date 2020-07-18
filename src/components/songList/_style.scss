@@ -1,0 +1,81 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.song-list-wrapper {
+  border-top: 0.0625rem solid $borderColor;
+  width: 100%;
+  padding: 0 2.5rem;
+
+  > .fix-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 2%;
+    padding: .3rem 0;
+
+    > .title, > .singer, > .album, > .time {
+      font-size: .8rem;
+      color: $tipsHoverColor;
+    }
+
+    > .title {
+      width: 51%;
+    }
+
+    > .singer {
+      width: 20.5%;
+    }
+
+    > .album {
+      width: 20.5%;
+    }
+
+    > .time {
+      width: 5%;
+    }
+  }
+
+  > .list-wrapper {
+    .list-item {
+      display: flex;
+      padding: .2rem 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bgColor !important;
+      }
+
+      > .title,
+      > .singer,
+      > .album,
+      > .duration {
+        @include ellipsis;
+      }
+
+      > .number {
+        width: 2%;
+      }
+
+      > .title {
+        width: 50%;
+        display: flex;
+
+        > i {
+          color: $color-theme;
+
+        }
+      }
+
+      > .singer {
+        width: 20%;
+      }
+
+      > .album {
+        width: 20%;
+      }
+
+      > .duration {
+        width: 5%;
+      }
+    }
+  }
+}

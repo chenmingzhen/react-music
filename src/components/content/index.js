@@ -22,12 +22,12 @@ export default class Content extends React.PureComponent {
 
     render() {
         return (
-            <div style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
+            <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
                 <div className="banner-wrapper">
                     <Carousel autoplay>
                         {
-                            this.state.bannerData.length&&this.state.bannerData.map((item,index)=>{
-                                return(
+                            this.state.bannerData.length && this.state.bannerData.map((item, index) => {
+                                return (
                                     <div key={index}>
                                         <img src={item.imageUrl} alt=""/>
                                     </div>

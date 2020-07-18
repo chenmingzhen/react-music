@@ -13,7 +13,7 @@ export default class Skin extends React.PureComponent {
                 {this.skin.map((item, index) => {
                     return (
                         <div className="theme-wrapper" key={index}>
-                            <div className="theme-icon" style={{backgroundColor:item.color}}/>
+                            <div className="theme-icon" style={{backgroundColor: item.color}}/>
                             <div className="name">{item.name}</div>
                         </div>
                     )

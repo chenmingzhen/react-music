@@ -10,7 +10,7 @@ export class Song {
      * @param al  专辑 内有picUrl
      * @param dt  时长
      */
-    constructor({id, name, ar, al, dt, url}) {
+    constructor({id, name, ar, al, dt, url, fee}) {
         this.id = id;
         this.name = name;
         this.singer = ar;
@@ -18,6 +18,7 @@ export class Song {
         this.duration = dt;
         this.image = al.picUrl;
         this.url = url;
+        this.fee = fee;
     }
 
     /*获取歌词*/
@@ -43,11 +44,12 @@ export async function createSong(musicData) {
     return new Song({
         id: musicData.id,
         name: musicData.name,
-        ar: filterSinger(musicData.ar)||filterSinger(musicData.artists),
-        al: musicData.al||musicData.album,
-        dt: musicData.dt||musicData.duration,
-        image: (musicData.al&&musicData.al.picUrl)||musicData.album.picUrl,
-        url: _url
+        ar: filterSinger(musicData.ar) || filterSinger(musicData.artists),
+        al: musicData.al || musicData.album,
+        dt: musicData.dt || musicData.duration,
+        image: (musicData.al && musicData.al.picUrl) || musicData.album.picUrl,
+        url: _url,
+        fee: musicData.fee
     });
 }
 

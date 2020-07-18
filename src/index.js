@@ -19,6 +19,7 @@ import store from "./store";
         const c = b / 1920 * 16;
         document.getElementsByTagName('html')[0].style.fontSize = c + 'px';
     }
+
     a();
     window.onresize = a;
 })();

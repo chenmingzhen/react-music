@@ -1,23 +1,26 @@
-.rightIn-enter ,.rightIn-appear{
+.rightIn-enter, .rightIn-appear {
   transform: translateX(100%);
 }
-.rightIn-enter-active,.rightIn-appear-active{
+
+.rightIn-enter-active, .rightIn-appear-active {
   transform: translateX(0);
   transition: transform .4s;
 }
-.rightIn-enter-done{
+
+.rightIn-enter-done {
   transform: translateX(0);
 }
 
 
-.rightIn-exit{
+.rightIn-exit {
   transform: translateX(0);
 }
 
-.rightIn-exit-active{
+.rightIn-exit-active {
   transform: translateX(100%);
-  transition: transform .4s ;
+  transition: transform .4s;
 }
+
 .rightIn-exit-done {
   transform: translateX(100%);
 }

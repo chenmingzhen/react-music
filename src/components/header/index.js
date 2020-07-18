@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import './_style.scss'
 import {connect} from 'react-redux';
 import {changeSearchStatus} from "../../store/actionCreator";
 import {Popover} from 'antd'
 import Skin from "../skin";
+import {withRouter} from 'react-router-dom';
+
 class Header extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -36,8 +38,10 @@ class Header extends React.PureComponent {
                         }
                     </div>
                     <div className="arrow-wrapper">
-                        <span className="arrow-left"><i className={'iconfont icon-youjiantou left'}/></span>
-                        <span className="arrow-right"><i className={'iconfont icon-youjiantou'}/></span>
+                        <span className="arrow-left" onClick={this.props.history.goBack.bind(this)}><i
+                            className={'iconfont icon-youjiantou left'}/></span>
+                        <span className="arrow-right" onClick={this.props.history.goForward.bind(this)}><i
+                            className={'iconfont icon-youjiantou'}/></span>
                     </div>
                 </div>
                 <div className={'header-right'}>
@@ -61,7 +65,8 @@ class Header extends React.PureComponent {
                             <i className={'iconfont icon-chazhao'}/>
                             <input type="text" placeholder={'搜索'}/>
                         </div>
-                        <Popover placement="bottomRight" content={(<Skin/>)} trigger="click"><i className={'iconfont icon-yifu change-skin'}/></Popover>
+                        <Popover placement="bottomRight" content={(<Skin/>)} trigger="click"><i
+                            className={'iconfont icon-yifu change-skin'}/></Popover>
                     </div>
                 </div>
             </div>
@@ -80,4 +85,4 @@ const mapDispatch = (dispatch) => ({
     }
 });
 
-export default connect(mapState, mapDispatch)(Header);
+export default withRouter(connect(mapState, mapDispatch)(Header));

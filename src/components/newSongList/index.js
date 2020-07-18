@@ -1,9 +1,10 @@
 import {getNewSong} from "../../api/recommend";
 import React from "react";
 import {AddZero} from "../../assets/js/util";
-import LazyLoad from '../lazyLoad/index'
+
 import {createSong} from "../../assets/js/song";
 import './_style.scss'
+
 class NewSongList extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ class NewSongList extends React.PureComponent {
                             <div className={'new-song-list-item-wrapper'} key={index}>
                                 <div className="rank">{AddZero(index)}</div>
                                 <div className={'img-wrapper'}>
-                                    <LazyLoad src={item.image} alt=""/>
+                                    <img src={item.image} alt=""/>
                                     <i className={'iconfont icon-bofang'}/>
                                 </div>
                                 <div className="text-wrapper">

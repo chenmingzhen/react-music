@@ -18,6 +18,7 @@ time, mark, audio, video, input {
   font-weight: normal;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -47,16 +48,17 @@ table {
   border-spacing: 0;
 }
 
-a{
+a {
   color: #7e8c8d;
   -webkit-backface-visibility: hidden;
   text-decoration: none;
 }
 
-li{
+li {
   list-style: none;
 }
-body{
+
+body {
   -webkit-text-size-adjust: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

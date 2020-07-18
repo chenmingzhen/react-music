@@ -1,7 +1,7 @@
 import React from "react";
 import {getOfficialColumn} from "../../api/recommend";
 import './_style.scss'
-import LazyLoad from '../lazyLoad'
+
 export default class PlayList extends React.PureComponent {
 
     constructor(props) {
@@ -26,7 +26,7 @@ export default class PlayList extends React.PureComponent {
                         return (
                             <div className={'playlist-item'} key={index}>
                                 <div className="img-wrap">
-                                    <LazyLoad src={item.picUrl} alt="none"/>
+                                    <img src={item.picUrl} alt="none"/>
                                     <div className="desc-wrapper">
                                         {item.copywriter}
                                     </div>

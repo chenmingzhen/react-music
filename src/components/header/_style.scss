@@ -84,7 +84,7 @@
       margin-left: 0.8rem;
       display: flex;
 
-      >span {
+      > span {
         font-size: 1.2rem;
         cursor: pointer;
         margin-right: 1.7rem;
@@ -124,7 +124,8 @@
         width: 2.3125rem;
         height: 2.3125rem;
         text-align: center;
-        &:hover{
+
+        &:hover {
           background-color: $tipsHoverColor;
           border-radius: 50%;
           color: white;

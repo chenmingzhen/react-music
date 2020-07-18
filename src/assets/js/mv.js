@@ -17,8 +17,8 @@ export function createMv(mvData) {
             name: mvData.name,
             picUrl: mvData.picUrl,
             playCount: mvData.playCount,
-            artists:mvData.artists,
-            dt:mvData.duration
+            artists: mvData.artists,
+            dt: mvData.duration
         }
     )
 }

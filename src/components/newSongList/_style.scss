@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+
   .new-song-list-item-wrapper {
     box-sizing: border-box;
     display: flex;
@@ -15,15 +16,18 @@
     width: 50%;
     padding: 1.25rem 0;
     overflow: hidden;
-    &:hover{
-      background-color: rgba(0,0,0,.1);
+
+    &:hover {
+      background-color: rgba(0, 0, 0, .1);
       cursor: pointer;
-      .img-wrapper{
-        i{
+
+      .img-wrapper {
+        i {
           opacity: 1;
         }
       }
     }
+
     .rank {
       font-size: 1rem;
       padding: 0 1.25rem;
@@ -37,7 +41,8 @@
       height: 0;
       padding-top: 6.25rem;
       flex: 0 0 6.25rem;
-      >i{
+
+      > i {
         font-size: 2rem;
         color: $color-theme;
         position: absolute;
@@ -46,6 +51,7 @@
         opacity: 0;
         transition: all .4s;
       }
+
       img {
         position: absolute;
         left: 0;
@@ -58,6 +64,7 @@
 
     .text-wrapper {
       padding-left: 1.25rem;
+
       .name {
         font-size: 1.2rem;
         @include ellipsis
