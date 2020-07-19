@@ -4,7 +4,6 @@
 .song-list-wrapper {
   border-top: 0.0625rem solid $borderColor;
   width: 100%;
-  padding: 0 2.5rem;
 
   > .fix-wrapper {
     display: flex;
@@ -53,6 +52,9 @@
 
       > .number {
         width: 2%;
+        >.like{
+          color: $color-theme;
+        }
       }
 
       > .title {

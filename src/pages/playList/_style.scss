@@ -50,7 +50,7 @@
       > .creator-wrapper {
         display: flex;
         align-items: center;
-        margin-top: .4rem;
+        margin-top: 0.4rem;
 
         > .img-wrapper {
           position: relative;
@@ -71,40 +71,40 @@
         }
 
         > .name {
-          margin-left: .5rem;
+          margin-left: 0.5rem;
           cursor: pointer;
           color: $color-blue;
         }
 
         > .time {
-          margin-left: .5rem;
+          margin-left: 0.5rem;
         }
       }
 
       > .play-all {
-        margin-top: .4rem;
+        margin-top: 0.4rem;
         background-color: $color-theme;
         width: 7rem;
         text-align: center;
         color: white;
         border-radius: 1.25rem;
-        padding: .2rem .5rem;
+        padding: 0.2rem 0.5rem;
         cursor: pointer;
       }
 
-      > .tag, > .count, > .resume {
-        margin-top: .3rem;
+      > .tag,
+      > .count,
+      > .resume {
+        margin-top: 0.3rem;
       }
 
       > .count {
-
       }
 
       > .resume {
         @include ellipsis2(2);
         width: 100%;
       }
-
     }
   }
 
@@ -115,8 +115,9 @@
     align-items: center;
     color: $nameColor;
 
-    > .song, > .comment {
-      padding-bottom: .5rem;
+    > .song,
+    > .comment {
+      padding-bottom: 0.5rem;
       cursor: pointer;
 
       &.active {
@@ -126,11 +127,13 @@
     }
 
     > .song {
-
     }
 
     > .comment {
       margin-left: 1.8rem;
     }
+  }
+  > div {
+    padding: 0 2.5rem;
   }
 }
