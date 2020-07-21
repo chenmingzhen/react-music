@@ -1,35 +1,20 @@
-import { getNewSong } from "../../api/recommend";
 import React from "react";
 import { AddZero } from "../../assets/js/util";
 import { Spin } from "antd";
-import { createSong } from "../../assets/js/song";
 import "./_style.scss";
+import PropTypes from "prop-types";
 
 class NewSongList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      listData: [],
-    };
-  }
-
-  componentDidMount() {
-    getNewSong().then((data) => {
-      data.result.forEach((item, index) => {
-        createSong(item.song).then((data) => {
-          const listData = [...this.state.listData];
-          listData.push(data);
-          this.setState({ listData });
-        });
-      });
-    });
+    this.state = {};
   }
 
   render() {
-    if (this.state.listData.length > 0) {
+    if (this.props.newSongList.length > 0) {
       return (
         <div className={"new-song-list-wrapper"}>
-          {this.state.listData.map((item, index) => {
+          {this.props.newSongList.map((item, index) => {
             return (
               <div className={"new-song-list-item-wrapper"} key={index}>
                 <div className="rank">{AddZero(index)}</div>
@@ -55,4 +40,10 @@ class NewSongList extends React.PureComponent {
   }
 }
 
+NewSongList.propTypes = {
+  newSongList: PropTypes.array.isRequired,
+};
+NewSongList.defaultProps = {
+  newSongList: [],
+};
 export default NewSongList;

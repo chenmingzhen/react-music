@@ -18,7 +18,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 const Discovery = lazy(() => import("./pages/discovery"));
 const PlayList = lazy(() => import("./pages/playList"));
 const DailyRecommend = lazy(() => import("./pages/dailyRecommend"));
-
+const SongSheet = lazy(() => import("./pages/songSheet"));
 function App(props) {
   if (!props.loading) {
     NProgress.start();
@@ -47,7 +47,9 @@ function App(props) {
               ) : (
                 ""
               )}
+              <Route path="/commentplaylist/:id" exact component={PlayList} />
               <Route path="/dailyrecommend" exact component={DailyRecommend} />
+              <Route path="/songsheet" exact component={SongSheet} />
               <Redirect to="/discovery" />
             </Switch>
           </Suspense>

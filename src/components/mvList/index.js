@@ -1,38 +1,24 @@
 import React from "react";
-
 import "./_style.scss";
 import { Spin } from "antd";
-import { getRecommendMv } from "../../api/recommend";
-import { createMv } from "../../assets/js/mv";
+import PropTypes from "prop-types";
 
 class MvList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      mvData: [],
-    };
-  }
-
-  componentDidMount() {
-    getRecommendMv().then((data) => {
-      data.result.forEach((item, index) => {
-        const mvData = [...this.state.mvData];
-        mvData.push(createMv(item));
-        this.setState(() => ({ mvData }));
-      });
-    });
+    this.state = {};
   }
 
   render() {
-    if (this.state.mvData) {
+    if (this.props.mvData) {
       return (
         <div className={"mv-list-wrapper"}>
-          {this.state.mvData &&
-            this.state.mvData.map((item, index) => {
+          {this.props.mvData &&
+            this.props.mvData.map((item, index) => {
               return (
                 <div className={"mv-item"} key={index}>
                   <div className="img-wrapper">
-                    <img src={item.picUrl} alt="" loading="lazy"/>
+                    <img src={item.picUrl} alt="" loading="lazy" />
                     <div className="playCount-wrapper">
                       <i className={"iconfont icon-ai-video"} />
                       <p className="playCount"> {item.playCount}</p>
@@ -65,5 +51,12 @@ class MvList extends React.PureComponent {
     );
   }
 }
+
+MvList.propTypes = {
+  mvData: PropTypes.array.isRequired,
+};
+MvList.defaultProps = {
+  mvData: [],
+};
 
 export default MvList;

@@ -1,31 +1,32 @@
 import React from "react";
-import { getOfficialColumn } from "../../api/recommend";
 import { Spin } from "antd";
+import PropTypes from "prop-types";
 import "./_style.scss";
-
-export default class PlayList extends React.PureComponent {
+import { withRouter } from "react-router-dom";
+class PlayList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      playListData: [],
-    };
-  }
-
-  componentDidMount() {
-    getOfficialColumn(10).then((data) => {
-      this.setState({ playListData: data.result });
-    });
+    this.state = {};
   }
 
   render() {
-    if (this.state.playListData.length > 0) {
+    const { playListData } = this.props;
+    if (playListData.length > 0) {
       return (
         <div className={"playlist-wrapper"}>
-          {this.state.playListData.map((item, index) => {
+          {playListData.map((item, index) => {
             return (
-              <div className={"playlist-item"} key={index}>
+              <div
+                className={"playlist-item"}
+                key={index}
+                onClick={this.clickItem.bind(this, item)}
+              >
                 <div className="img-wrap">
-                  <img src={item.picUrl} alt="none" loading="lazy"/>
+                  <img
+                    src={item.picUrl || item.coverImgUrl}
+                    alt="none"
+                    loading="lazy"
+                  />
                   <div className="desc-wrapper">{item.copywriter}</div>
                   <div className="play-icon-wrapper">
                     <i className={"iconfont icon-bofang"} />
@@ -44,4 +45,18 @@ export default class PlayList extends React.PureComponent {
       </div>
     );
   }
+
+  clickItem(item) {
+    console.log(item.id);
+    this.props.history.push({ pathname: `/commentplaylist/${item.id}` });
+  }
 }
+
+PlayList.propTypes = {
+  playListData: PropTypes.array.isRequired,
+};
+PlayList.defaultProps = {
+  playListData: [],
+};
+
+export default withRouter(PlayList);

@@ -1,0 +1,119 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+.song-sheet-wrapper {
+  padding: 2rem 15rem;
+  position: relative;
+  box-sizing: border-box;
+  > .banner-wrapper {
+    height: 16rem;
+    > .bg-wrpper,
+    > .bg-mask {
+      position: absolute;
+      width: 70%;
+      height: 12.5rem;
+    }
+    > .bg-mask {
+      border: 0.125rem solid $borderColor;
+    }
+    > .bg-wrpper {
+      filter: blur(0.6rem);
+    }
+    > .top-wrapper {
+      display: flex;
+      position: absolute;
+      /* top: 3rem; */
+      margin-top: 1rem;
+      margin-left: 3rem;
+      > .img-wrapper {
+        width: 10rem;
+        padding-top: 10rem;
+        position: relative;
+        height: 0;
+        flex: 0 0 auto;
+        > img {
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 0.625rem;
+        }
+      }
+      > .text-wrapper {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        > .tag {
+          font-size: 1rem;
+          margin: 0.7rem 0.8rem;
+          width: 5rem;
+          border: 1px solid #e5a158;
+          padding: 0.1875rem 0.25rem;
+          text-align: center;
+          color: #e5a158;
+          border-radius: 0.9rem;
+        }
+        > .title {
+          margin: 0.3rem 0.8rem;
+          font-size: 1.2em;
+          color: hsla(0, 0%, 100%, 0.8);
+          @include ellipsis2(1);
+        }
+        > .desc {
+          margin: 0.3rem 0.8rem;
+          font-size: 0.8rem;
+          color: hsla(0, 0%, 100%, 0.6);
+          @include ellipsis2(3);
+        }
+      }
+    }
+  }
+  > .select-wrapper {
+    > .left-button {
+      width: 5.625rem;
+      padding: 0.3rem 1rem;
+      text-align: center;
+      border: 0.0625rem solid #bababa;
+      border-radius: 1.5625rem;
+      cursor: pointer;
+      @include ellipsis();
+    }
+  }
+  > .playlist-wrapper {
+    padding: 0;
+  }
+}
+
+.select-content {
+  width: 31.25rem;
+  .select-vertical-wrapper {
+    display: flex;
+    border-bottom: 1px solid $borderColor;
+    padding-top: 0.7rem;
+
+    .select-vertical-title {
+      color: nameHoverColor;
+      font-size: 1.1rem;
+      flex: 0 0 auto;
+      line-height: 1.5rem;
+      width: 10%;
+    }
+    .select-vertical-item {
+      display: flex;
+      flex-wrap: wrap;
+      .select-item {
+        font-size: 0.8rem;
+        margin-left: 1rem;
+        margin-bottom: 0.2rem;
+        padding: 0.1rem 0.5rem;
+        cursor: pointer;
+        &.active {
+          background-color: $color-dot-red;
+          border-radius: 1rem;
+          color: white;
+        }
+      }
+    }
+  }
+}

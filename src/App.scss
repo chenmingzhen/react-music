@@ -37,7 +37,12 @@
       background-color: white;
       height: 100%;
       right: 0;
-      box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, .2);
+      box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
     }
+  }
+
+  /* globla scss */
+  .ant-pagination {
+    text-align: center;
   }
 }
