@@ -3,7 +3,7 @@ import { createSong } from "../../assets/js/song";
 import { formatDuration } from "../../util/util";
 import "./_style.scss";
 import { Spin } from "antd";
-
+import axios from "axios";
 class SongList extends React.Component {
   constructor(props) {
     super(props);
@@ -11,8 +11,10 @@ class SongList extends React.Component {
   }
 
   componentDidMount() {
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
     this.props.songList.forEach((item) => {
-      createSong(item).then((data) => {
+      createSong(item, this.source.token).then((data) => {
         let tmp = [...this.state.song];
         tmp.push(data);
         this.setState({ song: tmp });
@@ -41,7 +43,7 @@ class SongList extends React.Component {
                 >
                   <div className={"number"}>
                     {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                   {/*  <i
+                    {/*  <i
                       className={
                         item.liked
                           ? "iconfont icon-xihuan like"
@@ -83,6 +85,11 @@ class SongList extends React.Component {
         </div>
       );
     }
+  }
+
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 }
 

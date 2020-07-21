@@ -9,9 +9,9 @@ export function getBanner() {
 }
 
 /*官方歌单*/
-export function getOfficialColumn(limit = 1) {
+export function getOfficialColumn(limit = 1,cancelToken) {
     const url = '/personalized';
-    return request({url, method: 'get', params: {limit}});
+    return request({url, method: 'get', params: {limit},cancelToken});
 }
 
 /*达人歌单*/
@@ -37,13 +37,13 @@ export function getPlayList(id) {
 }
 
 //最新音乐
-export function getNewSong() {
+export function getNewSong(cancelToken) {
     const url = '/personalized/newsong';
-    return request({url, method: 'get'});
+    return request({url, method: 'get',cancelToken});
 }
 
 //推荐Mv
-export function getRecommendMv() {
+export function getRecommendMv(cancelToken) {
     const url = '/personalized/mv';
-    return request({url, method: 'get'});
+    return request({url, method: 'get',cancelToken});
 }

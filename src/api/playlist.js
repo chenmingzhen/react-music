@@ -2,9 +2,9 @@ import request from "./request";
 
 //获取歌单详情
 
-export function getPlayList(id) {
+export function getPlayList(id, cancelToken) {
   const url = "/playlist/detail";
-  return request({ url, method: "get", params: { id } });
+  return request({ url, method: "get", params: { id }, cancelToken });
 }
 
 //歌单评论
@@ -20,7 +20,7 @@ export function likeComment(id, cid, t, type) {
 }
 
 //日推歌曲
-export function getDailyRecommend() {
+export function getDailyRecommend(cancelToken) {
   const url = "/recommend/songs";
-  return request({ url, method: "get"});
+  return request({ url, method: "get", cancelToken }).catch((e) => {});
 }

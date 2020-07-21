@@ -4,6 +4,7 @@ import { changeLoading, setUser } from "../../store/actionCreator";
 import SongList from "../../components/songList";
 import { getDailyRecommend } from "../../api/playlist";
 import { Spin } from "antd";
+import axios from "axios";
 import "./_style.scss";
 class DailyRecommend extends React.PureComponent {
   constructor(props) {
@@ -14,7 +15,9 @@ class DailyRecommend extends React.PureComponent {
   }
 
   componentDidMount() {
-    getDailyRecommend()
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
+    getDailyRecommend(this.source.token)
       .then((data) => {
         this.setState({ listData: data.recommend });
         this.props.changeLoadingDone(true);
@@ -43,6 +46,11 @@ class DailyRecommend extends React.PureComponent {
         {this.renderSongList()}
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 
   renderSongList() {

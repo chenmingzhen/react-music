@@ -8,7 +8,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SongList from "../../components/songList";
 import Comment from "../../components/comment";
-
+import axios from "axios";
 const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
 
 class PlayList extends React.Component {
@@ -22,13 +22,20 @@ class PlayList extends React.Component {
   }
 
   getData() {
-    getPlayList(this.props.match.params.id).then((data) => {
-      this.setState(() => ({
-        listData: data.playlist,
-        id: this.props.match.params.id,
-      }));
-      this.props.changeLoadingDone(true);
-    });
+    getPlayList(this.props.match.params.id, this.source.token)
+      .then((data) => {
+        this.setState(() => ({
+          listData: data.playlist,
+          id: this.props.match.params.id,
+        }));
+        this.props.changeLoadingDone(true);
+      })
+      .catch((e) => {});
+  }
+
+  UNSAFE_componentWillMount() {
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -39,7 +46,6 @@ class PlayList extends React.Component {
     ) {
       return false;
     }
-
     this.props.changeLoadingDone(false);
     return true;
   }
@@ -52,7 +58,7 @@ class PlayList extends React.Component {
         <div className={"self-playlist-wrapper"}>
           <div className={"detail-wrapper"}>
             <div className={"img-wrapper"}>
-              <img src={data.coverImgUrl} alt="" loading="lazy"/>
+              <img src={data.coverImgUrl} alt="" loading="lazy" />
             </div>
             <div className="text-wrapper">
               <div className="title-wrapper">
@@ -61,7 +67,7 @@ class PlayList extends React.Component {
               </div>
               <div className="creator-wrapper">
                 <div className={"img-wrapper"}>
-                  <img src={data.creator.avatarUrl} alt="" loading="lazy"/>
+                  <img src={data.creator.avatarUrl} alt="" loading="lazy" />
                 </div>
                 <div className="name">{data.creator.nickname}</div>
                 <div className="time">
@@ -126,6 +132,11 @@ class PlayList extends React.Component {
         </div>
       );
     }
+  }
+
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 }
 

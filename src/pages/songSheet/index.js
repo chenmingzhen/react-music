@@ -5,6 +5,7 @@ import { Spin, Popover, Pagination } from "antd";
 import PlayList from "../../components/playList";
 import { connect } from "react-redux";
 import { changeLoading } from "../../store/actionCreator";
+import axios from "axios";
 import "./_style.scss";
 class SongSheet extends React.PureComponent {
   constructor(props) {
@@ -25,14 +26,20 @@ class SongSheet extends React.PureComponent {
     };
   }
   componentDidMount() {
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
     this.props.changeLoadingDone(true);
     //歌单分类
-    getCatList().then((data) => {
-      this.classifyList(data.sub);
-    });
-    getPlayList().then((data) => {
-      this.setState({ showList: data.playlists, total: data.total });
-    });
+    getCatList(this.source.token)
+      .then((data) => {
+        this.classifyList(data.sub);
+      })
+      .catch((e) => {});
+    getPlayList("全部", 0, this.source.token)
+      .then((data) => {
+        this.setState({ showList: data.playlists, total: data.total });
+      })
+      .catch((e) => {});
   }
   render() {
     const { showList, currentName } = this.state;
@@ -62,28 +69,40 @@ class SongSheet extends React.PureComponent {
     );
   }
 
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
+  }
   renderBanner() {
-    const { showList, currentName } = this.state;
+    const { showList } = this.state;
     const randomList = this.getRandomList();
     return (
       <div className={"banner-wrapper"}>
         {showList.length > 0 ? (
           <>
-            <div
-              className={"bg-wrpper"}
-              style={{ background: `url(${randomList.coverImgUrl})` }}
-            ></div>
+            {randomList && randomList.coverImgUrl && (
+              <div
+                className={"bg-wrpper"}
+                style={{ background: `url(${randomList.coverImgUrl})` }}
+              ></div>
+            )}
             <div className={"bg-mask"}></div>
             <div className={"top-wrapper"}>
               <div className={"img-wrapper"}>
-                <img src={randomList.coverImgUrl} alt="" loading="lazy" />
+                {randomList && randomList.coverImgUrl && (
+                  <img src={randomList.coverImgUrl} alt="" loading="lazy" />
+                )}
               </div>
               <div className={"text-wrapper"}>
                 <div className={"tag"}>精品歌单</div>
                 {showList.length > 0 ? (
                   <>
-                    <div className={"title"}>{randomList.name}</div>
-                    <div className={"desc"}>{randomList.description}</div>
+                    {randomList && randomList.name && randomList.description && (
+                      <>
+                        <div className={"title"}>{randomList.name}</div>
+                        <div className={"desc"}>{randomList.description}</div>
+                      </>
+                    )}
                   </>
                 ) : (
                   ""
@@ -109,9 +128,11 @@ class SongSheet extends React.PureComponent {
           total={total}
           onChange={(page) => {
             this.setState({ offset: page - 1, showList: [] });
-            getPlayList(currentName, (page - 1) * 50).then((data) => {
-              this.setState({ showList: data.playlists });
-            });
+            getPlayList(currentName, (page - 1) * 50, this.source.token)
+              .then((data) => {
+                this.setState({ showList: data.playlists });
+              })
+              .catch((e) => {});
           }}
         ></Pagination>
       );
@@ -214,9 +235,11 @@ class SongSheet extends React.PureComponent {
 
   clickItem(name) {
     this.setState({ showList: [], currentName: "loading", offset: 0 });
-    getPlayList(name).then((data) => {
-      this.setState({ showList: data.playlists, currentName: name });
-    });
+    getPlayList(name, 0, this.source.token)
+      .then((data) => {
+        this.setState({ showList: data.playlists, currentName: name });
+      })
+      .catch((e) => {});
   }
 }
 

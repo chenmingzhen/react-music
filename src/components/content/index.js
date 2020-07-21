@@ -3,6 +3,7 @@ import { getBanner } from "../../api/recommend";
 import { Carousel } from "antd";
 import "./_style.scss";
 import { Spin } from "antd";
+import axios from "axios";
 export default class Content extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -12,7 +13,9 @@ export default class Content extends React.PureComponent {
   }
 
   componentDidMount() {
-    getBanner().then((data) => {
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
+    getBanner(this.source.token).then((data) => {
       this.setState(() => ({ bannerData: data.banners }));
     });
   }
@@ -32,7 +35,7 @@ export default class Content extends React.PureComponent {
               {this.state.bannerData.map((item, index) => {
                 return (
                   <div key={index}>
-                    <img src={item.imageUrl} alt=""  loading="lazy"/>
+                    <img src={item.imageUrl} alt="" loading="lazy" />
                   </div>
                 );
               })}
@@ -46,5 +49,10 @@ export default class Content extends React.PureComponent {
         <Spin></Spin>
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this.source.cancel("cancel");
+    this.setState = ()=>false;
   }
 }
