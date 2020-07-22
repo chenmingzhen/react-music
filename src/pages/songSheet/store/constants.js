@@ -1,0 +1,2 @@
+// songSheet
+export const SET_SONGSHEET_POSITION = "SET_SONGSHEET_POSITION";

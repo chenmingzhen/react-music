@@ -5,6 +5,7 @@ import { Spin, Popover, Pagination } from "antd";
 import PlayList from "../../components/playList";
 import { connect } from "react-redux";
 import { changeLoading } from "../../store/actionCreator";
+import { setSongSheetPosition } from "./store/actionCreator";
 import axios from "axios";
 import "./_style.scss";
 class SongSheet extends React.PureComponent {
@@ -26,6 +27,7 @@ class SongSheet extends React.PureComponent {
     };
   }
   componentDidMount() {
+    const { position } = this.props;
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     this.props.changeLoadingDone(true);
@@ -35,14 +37,15 @@ class SongSheet extends React.PureComponent {
         this.classifyList(data.sub);
       })
       .catch((e) => {});
-    getPlayList("全部", 0, this.source.token)
+    getPlayList(position.type, position.offset * 50, this.source.token)
       .then((data) => {
         this.setState({ showList: data.playlists, total: data.total });
       })
       .catch((e) => {});
   }
   render() {
-    const { showList, currentName } = this.state;
+    const { showList } = this.state;
+    const { position } = this.props;
     return (
       <div className={"song-sheet-wrapper"}>
         {this.renderBanner()}
@@ -54,7 +57,9 @@ class SongSheet extends React.PureComponent {
               trigger="click"
             >
               <div className="left-button">
-                {currentName === "loading" ? this.renderSpin() : currentName}
+                {position.type === "loading"
+                  ? this.renderSpin()
+                  : position.type}
               </div>
             </Popover>
           </div>
@@ -84,11 +89,18 @@ class SongSheet extends React.PureComponent {
               <div
                 className={"bg-wrpper"}
                 style={{ background: `url(${randomList.coverImgUrl})` }}
+                onClick={this.clickRandom.bind(this, randomList.id)}
               ></div>
             )}
-            <div className={"bg-mask"}></div>
+            <div
+              className={"bg-mask"}
+              onClick={this.clickRandom.bind(this, randomList.id)}
+            ></div>
             <div className={"top-wrapper"}>
-              <div className={"img-wrapper"}>
+              <div
+                className={"img-wrapper"}
+                onClick={this.clickRandom.bind(this, randomList.id)}
+              >
                 {randomList && randomList.coverImgUrl && (
                   <img src={randomList.coverImgUrl} alt="" loading="lazy" />
                 )}
@@ -118,17 +130,19 @@ class SongSheet extends React.PureComponent {
   }
 
   renderPagination() {
-    const { showList, offset, total, currentName } = this.state;
+    const { showList, total } = this.state;
+    const { setPosition, position } = this.props;
     if (showList.length > 0) {
       return (
         <Pagination
-          defaultCurrent={offset + 1}
+          defaultCurrent={position.offset + 1} //offset + 1
           pageSize={50}
           showSizeChanger={false}
           total={total}
           onChange={(page) => {
             this.setState({ offset: page - 1, showList: [] });
-            getPlayList(currentName, (page - 1) * 50, this.source.token)
+            setPosition({ type: position.type, offset: page - 1 });
+            getPlayList(position.type, (page - 1) * 50, this.source.token)
               .then((data) => {
                 this.setState({ showList: data.playlists });
               })
@@ -234,12 +248,18 @@ class SongSheet extends React.PureComponent {
   }
 
   clickItem(name) {
+    const { setPosition } = this.props;
     this.setState({ showList: [], currentName: "loading", offset: 0 });
+    setPosition({ type: "loading", offset: 0 });
     getPlayList(name, 0, this.source.token)
       .then((data) => {
         this.setState({ showList: data.playlists, currentName: name });
+        setPosition({ type: name, offset: 0 });
       })
       .catch((e) => {});
+  }
+  clickRandom(id) {
+    this.props.history.push({ pathname: `/commentplaylist/${id}` });
   }
 }
 
@@ -264,11 +284,16 @@ function translate(str) {
 
 const mapState = (state) => ({
   loading: state.getIn(["app", "loading"]),
+  //对象不使用转化返回的是一个map
+  position: state.getIn(["songSheet", "position"]).toJS(),
 });
 
 const mapDispatch = (dispatch) => ({
   changeLoadingDone(result) {
     dispatch(changeLoading(result));
+  },
+  setPosition(position) {
+    dispatch(setSongSheetPosition(position));
   },
 });
 export default connect(mapState, mapDispatch)(SongSheet);

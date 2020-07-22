@@ -4,6 +4,7 @@
   padding: 2rem 15rem;
   position: relative;
   box-sizing: border-box;
+  overflow-x: hidden;
   > .banner-wrapper {
     height: 16rem;
     > .bg-wrpper,
@@ -11,6 +12,7 @@
       position: absolute;
       width: 70%;
       height: 12.5rem;
+      cursor: pointer;
     }
     > .bg-mask {
       border: 0.125rem solid $borderColor;
@@ -30,6 +32,7 @@
         position: relative;
         height: 0;
         flex: 0 0 auto;
+        cursor: pointer;
         > img {
           width: 100%;
           position: absolute;
