@@ -19,6 +19,7 @@ const Discovery = lazy(() => import("./pages/discovery"));
 const PlayList = lazy(() => import("./pages/playList"));
 const DailyRecommend = lazy(() => import("./pages/dailyRecommend"));
 const SongSheet = lazy(() => import("./pages/songSheet"));
+const Chart = lazy(() => import("./pages/chart"));
 function App(props) {
   if (!props.loading) {
     NProgress.start();
@@ -32,7 +33,7 @@ function App(props) {
         <div className={"slider-bar-wrapper"}>
           <SliderBar />
         </div>
-        <div className={"content-wrapper"}>
+        <div className={"content-wrapper"} id="content-wrapper">
           <Suspense
             fallback={
               <div className={"loading-wrapper"}>
@@ -50,6 +51,7 @@ function App(props) {
               <Route path="/commentplaylist/:id" exact component={PlayList} />
               <Route path="/dailyrecommend" exact component={DailyRecommend} />
               <Route path="/songsheet" exact component={SongSheet} />
+              <Route path="/chart" exact component={Chart} />
               <Redirect to="/discovery" />
             </Switch>
           </Suspense>

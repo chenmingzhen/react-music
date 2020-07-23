@@ -1,0 +1,24 @@
+@import "./src/assets/sass/variable";
+.scroll {
+    opacity: 0.3;
+    background-color: $color-theme;
+    width: 3.5rem;
+    height: 3.5rem;
+    position: fixed;
+    bottom: 6.25rem;
+    right: 6rem;
+    border-radius: .3125rem;
+    border: none;
+    outline: none;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .arrow-up {
+    color: white;
+    position: absolute;
+    top: 0.7rem;
+    left: 1.1rem;
+    transform: rotate(-90deg);
+  }

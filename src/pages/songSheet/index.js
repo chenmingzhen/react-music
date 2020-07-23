@@ -1,6 +1,5 @@
 import React from "react";
-import { getCatList } from "../../api/songSheet";
-import { getPlayList } from "../../api/songSheet";
+import { getCatList, getPlayList } from "../../api/songSheet";
 import { Spin, Popover, Pagination } from "antd";
 import PlayList from "../../components/playList";
 import { connect } from "react-redux";

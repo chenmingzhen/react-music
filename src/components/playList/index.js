@@ -47,7 +47,6 @@ class PlayList extends React.PureComponent {
   }
 
   clickItem(item) {
-    console.log(item.id);
     this.props.history.push({ pathname: `/commentplaylist/${item.id}` });
   }
 }

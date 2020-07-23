@@ -1,0 +1,88 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+.chart-list-wrapper {
+  margin-top: 2rem;
+  width: 100%;
+  > .fix-title {
+    display: flex;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
+    font-size: 1.2rem;
+    padding: 0.7rem 0;
+    color: #999;
+    > .title {
+      margin-left: 4rem;
+    }
+    > .singer {
+      margin-left: 30rem;
+    }
+    > .duration {
+      margin-left: 25rem;
+    }
+  }
+  > .chart-item {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.03);
+      > .song-wrapper > .play {
+        opacity: 1;
+        transition: all 0.4s;
+      }
+    }
+    > .rank {
+      width: 4rem;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.hot {
+        color: $color-theme;
+      }
+    }
+    > .song-wrapper {
+      display: flex;
+      width: 32.5rem;
+      align-items: center;
+      > .img-wrapper {
+        flex: 0 0 auto;
+        width: 5.4rem;
+        padding-top: 5.4rem;
+        height: 0;
+        position: relative;
+        > img {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+        }
+      }
+      > .name {
+        @include ellipsis;
+        margin-left: 3rem;
+        font-size: 1.2rem;
+        color: $color-black;
+      }
+      > i {
+        margin-left: 1rem;
+        cursor: pointer;
+      }
+      > .play {
+        opacity: 0;
+        font-size: 2.8rem;
+      }
+    }
+    > .singer {
+      @include ellipsis;
+      font-size: 1.2rem;
+      width: 27.5rem;
+      color: $color-black;
+    }
+    > .duration {
+      color: $color-grey;
+    }
+  }
+}

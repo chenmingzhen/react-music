@@ -1,0 +1,49 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+.chart-wrapper {
+  padding: 3rem 8rem;
+  display: flex;
+  > .chart-slider-wrapper {
+    border: 0.0625rem solid rgba(0, 0, 0, 0.1);
+    width: 14rem;
+    max-height: 60rem;
+    > .chart-slider-item {
+      padding: 1.8rem 0.5rem;
+      color: #000000;
+      border-bottom: 0.0625rem solid #ebebeb;
+      width: 100%;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      &.active {
+        color: white !important;
+        background-color: $color-theme;
+      }
+      &:hover {
+        color: $color-theme;
+      }
+    }
+  }
+  > .chart-content-wrapper {
+    flex: 1;
+    padding-left: 5rem;
+    display: flex;
+    flex-direction: column;
+
+    > .top-wrapper {
+      display: flex;
+      align-items: center;
+      > .title {
+        font-size: 2.1rem;
+      }
+      > .time {
+        font-size: 1.2rem;
+        margin-left: 1rem;
+        counter-reset: $color-grey;
+      }
+    }
+    > .middle-wrapper {
+    }
+  }
+}
