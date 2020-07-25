@@ -1,0 +1,213 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.singer-wrapper {
+  padding: 1rem 0;
+  width: 100%;
+  //height: 100%;
+
+  //测试下拉自动加载 失败
+  //overflow: auto;  出现滚动条
+  //&::-webkit-scrollbar {display:none} //隐藏滚动条样式
+  > .top-wrapper {
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      > img {
+        transform: scale(1.1);
+      }
+    }
+
+    > img {
+      transition: all .8s;
+      width: 100%;
+    }
+
+    > .text-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+
+      > .title {
+        font-size: 4rem;
+        color: white;
+      }
+
+      > .subtitle {
+        font-size: 2rem;
+        color: white;
+        text-align: center;
+        margin: 1rem 0;
+      }
+
+      > .button {
+        display: inline-block;
+        color: white;
+        font-size: 1rem;
+        padding: .8rem 3.5rem;
+        border: .1rem solid $color-grey;
+        cursor: pointer;
+        transition: all .4s;
+
+        &:hover {
+          border-color: #fff;
+
+        }
+      }
+
+    }
+
+    > .carousel-wrapper {
+      height: 7.5rem;
+      position: absolute;
+      top: 25%;
+      left: 46%;
+      transform: translate(-50%, -50%);
+
+      > .text-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 7.5rem;
+
+        > .text {
+          font-size: 2rem;
+          color: white;
+          text-align: center;
+          margin: 1rem 0;
+        }
+
+        > .text-more {
+          font-size: 2rem;
+          color: white;
+          text-align: center;
+          margin-left: 3rem;
+          border: .1rem solid $color-grey;
+          cursor: pointer;
+          transition: all .4s;
+          padding: 0rem 1.2rem;
+
+          &:hover {
+            border-color: #fff;
+            transform: scale(1.1);
+
+          }
+        }
+      }
+    }
+  }
+
+  > .select-wrapper {
+    padding: 0 20rem;
+    margin: 2.5rem 0;
+    border-top: 0.0625rem solid rgba(0, 0, 0, .1);
+
+    > .initial-wrapper, > .area-wrapper, > .gender-wrapper {
+      display: flex;
+    }
+
+
+    > .initial-wrapper {
+      > .initial-item {
+        padding: .2rem 0.75rem;
+        cursor: pointer;
+        margin: .8rem 0;
+
+        &.active {
+          background-color: $color-theme;
+          color: #fff;
+        }
+      }
+    }
+
+    > .area-wrapper {
+      > .area-item {
+        padding: .2rem 0.75rem;
+        margin: .8rem 0;
+        cursor: pointer;
+
+        &.active {
+          background-color: $color-theme;
+          color: #fff;
+        }
+      }
+    }
+
+    > .gender-wrapper {
+      > .gender-item {
+        padding: .2rem 0.75rem;
+        margin: .8rem 0;
+        cursor: pointer;
+
+        &.active {
+          background-color: $color-theme;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  > .singer-select-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 0 20rem;
+
+    > .singer-item {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+      padding: 1rem;
+      border-radius: .4rem;
+
+      &:hover {
+        background-color: $color-theme;
+        transition: all .4s;
+
+        > .name {
+          color: white;
+        }
+      }
+
+      > .img-wrapper {
+        width: 8rem;
+        padding-top: 8rem;
+        height: 0;
+        position: relative;
+
+        > img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+
+      > .name {
+        font-size: 1.3rem;
+        margin: .7rem 0;
+        color: $nameColor;
+        cursor: pointer;
+      }
+    }
+  }
+
+  > .more-wrapper {
+    .more {
+      cursor: pointer;
+      color: $color-blue;
+      text-align: center;
+    }
+  }
+}

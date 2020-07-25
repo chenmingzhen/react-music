@@ -129,6 +129,10 @@ class Header extends React.PureComponent {
         this.props.changeIndex(3);
         this.props.history.push({ pathname: "/chart" });
         break;
+      case 4:
+        this.props.changeIndex(4);
+        this.props.history.push({ pathname: "/singer" });
+        break;
       default:
         break;
     }

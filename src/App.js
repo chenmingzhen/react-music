@@ -12,6 +12,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
@@ -20,6 +21,7 @@ const PlayList = lazy(() => import("./pages/playList"));
 const DailyRecommend = lazy(() => import("./pages/dailyRecommend"));
 const SongSheet = lazy(() => import("./pages/songSheet"));
 const Chart = lazy(() => import("./pages/chart"));
+const Singer = lazy(() => import("./pages/singer"));
 function App(props) {
   if (!props.loading) {
     NProgress.start();
@@ -52,6 +54,7 @@ function App(props) {
               <Route path="/dailyrecommend" exact component={DailyRecommend} />
               <Route path="/songsheet" exact component={SongSheet} />
               <Route path="/chart" exact component={Chart} />
+              <Route path="/singer" exact component={Singer} />
               <Redirect to="/discovery" />
             </Switch>
           </Suspense>
