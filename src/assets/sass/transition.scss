@@ -24,3 +24,15 @@
 .rightIn-exit-done {
   transform: translateX(100%);
 }
+
+.upIn-enter{
+  transform: translateY(-100%);
+}
+.upIn-enter-active,{
+  transform: translateY(0);
+  transition: transform 2s;
+}
+
+.upIn-enter-done {
+  transform: translateY(0);
+}

@@ -1,12 +1,13 @@
 import React from "react";
 import { getCatList, getPlayList } from "../../api/songSheet";
-import { Spin, Popover, Pagination } from "antd";
+import { Pagination, Popover, Spin } from "antd";
 import PlayList from "../../components/playList";
 import { connect } from "react-redux";
 import { changeLoading } from "../../store/actionCreator";
 import { setSongSheetPosition } from "./store/actionCreator";
 import axios from "axios";
 import "./_style.scss";
+
 class SongSheet extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -25,6 +26,7 @@ class SongSheet extends React.PureComponent {
       total: 0,
     };
   }
+
   componentDidMount() {
     const { position } = this.props;
     const CancelToken = axios.CancelToken;
@@ -42,6 +44,7 @@ class SongSheet extends React.PureComponent {
       })
       .catch((e) => {});
   }
+
   render() {
     const { showList } = this.state;
     const { position } = this.props;
@@ -77,6 +80,7 @@ class SongSheet extends React.PureComponent {
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
   }
+
   renderBanner() {
     const { showList } = this.state;
     const randomList = this.getRandomList();
@@ -147,7 +151,7 @@ class SongSheet extends React.PureComponent {
               })
               .catch((e) => {});
           }}
-        ></Pagination>
+        />
       );
     }
     return "";
@@ -257,6 +261,7 @@ class SongSheet extends React.PureComponent {
       })
       .catch((e) => {});
   }
+
   clickRandom(id) {
     this.props.history.push({ pathname: `/commentplaylist/${id}` });
   }

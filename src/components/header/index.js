@@ -2,10 +2,10 @@ import React from "react";
 import "./_style.scss";
 import { connect } from "react-redux";
 import {
+  changeLoading,
   changeSearchStatus,
   setCurrentHeaderIndex,
   setHeaderStatus,
-  changeLoading,
 } from "../../store/actionCreator";
 import { Popover } from "antd";
 import Skin from "../skin";

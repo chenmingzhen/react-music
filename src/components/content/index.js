@@ -1,9 +1,9 @@
 import React from "react";
 import { getBanner } from "../../api/recommend";
-import { Carousel } from "antd";
+import { Carousel, Spin } from "antd";
 import "./_style.scss";
-import { Spin } from "antd";
 import axios from "axios";
+
 export default class Content extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -53,6 +53,6 @@ export default class Content extends React.PureComponent {
 
   componentWillUnmount() {
     this.source.cancel("cancel");
-    this.setState = ()=>false;
+    this.setState = () => false;
   }
 }

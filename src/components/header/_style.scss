@@ -90,10 +90,12 @@
         margin-right: 1.7rem;
         color: $nameColor;
         padding-bottom: .5rem;
-        &.active{
+
+        &.active {
           border-bottom: .125rem solid $color-theme;
           color: $nameHoverColor;
-        }  
+        }
+
         &:hover {
           color: $nameHoverColor;
         }

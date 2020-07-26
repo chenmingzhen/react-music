@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import PropTypes from "prop-types";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
+
 class PlayList extends React.PureComponent {
   constructor(props) {
     super(props);

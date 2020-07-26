@@ -1,15 +1,19 @@
 @import "./src/assets/sass/variable";
+
 .daily-recommend-wrapper {
   padding: 2rem 18rem;
   width: 100%;
   height: 100%;
+
   > .title-wrapper {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
+
     > .calendar-wrapper {
       border: 0.0625rem solid #f5f5f5;
       box-shadow: 0 0.0625rem 0.3125rem 0.125rem #f5f5f5;
+
       > .day {
         text-align: center;
         background-color: $color-theme;
@@ -19,6 +23,7 @@
         color: white;
         border-radius: 0.3125rem 0.3125rem 0 0;
       }
+
       > .date {
         text-align: center;
         width: 6.25rem;
@@ -32,25 +37,29 @@
         font-weight: 600;
       }
     }
+
     > .text-wrapper {
       margin-left: 1.5rem;
+
       > .title {
-          font-size: 1.8rem;
-          font-weight: 700;
+        font-size: 1.8rem;
+        font-weight: 700;
       }
+
       > .desc {
-          margin-top: 1rem;
+        margin-top: 1rem;
       }
     }
-    >.play-all{
-        background-color: $color-theme;
-        width: 7rem;
-        text-align: center;
-        color: white;
-        border-radius: 1.25rem;
-        padding: .2rem .5rem;
-        cursor: pointer;
-        margin-left: 30rem;
+
+    > .play-all {
+      background-color: $color-theme;
+      width: 7rem;
+      text-align: center;
+      color: white;
+      border-radius: 1.25rem;
+      padding: .2rem .5rem;
+      cursor: pointer;
+      margin-left: 30rem;
     }
   }
 }

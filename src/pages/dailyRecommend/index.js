@@ -6,6 +6,7 @@ import { getDailyRecommend } from "../../api/playlist";
 import { Spin } from "antd";
 import axios from "axios";
 import "./_style.scss";
+
 class DailyRecommend extends React.PureComponent {
   constructor(props) {
     super(props);

@@ -9,6 +9,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import SongList from "../../components/songList";
 import Comment from "../../components/comment";
 import axios from "axios";
+
 const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
 
 class PlayList extends React.Component {

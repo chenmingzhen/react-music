@@ -8,10 +8,10 @@
   position: relative;
   perspective: 62.5rem;*/
 
-  width: 13.125rem;
+  width: 23rem;
   height: 8.75rem;
   position: relative;
-  perspective: 200.5rem;
+  perspective: 250rem;
 
 }
 
@@ -36,6 +36,7 @@
   top: 0.625rem;
   overflow: hidden;
   border-radius: 1rem;
+
   &:hover {
     border: 0.25rem $color-theme solid;
   }

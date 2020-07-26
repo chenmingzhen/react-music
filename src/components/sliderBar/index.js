@@ -7,13 +7,13 @@ import {
   setLocalStorage,
 } from "../../util/localStorage";
 import {
-  setUser,
   setCurrentHeaderIndex,
   setHeaderStatus,
+  setUser,
 } from "../../store/actionCreator";
 import { connect } from "react-redux";
 import { login, logout } from "../../api/login";
-import { Modal, Input, message, Popover, Button } from "antd";
+import { Button, Input, message, Modal, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 
@@ -49,6 +49,29 @@ class SliderBar extends React.PureComponent {
     confirmLoading: false,
     data: InfData,
   };
+
+  constructor(props) {
+    super(props);
+    //this.data = InfData;
+    this.status = "未登录";
+    this.phone = "";
+    this.password = "";
+    this.source = {};
+    this.currentIndex = Number;
+    this.popoverContent = () => {
+      return (
+        <Button
+          onClick={() => {
+            this.logOut();
+          }}
+        >
+          退出登录
+        </Button>
+      );
+    };
+    //先要运行一次set 不知为何不运行无法输出user值
+    this.props.setUser({});
+  }
 
   showModal = () => {
     this.setState({
@@ -90,37 +113,14 @@ class SliderBar extends React.PureComponent {
       });
   };
 
+  //--------------------------------------------------
+
   handleCancel = () => {
     this.source.cancel && this.source.cancel("登录取消");
     this.setState({
       visible: false,
     });
   };
-
-  //--------------------------------------------------
-
-  constructor(props) {
-    super(props);
-    //this.data = InfData;
-    this.status = "未登录";
-    this.phone = "";
-    this.password = "";
-    this.source = {};
-    this.currentIndex = Number;
-    this.popoverContent = () => {
-      return (
-        <Button
-          onClick={() => {
-            this.logOut();
-          }}
-        >
-          退出登录
-        </Button>
-      );
-    };
-    //先要运行一次set 不知为何不运行无法输出user值
-    this.props.setUser({});
-  }
 
   loginCheck() {
     //如果存在cookie
@@ -199,9 +199,13 @@ class SliderBar extends React.PureComponent {
         <div className="selfInf">
           <div className="avatar">
             {this.props.user.code ? (
-              <img src={this.props.user.profile.avatarUrl} alt="" loading="lazy"></img>
+              <img
+                src={this.props.user.profile.avatarUrl}
+                alt=""
+                loading="lazy"
+              ></img>
             ) : (
-              <img src={"img/github-logo.png"} alt="" loading="lazy"/>
+              <img src={"img/github-logo.png"} alt="" loading="lazy" />
             )}
           </div>
           <div

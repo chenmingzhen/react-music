@@ -1,9 +1,9 @@
 import React from "react";
 import "./_style.scss";
-import PropTypes from "prop-types";
 import { createSong } from "../../assets/js/song";
 import { formatDuration } from "../../util/util";
 import axios from "axios";
+
 class ChartList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -16,7 +16,7 @@ class ChartList extends React.PureComponent {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     this.getSongLists();
-    this.props.onRef(this);
+    if (this.props.onRef) this.props.onRef(this);
   }
 
   render() {
@@ -49,12 +49,21 @@ class ChartList extends React.PureComponent {
               <img src={item.image} alt="" loading="lazy" />
             </div>
             <div className={"name"}>{item.name}</div>
-            {item.mvid !== 0 ? (
-              <i className={"iconfont icon-shipin"} title="播放MV"></i>
+            {item.fee === 1 ? (
+              <i
+                className={"iconfont icon-VIP"}
+                title="vip歌曲"
+                style={{ color: "#c7332f" }}
+              />
             ) : (
               ""
             )}
-            <i className={"iconfont icon-bofang play"} title="播放"></i>
+            {item.mvid !== 0 ? (
+              <i className={"iconfont icon-shipin"} title="播放MV" />
+            ) : (
+              ""
+            )}
+            <i className={"iconfont icon-bofang play"} title="播放" />
           </div>
           <div className={"singer"}>{item.singer}</div>
           <div className={"duration"}>{formatDuration(item.duration)}</div>
@@ -65,6 +74,8 @@ class ChartList extends React.PureComponent {
 
   //循环异步
   async getSongLists() {
+    //要将之前的请求取消 不然来回点击会出现歌曲不对应 不应该出现在这榜单的会出现
+    this.source.cancel && this.source.cancel("cancel");
     this.setState({ songLists: [] });
     const { dataLists } = this.props;
     for (let i = 0; i < dataLists.length; i++) {
@@ -81,12 +92,5 @@ class ChartList extends React.PureComponent {
     }
   }
 }
-
-ChartList.propTypes = {
-  songLists: PropTypes.array,
-};
-ChartList.defaultProps = {
-  songLists: [],
-};
 
 export default ChartList;

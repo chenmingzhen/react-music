@@ -26,5 +26,8 @@ const appReducer = (state = defaultAppState, action) => {
       return state;
   }
 };
-const reducer = combineReducers({ app: appReducer, songSheet:SongSheetReducer });
+const reducer = combineReducers({
+  app: appReducer,
+  songSheet: SongSheetReducer,
+});
 export default reducer;

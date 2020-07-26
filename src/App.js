@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import Header from "./components/header";
 import SliderBar from "./components/sliderBar";
 import Search from "./components/search";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.scss";
 import NProgress from "react-nprogress"; // 引入nprogress插件
 import "react-nprogress/nprogress.css";
@@ -12,7 +12,6 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
@@ -22,6 +21,8 @@ const DailyRecommend = lazy(() => import("./pages/dailyRecommend"));
 const SongSheet = lazy(() => import("./pages/songSheet"));
 const Chart = lazy(() => import("./pages/chart"));
 const Singer = lazy(() => import("./pages/singer"));
+const SingerDetail = lazy(() => import("./pages/singerDetail"));
+
 function App(props) {
   if (!props.loading) {
     NProgress.start();
@@ -55,6 +56,12 @@ function App(props) {
               <Route path="/songsheet" exact component={SongSheet} />
               <Route path="/chart" exact component={Chart} />
               <Route path="/singer" exact component={Singer} />
+              {/*非二级路由*/}
+              <Route
+                path={"/singer/singerdetail/:id"}
+                exact
+                component={SingerDetail}
+              />
               <Redirect to="/discovery" />
             </Switch>
           </Suspense>

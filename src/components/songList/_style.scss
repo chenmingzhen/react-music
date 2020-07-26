@@ -52,7 +52,8 @@
 
       > .number {
         width: 2%;
-        >.like{
+
+        > .like {
           color: $color-theme;
         }
       }

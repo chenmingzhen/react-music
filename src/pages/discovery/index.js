@@ -3,13 +3,14 @@ import "./_style.scss";
 import { changeLoading } from "../../store/actionCreator";
 import { connect } from "react-redux";
 import {
-  getOfficialColumn,
   getNewSong,
+  getOfficialColumn,
   getRecommendMv,
 } from "../../api/recommend";
 import { createSong } from "../../assets/js/song";
 import { createMv } from "../../assets/js/mv";
 import axios from "axios";
+
 const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));
@@ -63,7 +64,7 @@ class Recommend extends React.PureComponent {
       <React.Fragment>
         <Suspense fallback={<React.Fragment />}>
           <div>
-            <Banner/>
+            <Banner />
             <div className={"recommend-title"}>推荐歌单</div>
             <PlayList playListData={this.state.playListData} />
             <div className={"recommend-title"}>最新音乐</div>
@@ -78,7 +79,7 @@ class Recommend extends React.PureComponent {
 
   componentWillUnmount() {
     this.source.cancel && this.source.cancel("cancel");
-    this.setState = ()=>false;
+    this.setState = () => false;
   }
 }
 

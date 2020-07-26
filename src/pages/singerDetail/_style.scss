@@ -1,0 +1,157 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.singer-detail-wrapper {
+  padding: 3rem 10rem;
+  width: 100%;
+  height: 100%;
+
+  > .singer-inf {
+    display: flex;
+
+    > .img-wrapper {
+      flex: 0 0 auto;
+      width: 15.625rem;
+      padding-top: 15.625rem;
+      height: 0;
+      position: relative;
+
+      > img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+
+    > .text-wrapper {
+      margin-left: 5rem;
+      width: 70%;
+
+      > .name {
+        font-size: 2.5rem;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        color: $color-black;
+      }
+
+      > .desc-wrapper {
+        margin-top: 1rem;
+        display: flex;
+        align-items: flex-end;
+
+        > .desc {
+          @include ellipsis2(2);
+          font-size: 1rem;
+        }
+
+        > .more {
+          width: 15%;
+          cursor: pointer;
+          font-size: 1rem;
+          flex: 0 0 auto;
+        }
+      }
+
+      > .work {
+        display: flex;
+        margin-top: 1rem;
+        font-size: 1.5rem;
+
+        > .song {
+          position: relative;
+
+          > strong {
+            font-size: 2.3rem;
+            cursor: pointer;
+          }
+
+          &::after {
+            content: "|";
+            display: block;
+            position: absolute;
+            right: -1rem;
+            top: .6rem;
+          }
+        }
+
+        > .album {
+          margin-left: 2rem;
+          position: relative;
+
+          > strong {
+            font-size: 2.3rem;
+            cursor: pointer;
+          }
+
+          &::after {
+            content: "|";
+            display: block;
+            position: absolute;
+            right: -1rem;
+            top: .6rem;
+          }
+        }
+
+        > .mv {
+          margin-left: 2rem;
+
+          > strong {
+            font-size: 2.3rem;
+            cursor: pointer;
+          }
+        }
+      }
+
+      > .button-wrapper {
+        display: flex;
+        margin-top: 1rem;
+
+        > .play-all, > .subscribe {
+          background-color: $color-theme;
+          color: white;
+          padding: .2rem 1rem;
+          border-radius: 0.325rem;
+          cursor: pointer;
+
+          > i {
+            margin-right: .5rem;
+          }
+        }
+
+        > .subscribe {
+          margin-left: .5rem;
+        }
+      }
+    }
+
+  }
+
+  > .hot-song-wrapper,>.album-wrapper {
+    margin-top: 2.5rem;
+    padding: 2rem 0;
+    .text-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        font-size: 1.7rem;
+      }
+
+      .more {
+        cursor: pointer;
+        font-size: .8rem;
+        color: $color-grey;
+        &:hover{
+          color: $color-theme;
+        }
+      }
+    }
+
+  }
+
+}

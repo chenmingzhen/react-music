@@ -1,10 +1,9 @@
 import React, { createElement } from "react";
-import { Pagination } from "antd";
+import { Avatar, Comment as AntComment, message, Pagination } from "antd";
 import { getListComment, likeComment } from "../../api/playlist";
-import { Comment as AntComment, Avatar, message } from "antd";
 import "./_style.scss";
 import { timestampToTime } from "../../util/util";
-import { LikeOutlined, LikeFilled } from "@ant-design/icons";
+import { LikeFilled, LikeOutlined } from "@ant-design/icons";
 
 class Comment extends React.PureComponent {
   constructor(props) {

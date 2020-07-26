@@ -1,0 +1,67 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+@import "./src/assets/sass/transition";
+
+.mv-list-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+
+  .mv-item{
+    flex: 1;
+    margin-top: 2rem;
+    >.img-wrapper{
+      width: 15rem;
+      padding-top: 10rem;
+      height: 0;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      >img{
+        @include imgMixin;
+        transition: all .4s linear;
+      }
+      >i{
+        font-size: 0;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        transition: all .2s;
+        color: $color-theme;
+      }
+      &:hover{
+        >i{
+          font-size: 3.5rem;
+          opacity: 1;
+        }
+        >img{
+          transform: scale(1.2);
+
+        }
+      }
+    }
+    >.mv-name{
+      margin-top: .4rem;
+      width: 15rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      @include ellipsis;
+    }
+    >.time{
+      margin-top: .2rem;
+      font-size: .6rem;
+      color: $color-grey;
+    }
+  }
+}
+.mv-wrapper >.showMore{
+  margin-top: 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: $color-theme;
+  color: white;
+  font-weight: 700;
+  border-radius: 0.625rem;
+  padding: .2rem 0;
+}
