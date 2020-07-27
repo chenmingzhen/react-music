@@ -2,7 +2,7 @@ import { combineReducers } from "redux-immutable";
 import { fromJS } from "immutable";
 import * as constants from "./constants";
 import SongSheetReducer from "../pages/songSheet/store/reducer";
-
+import SingerReducer from "../pages/singer/store/reducer";
 const defaultAppState = fromJS({
   loading: false,
   searchStatus: false,
@@ -29,5 +29,6 @@ const appReducer = (state = defaultAppState, action) => {
 const reducer = combineReducers({
   app: appReducer,
   songSheet: SongSheetReducer,
+  singer: SingerReducer,
 });
 export default reducer;
