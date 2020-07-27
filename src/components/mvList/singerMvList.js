@@ -27,11 +27,11 @@ class SingerMvList extends React.PureComponent {
     const { mvLists, moreMv, mvLoading } = this.state;
     return (
       <>
-        <TransitionGroup className={"mv-list-wrapper"}>
+        <TransitionGroup className={"mv-lists-wrapper"}>
           {mvLists.map((item, index) => {
             return (
               <CSSTransition
-                timeout={2000}
+                timeout={700}
                 classNames="upIn"
                 unmountOnExit
                 key={index}
@@ -89,13 +89,15 @@ class SingerMvList extends React.PureComponent {
     const { offset } = this.state;
     this.setState({ mvLoading: true });
     getSingerMv(id, 10, offset * 10, this.source.token).then((data) => {
-      let tmp = [...this.state.mvLists].concat(data.mvs);
-      this.setState({
-        mvLists: tmp,
-        moreMv: data.hasMore,
-        offset: offset + 1,
-        mvLoading: false,
-      });
+      if (data) {
+        let tmp = [...this.state.mvLists].concat(data.mvs);
+        this.setState({
+          mvLists: tmp,
+          moreMv: data.hasMore,
+          offset: offset + 1,
+          mvLoading: false,
+        });
+      }
     });
   }
 }

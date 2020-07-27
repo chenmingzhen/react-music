@@ -8,3 +8,5 @@ export const SET_USER = "SET_USER";
 export const SET_CURRENT_HEADER_INDEX = "SET_CURRENT_HEADER_INDEX";
 
 export const SET_HEADER_STATUS = "SET_HEADER_STATUS";
+
+export const SET_SCROLL_TOP = "SET_SCROLL_TOP";

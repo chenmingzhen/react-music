@@ -16,3 +16,8 @@ export const setOffset = (offset) => ({
   type: constants.SET_OFFSET,
   offset,
 });
+
+export const setSingerList = (singerList) => ({
+  type: constants.SET_SINER_LIST,
+  singerList,
+});

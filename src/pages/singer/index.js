@@ -1,12 +1,23 @@
 import React from "react";
 import Carousel from "../../components/carousel";
 import "./_style.scss";
-import { changeLoading, setUser } from "../../store/actionCreator";
+import {
+  changeLoading,
+  setScrollTop,
+  setUser,
+} from "../../store/actionCreator";
 import { connect } from "react-redux";
 import axios from "axios";
 import { getSinger } from "../../api/singer";
 import { Spin } from "antd";
 import BackTop from "../../components/backTop";
+import {
+  setCurrentArea,
+  setCurrentGender,
+  setCurrentInitial,
+  setOffset,
+  setSingerList,
+} from "./store/actionCreator";
 
 class Singer extends React.PureComponent {
   constructor(props) {
@@ -57,9 +68,18 @@ class Singer extends React.PureComponent {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
 
-    getSinger(this.getParams(), this.source.token).then((data) => {
-      this.setState({ singerList: data.artists });
-    });
+    if (this.props.propsSingerList.length > 0) {
+      this.setState({ singerList: [].concat(this.props.propsSingerList) });
+      setTimeout(() => {
+        document.getElementById(
+          "content-wrapper"
+        ).scrollTop = this.props.scrollTop;
+      });
+    } else {
+      getSinger(this.getParams(true), this.source.token).then((data) => {
+        this.setState({ singerList: data.artists });
+      });
+    }
   }
 
   render() {
@@ -105,7 +125,7 @@ class Singer extends React.PureComponent {
   }
 
   renderSelect() {
-    const { currentInitial, currentArea, currentGender } = this.state;
+    const { currentInitial, currentArea, currentGender } = this.props;
     return (
       <div className="select-wrapper">
         <div className="initial-wrapper">
@@ -223,21 +243,34 @@ class Singer extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    this.props.setSingerList(this.state.singerList);
+    let scrollTop = document.getElementById("content-wrapper").scrollTop;
+    this.props.setScrollTop(scrollTop);
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
   }
 
   clickSelectItem(content, item) {
-    this.setState({ singerList: [], offset: 0 });
+    const {
+      setCurrentInitial,
+      setCurrentArea,
+      setCurrentGender,
+      setOffset,
+    } = this.props;
+    this.setState({ singerList: [] });
+    setOffset(0);
     switch (content) {
       case "initial":
-        this.setState({ currentInitial: item });
+        //this.setState({ currentInitial: item });
+        setCurrentInitial(item);
         break;
       case "area":
-        this.setState({ currentArea: item });
+        //this.setState({ currentArea: item });
+        setCurrentArea(item);
         break;
       case "gender":
-        this.setState({ currentGender: item });
+        //this.setState({ currentGender: item });
+        setCurrentGender(item);
         break;
       default:
         break;
@@ -250,8 +283,8 @@ class Singer extends React.PureComponent {
     });
   }
 
-  getParams() {
-    const { currentInitial, currentArea, currentGender, offset } = this.state;
+  getParams(back = false) {
+    const { currentInitial, currentArea, currentGender, offset } = this.props;
     let initial, area, type;
     if (currentInitial === "热门") {
       initial = -1;
@@ -298,12 +331,15 @@ class Singer extends React.PureComponent {
         area = -1;
         break;
     }
-    return { area, type, initial, offset: offset * 30 };
+    if (back === false) return { area, type, initial, offset: offset * 30 };
+    else return { area, type, initial, limit: (offset + 1) * 30, offset: 0 };
   }
 
   getMore() {
-    const { offset, singerList } = this.state;
-    this.setState({ offset: offset + 1, showMore: true });
+    const { offset, setOffset } = this.props;
+    const { singerList } = this.state;
+    this.setState({ showMore: true });
+    setOffset(offset + 1);
     setTimeout(() => {
       getSinger(this.getParams(), this.source.token).then((data) => {
         singerList.concat(data.artists);
@@ -317,6 +353,12 @@ class Singer extends React.PureComponent {
 const mapState = (state) => ({
   loading: state.getIn(["app", "loading"]),
   user: state.getIn(["app", "user"]),
+  currentInitial: state.getIn(["singer", "currentInitial"]),
+  currentArea: state.getIn(["singer", "currentArea"]),
+  currentGender: state.getIn(["singer", "currentGender"]),
+  offset: state.getIn(["singer", "offset"]),
+  propsSingerList: state.getIn(["singer", "singerList"]),
+  scrollTop: state.getIn(["app", "scrollTop"]),
 });
 
 const mapDispatch = (dispatch) => ({
@@ -325,6 +367,24 @@ const mapDispatch = (dispatch) => ({
   },
   setUser(user) {
     dispatch(setUser(user));
+  },
+  setCurrentInitial(currentInitial) {
+    dispatch(setCurrentInitial(currentInitial));
+  },
+  setCurrentArea(currentArea) {
+    dispatch(setCurrentArea(currentArea));
+  },
+  setCurrentGender(currentGender) {
+    dispatch(setCurrentGender(currentGender));
+  },
+  setOffset(offset) {
+    dispatch(setOffset(offset));
+  },
+  setSingerList(singerList) {
+    dispatch(setSingerList(singerList));
+  },
+  setScrollTop(scrollTop) {
+    dispatch(setScrollTop(scrollTop));
   },
 });
 

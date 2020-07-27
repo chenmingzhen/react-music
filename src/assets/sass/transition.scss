@@ -30,7 +30,7 @@
 }
 .upIn-enter-active,{
   transform: translateY(0);
-  transition: transform 2s;
+  transition: transform .7s;
 }
 
 .upIn-enter-done {

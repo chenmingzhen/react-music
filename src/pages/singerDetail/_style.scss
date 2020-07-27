@@ -62,7 +62,8 @@
         margin-top: 1rem;
         font-size: 1.5rem;
 
-        > .song {
+        >a >.song {
+          color: $titleColor;
           position: relative;
 
           > strong {
@@ -79,7 +80,8 @@
           }
         }
 
-        > .album {
+        >a > .album {
+          color: $titleColor;
           margin-left: 2rem;
           position: relative;
 
@@ -97,7 +99,8 @@
           }
         }
 
-        > .mv {
+        >a > .mv {
+          color: $titleColor;
           margin-left: 2rem;
 
           > strong {
@@ -131,7 +134,7 @@
 
   }
 
-  > .hot-song-wrapper,>.album-wrapper {
+  > .hot-song-wrapper,>.album-wrapper,>.mv-wrapper {
     margin-top: 2.5rem;
     padding: 2rem 0;
     .text-wrapper {

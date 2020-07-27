@@ -6,6 +6,7 @@ import { Popover, Spin } from "antd";
 import ChartList from "../../components/chartList";
 import AlbumList from "../../components/albumList";
 import MvList from "../../components/mvList/singerMvList";
+import BackTop from "../../components/backTop";
 class singerDetail extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -34,6 +35,7 @@ class singerDetail extends React.PureComponent {
         {this.renderHotSongList()}
         {this.renderAlbumList()}
         {this.renderMvList()}
+        <BackTop ele={"content-wrapper"} scrollStepInPx="100" delayInMs="10" />
       </div>
     );
   }
@@ -70,15 +72,21 @@ class singerDetail extends React.PureComponent {
             </Popover>
           </div>
           <div className="work">
-            <div className="song">
-              单曲 <strong title={"单曲"}>{artist.musicSize}</strong>
-            </div>
-            <div className="album">
-              专辑 <strong title={"专辑"}>{artist.albumSize}</strong>
-            </div>
-            <div className="mv">
-              Mv <strong title={"Mv"}>{artist.mvSize}</strong>
-            </div>
+            <a href="#hot-song-wrapper">
+              <div className="song">
+                单曲 <strong title={"单曲"}>{artist.musicSize}</strong>
+              </div>
+            </a>
+            <a href="#album-wrapper">
+              <div className="album">
+                专辑 <strong title={"专辑"}>{artist.albumSize}</strong>
+              </div>
+            </a>
+            <a href="#mv-wrapper">
+              <div className="mv">
+                Mv <strong title={"Mv"}>{artist.mvSize}</strong>
+              </div>
+            </a>
           </div>
           <div className="button-wrapper">
             <div className="play-all">
@@ -115,7 +123,7 @@ class singerDetail extends React.PureComponent {
     const { hotSongs, showAllSong } = this.state;
     if (hotSongs.length === 0) return;
     return (
-      <div className={"hot-song-wrapper"}>
+      <div className={"hot-song-wrapper"} id={"hot-song-wrapper"}>
         <div className="text-wrapper">
           <div className={"title"}>热门歌曲</div>
           <div
@@ -144,7 +152,7 @@ class singerDetail extends React.PureComponent {
     const { artist } = this.state;
     const { id } = this.props.match.params;
     return (
-      <div className={"album-wrapper"}>
+      <div className={"album-wrapper"} id={"album-wrapper"}>
         <div className="text-wrapper">
           <div className={"title"}>
             专辑{"\u00A0"}
@@ -160,7 +168,7 @@ class singerDetail extends React.PureComponent {
     const { artist } = this.state;
     const { id } = this.props.match.params;
     return (
-      <div className={"album-wrapper"}>
+      <div className={"mv-wrapper"} id={"mv-wrapper"}>
         <div className="text-wrapper">
           <div className={"title"}>
             Mv{"\u00A0"}

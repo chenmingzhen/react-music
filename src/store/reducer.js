@@ -9,6 +9,7 @@ const defaultAppState = fromJS({
   user: {},
   currentHeaderIndex: 0,
   headerStatus: true,
+  scrollTop: 0,
 });
 const appReducer = (state = defaultAppState, action) => {
   switch (action.type) {
@@ -22,6 +23,8 @@ const appReducer = (state = defaultAppState, action) => {
       return state.set("currentHeaderIndex", action.index);
     case constants.SET_HEADER_STATUS:
       return state.set("headerStatus", action.status);
+    case constants.SET_SCROLL_TOP:
+      return state.set("scrollTop", action.scrollTop);
     default:
       return state;
   }

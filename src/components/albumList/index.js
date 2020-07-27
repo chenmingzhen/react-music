@@ -32,7 +32,7 @@ class AlbumList extends React.PureComponent {
           {albumLists.map((item, index) => {
             return (
               <CSSTransition
-                timeout={2000}
+                timeout={700}
                 classNames="upIn"
                 unmountOnExit
                 key={index}

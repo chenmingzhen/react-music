@@ -21,3 +21,7 @@ export const setHeaderStatus = (status) => ({
   type: constants.SET_HEADER_STATUS,
   status,
 });
+export const setScrollTop = (scrollTop) => ({
+  type: constants.SET_SCROLL_TOP,
+  scrollTop,
+});
