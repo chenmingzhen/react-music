@@ -22,6 +22,7 @@ const SongSheet = lazy(() => import("./pages/songSheet"));
 const Chart = lazy(() => import("./pages/chart"));
 const Singer = lazy(() => import("./pages/singer"));
 const SingerDetail = lazy(() => import("./pages/singerDetail"));
+const AlbumDetail = lazy(() => import("./pages/albumDetail"));
 
 function App(props) {
   if (!props.loading) {
@@ -46,7 +47,7 @@ function App(props) {
           >
             <Switch>
               <Route path="/discovery" exact component={Discovery} />
-              {props.user.code ? (
+              {props.user && props.user.code ? (
                 <Route path="/playlist/:id" exact component={PlayList} />
               ) : (
                 ""
@@ -62,6 +63,7 @@ function App(props) {
                 exact
                 component={SingerDetail}
               />
+              <Route path={"/albumdetail/:id"} exact component={AlbumDetail} />
               <Redirect to="/discovery" />
             </Switch>
           </Suspense>

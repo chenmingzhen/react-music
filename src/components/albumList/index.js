@@ -5,6 +5,7 @@ import { getSingerAlbum } from "../../api/singer";
 import "./_style.scss";
 import { timestampToTime } from "../../util/util";
 import { Spin } from "antd";
+import { withRouter } from "react-router-dom";
 
 class AlbumList extends React.PureComponent {
   constructor(props) {
@@ -37,7 +38,14 @@ class AlbumList extends React.PureComponent {
                 unmountOnExit
                 key={index}
               >
-                <div className={"album-item"}>
+                <div
+                  className={"album-item"}
+                  onClick={() => {
+                    this.props.history.push({
+                      pathname: "/albumdetail/" + item.id,
+                    });
+                  }}
+                >
                   <div className="img-wrapper">
                     <img src={item.picUrl} alt="" />
                     <i className={"iconfont icon-bofang"} />
@@ -103,4 +111,4 @@ class AlbumList extends React.PureComponent {
   }
 }
 
-export default AlbumList;
+export default withRouter(AlbumList);

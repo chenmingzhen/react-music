@@ -4,6 +4,8 @@ import { getListComment, likeComment } from "../../api/playlist";
 import "./_style.scss";
 import { timestampToTime } from "../../util/util";
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
+import PropTypes from "prop-types";
+import { getAlbumComment } from "../../api/album";
 
 class Comment extends React.PureComponent {
   constructor(props) {
@@ -15,9 +17,15 @@ class Comment extends React.PureComponent {
   }
 
   getComment(offset) {
-    getListComment(this.props.listId, offset).then((data) => {
-      this.setState({ commentData: data });
-    });
+    if (this.props.isList) {
+      getListComment(this.props.listId, offset).then((data) => {
+        this.setState({ commentData: data });
+      });
+    } else {
+      getAlbumComment(this.props.listId, offset).then((data) => {
+        this.setState({ commentData: data });
+      });
+    }
   }
 
   componentDidMount() {
@@ -29,7 +37,11 @@ class Comment extends React.PureComponent {
     if (item.liked === false) {
       t = 1;
     }
-    likeComment(this.props.listId, commentId, t, 2).then((data) => {
+    let type = 2;
+    if (!this.props.isList) {
+      type = 3;
+    }
+    likeComment(this.props.listId, commentId, t, type).then((data) => {
       if (data.code === 200) {
         message.success("操作成功");
         this.getComment(this.state.offset);
@@ -115,5 +127,9 @@ class Comment extends React.PureComponent {
     );
   }
 }
+
+Comment.defaultProps = {
+  isList: true,
+};
 
 export default Comment;

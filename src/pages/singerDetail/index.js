@@ -180,6 +180,11 @@ class singerDetail extends React.PureComponent {
     );
   }
 
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
+  }
+
   getMoreInf() {
     const { moreDesc } = this.state;
     const { id } = this.props.match.params;

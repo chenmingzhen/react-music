@@ -1,0 +1,88 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.album-detail-wrapper {
+  padding: 4rem 12rem;
+
+  > .top-wrapper {
+    display: flex;
+
+    .img-wrapper {
+      width: 15.625rem;
+      padding-top: 15.625rem;
+      height: 0;
+      position: relative;
+
+      > img {
+        @include imgMixin
+      }
+
+      > i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url('https://y.gtimg.cn/mediastyle/yqq/img/album_cover.png?max_age=2592000&v=38b0c07edbf02967081562b016d3ef14') 0 0 no-repeat;
+        background-size: contain;
+        width: 18.625rem;
+        height: 15.625rem;
+      }
+    }
+
+    > .text-wrapper {
+      margin-left: 4rem;
+
+      > .name {
+        font-size: 2rem;
+      }
+
+      > .singer-wrapper {
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+        > .avatar-wrapper {
+          width: 4rem;
+          padding-top: 4rem;
+          height: 0;
+          position: relative;
+          cursor: pointer;
+          > img {
+            @include imgMixin;
+            border-radius: 50%;
+          }
+        }
+
+        > .name {
+          margin-left: 1.5rem;
+          cursor: pointer;
+        }
+      }
+
+      > .detail {
+        margin-top: 1.5rem;
+        font-size: 1rem;
+        color: $nameColor;
+
+        > .time, > .company, > .type {
+          margin-top: .3rem;
+        }
+
+      }
+    }
+  }
+
+  >.content-wrapper{
+    display: flex;
+    margin: 2rem 0;
+    .song-wrapper{
+
+    }
+    .content-wrapper{
+      margin: 2.4rem 0 0 1rem;
+      font-size: 1rem;
+      color: $color-black;
+      >p{
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
