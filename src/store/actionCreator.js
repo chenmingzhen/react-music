@@ -25,3 +25,7 @@ export const setScrollTop = (scrollTop) => ({
   type: constants.SET_SCROLL_TOP,
   scrollTop,
 });
+export const setMiddle = (result) => ({
+  type: constants.SET_MIDDLE,
+  result,
+});

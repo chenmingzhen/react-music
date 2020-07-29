@@ -82,7 +82,7 @@ class AlbumDetail extends React.PureComponent {
     const { id } = this.props.match.params;
     return (
       <div>
-        <Comment listId={id} isList={false} />
+        <Comment listId={id} isList={2} />
       </div>
     );
   }

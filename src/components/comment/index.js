@@ -4,8 +4,8 @@ import { getListComment, likeComment } from "../../api/playlist";
 import "./_style.scss";
 import { timestampToTime } from "../../util/util";
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
-import PropTypes from "prop-types";
 import { getAlbumComment } from "../../api/album";
+import { getMvComment } from "../../api/mv";
 
 class Comment extends React.PureComponent {
   constructor(props) {
@@ -17,12 +17,16 @@ class Comment extends React.PureComponent {
   }
 
   getComment(offset) {
-    if (this.props.isList) {
+    if (this.props.isList === 1) {
       getListComment(this.props.listId, offset).then((data) => {
         this.setState({ commentData: data });
       });
-    } else {
+    } else if (this.props.isList === 2) {
       getAlbumComment(this.props.listId, offset).then((data) => {
+        this.setState({ commentData: data });
+      });
+    } else {
+      getMvComment(this.props.listId, offset).then((data) => {
         this.setState({ commentData: data });
       });
     }
@@ -38,8 +42,11 @@ class Comment extends React.PureComponent {
       t = 1;
     }
     let type = 2;
-    if (!this.props.isList) {
+    if (this.props.isList === 2) {
       type = 3;
+    }
+    if (this.props.isList === 3) {
+      type = 1;
     }
     likeComment(this.props.listId, commentId, t, type).then((data) => {
       if (data.code === 200) {
@@ -129,7 +136,7 @@ class Comment extends React.PureComponent {
 }
 
 Comment.defaultProps = {
-  isList: true,
+  isList: 1,
 };
 
 export default Comment;

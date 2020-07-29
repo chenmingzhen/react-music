@@ -4,7 +4,7 @@ import { Spin } from "antd";
 import axios from "axios";
 import { getSingerMv } from "../../api/singer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
+import { withRouter } from "react-router-dom";
 class SingerMvList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -36,7 +36,14 @@ class SingerMvList extends React.PureComponent {
                 unmountOnExit
                 key={index}
               >
-                <div className={"mv-item"}>
+                <div
+                  className={"mv-item"}
+                  onClick={() => {
+                    this.props.history.push({
+                      pathname: "/mvplay/" + item.id,
+                    });
+                  }}
+                >
                   <div className="img-wrapper">
                     <img src={item.imgurl} alt="" />
                     <i className={"iconfont icon-bofang"} />
@@ -102,4 +109,4 @@ class SingerMvList extends React.PureComponent {
   }
 }
 
-export default SingerMvList;
+export default withRouter(SingerMvList);

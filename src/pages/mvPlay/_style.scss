@@ -1,0 +1,150 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.content-wrapper >.mv-wrapper {
+  position: absolute;
+  width: 100vw;
+  height: 86vh;
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  padding: 3rem 15rem;
+  top: 0;
+  left: 0;
+  > .left-wrapper {
+    flex: 1;
+
+    > .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    > .video-wrapper {
+      margin-top: 2rem;
+      width: 78%;
+      height: 25rem;
+      > video {
+        width: 100%;
+        height: 100%;
+        outline: none;
+      }
+    }
+
+    > .singer-wrapper {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      > .avatar {
+        width: 6rem;
+        padding-top: 6rem;
+        height: 0;
+        position: relative;
+        > img {
+          @include imgMixin;
+          border-radius: 50%;
+        }
+      }
+
+      > .name {
+        font-size: 1.3rem;
+        margin-left: 1rem;
+        font-weight: 600;
+      }
+    }
+
+    > .name {
+      margin-top: 1.5rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    > .mv-inf {
+      display: flex;
+      color: $tipsHoverColor;
+      margin: 1.5rem 0;
+      > .time {
+
+      }
+
+      > .count {
+        margin-left: 2rem;
+      }
+    }
+  }
+
+  > .right-wrapper {
+    width: 36%;
+    >.simi-wrapper{
+      >.title{
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+      >.simi-item{
+        &:hover{
+          background-color: rgba(0,0,0,.1);
+        }
+        padding: .4rem 0;
+        cursor: pointer;
+        display: flex;
+        margin-bottom: 2rem;
+        align-items: center;
+        >.img-wrapper{
+          position: relative;
+          width: 11rem;
+          padding-top: 8rem;
+          height: 0;
+          flex: 0 0 auto;
+          &:hover{
+            >.center{
+              opacity: 1;
+            }
+          }
+          >img{
+            @include imgMixin;
+            border-radius: 0.3rem;
+          }
+          >.time,>i,>.count{
+            position: absolute;
+          }
+          >.time{
+            right: 0;
+            bottom: 0;
+            color: white;
+          }
+          >.center{
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 3rem;
+            color: $color-theme;
+            opacity: 0;
+            transition: all .4s;
+          }
+          >.count{
+            top: 0;
+            right: 0;
+            color: white;
+            font-size: .7rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            >.number{
+              margin-left: .3rem;
+            }
+          }
+        }
+        >.text-wrapper{
+          margin-left: 1rem;
+          >.name,.singer{
+            @include ellipsis2(2);
+          }
+          >.singer{
+            color: $tipsColor;
+          }
+        }
+      }
+    }
+  }
+}

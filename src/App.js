@@ -23,6 +23,7 @@ const Chart = lazy(() => import("./pages/chart"));
 const Singer = lazy(() => import("./pages/singer"));
 const SingerDetail = lazy(() => import("./pages/singerDetail"));
 const AlbumDetail = lazy(() => import("./pages/albumDetail"));
+const MvPlay = lazy(() => import("./pages/mvPlay"));
 
 function App(props) {
   if (!props.loading) {
@@ -34,40 +35,51 @@ function App(props) {
     <div className="App">
       <Header />
       <div className={"middle-wrapper"}>
-        <div className={"slider-bar-wrapper"}>
-          <SliderBar />
-        </div>
-        <div className={"content-wrapper"} id="content-wrapper">
-          <Suspense
-            fallback={
-              <div className={"loading-wrapper"}>
-                <Spin tip={"loading"} indicator={antIcon} />
-              </div>
-            }
-          >
-            <Switch>
-              <Route path="/discovery" exact component={Discovery} />
-              {props.user && props.user.code ? (
-                <Route path="/playlist/:id" exact component={PlayList} />
-              ) : (
-                ""
-              )}
-              <Route path="/commentplaylist/:id" exact component={PlayList} />
-              <Route path="/dailyrecommend" exact component={DailyRecommend} />
-              <Route path="/songsheet" exact component={SongSheet} />
-              <Route path="/chart" exact component={Chart} />
-              <Route path="/singer" exact component={Singer} />
-              {/*非二级路由*/}
-              <Route
-                path={"/singer/singerdetail/:id"}
-                exact
-                component={SingerDetail}
-              />
-              <Route path={"/albumdetail/:id"} exact component={AlbumDetail} />
-              <Redirect to="/discovery" />
-            </Switch>
-          </Suspense>
-        </div>
+        <>
+          <div className={"slider-bar-wrapper"}>
+            <SliderBar />
+          </div>
+          <div className={"content-wrapper"} id="content-wrapper">
+            <Suspense
+              fallback={
+                <div className={"loading-wrapper"}>
+                  <Spin tip={"loading"} indicator={antIcon} />
+                </div>
+              }
+            >
+              <Switch>
+                <Route path="/discovery" exact component={Discovery} />
+                {props.user && props.user.code ? (
+                  <Route path="/playlist/:id" exact component={PlayList} />
+                ) : (
+                  ""
+                )}
+                <Route path="/commentplaylist/:id" exact component={PlayList} />
+                <Route
+                  path="/dailyrecommend"
+                  exact
+                  component={DailyRecommend}
+                />
+                <Route path="/songsheet" exact component={SongSheet} />
+                <Route path="/chart" exact component={Chart} />
+                <Route path="/singer" exact component={Singer} />
+                {/*非二级路由*/}
+                <Route
+                  path={"/singer/singerdetail/:id"}
+                  exact
+                  component={SingerDetail}
+                />
+                <Route
+                  path={"/albumdetail/:id"}
+                  exact
+                  component={AlbumDetail}
+                />
+                <Route path="/mvplay/:id" exact component={MvPlay} />
+                <Redirect to="/discovery" />
+              </Switch>
+            </Suspense>
+          </div>
+        </>
         {
           <CSSTransition
             in={props.searchStatus}
@@ -90,6 +102,7 @@ const mapState = (state) => ({
   loading: state.getIn(["app", "loading"]),
   searchStatus: state.getIn(["app", "searchStatus"]),
   user: state.getIn(["app", "user"]),
+  middleAll: state.getIn(["app", "middleAll"]),
 });
 
 export default connect(mapState, null)(App);
