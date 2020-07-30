@@ -13,6 +13,7 @@
     "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
+    "pubsub-js": "^1.8.0",
     "r-img-lazyload": "^1.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

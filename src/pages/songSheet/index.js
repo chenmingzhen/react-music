@@ -67,7 +67,7 @@ class SongSheet extends React.PureComponent {
           </div>
         }
         {showList.length > 0 ? (
-          <PlayList playListData={showList}></PlayList>
+          <PlayList playListData={showList} />
         ) : (
           this.renderSpin()
         )}
@@ -92,13 +92,9 @@ class SongSheet extends React.PureComponent {
               <div
                 className={"bg-wrpper"}
                 style={{ background: `url(${randomList.coverImgUrl})` }}
-                onClick={this.clickRandom.bind(this, randomList.id)}
-              ></div>
+              />
             )}
-            <div
-              className={"bg-mask"}
-              onClick={this.clickRandom.bind(this, randomList.id)}
-            ></div>
+            <div className={"bg-mask"} />
             <div className={"top-wrapper"}>
               <div
                 className={"img-wrapper"}

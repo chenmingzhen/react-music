@@ -12,3 +12,5 @@ export const SET_HEADER_STATUS = "SET_HEADER_STATUS";
 export const SET_SCROLL_TOP = "SET_SCROLL_TOP";
 
 export const SET_MIDDLE = "SET_MIDDLE";
+
+export const SET_SEARCH_CONTROL = "SET_SEARCH_CONTROL";

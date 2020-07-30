@@ -29,3 +29,7 @@ export const setMiddle = (result) => ({
   type: constants.SET_MIDDLE,
   result,
 });
+export const setSearchControl = (result) => ({
+  type: constants.SET_SEARCH_CONTROL,
+  result,
+});

@@ -12,6 +12,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
+import { setSearchControl } from "./store/actionCreator";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
@@ -82,13 +83,19 @@ function App(props) {
         </>
         {
           <CSSTransition
-            in={props.searchStatus}
+            in={props.searchControl}
             timeout={400}
             classNames={"rightIn"}
             unmountOnExit
             appear={true}
           >
-            <div className={"search-wrapper"}>
+            <div
+              className={"search-wrapper"}
+              /*tabIndex={0}*/
+              /*onBlur={() => {
+                props.setSearchControl(false);
+              }}*/
+            >
               <Search />
             </div>
           </CSSTransition>
@@ -103,6 +110,13 @@ const mapState = (state) => ({
   searchStatus: state.getIn(["app", "searchStatus"]),
   user: state.getIn(["app", "user"]),
   middleAll: state.getIn(["app", "middleAll"]),
+  searchControl: state.getIn(["app", "searchControl"]),
 });
 
-export default connect(mapState, null)(App);
+const mapDispatch = (dispatch) => ({
+  setSearchControl(result) {
+    dispatch(setSearchControl(result));
+  },
+});
+
+export default connect(mapState, mapDispatch)(App);

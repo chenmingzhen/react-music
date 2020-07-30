@@ -57,7 +57,7 @@ export async function createSong(musicData, cancelToken) {
   });
 }
 
-function filterSinger(singer) {
+export function filterSinger(singer) {
   let ret = [];
   if (!singer) {
     return "";

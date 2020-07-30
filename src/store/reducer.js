@@ -11,6 +11,7 @@ const defaultAppState = fromJS({
   headerStatus: true,
   scrollTop: 0,
   middleAll: false,
+  searchControl: false,
 });
 const appReducer = (state = defaultAppState, action) => {
   switch (action.type) {
@@ -28,6 +29,8 @@ const appReducer = (state = defaultAppState, action) => {
       return state.set("scrollTop", action.scrollTop);
     case constants.SET_MIDDLE:
       return state.set("middleAll", action.result);
+    case constants.SET_SEARCH_CONTROL:
+      return state.set("searchControl", action.result);
     default:
       return state;
   }

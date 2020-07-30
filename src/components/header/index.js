@@ -6,10 +6,13 @@ import {
   changeSearchStatus,
   setCurrentHeaderIndex,
   setHeaderStatus,
+  setSearchControl,
 } from "../../store/actionCreator";
 import { Popover } from "antd";
 import Skin from "../skin";
 import { withRouter } from "react-router-dom";
+import PubSub from "pubsub-js";
+import { getLocalStorage, setLocalStorage } from "../../util/localStorage";
 
 class Header extends React.PureComponent {
   constructor(props) {
@@ -31,6 +34,7 @@ class Header extends React.PureComponent {
   }
 
   render() {
+    const { setSearchControl } = this.props;
     return (
       <div className={"header-wrapper"}>
         <div className={"header-left"}>
@@ -90,15 +94,19 @@ class Header extends React.PureComponent {
           <div
             className="search-wrapper"
             onFocus={() => {
-              this.props.changeSearchStatus(true);
-            }}
-            onBlur={() => {
-              this.props.changeSearchStatus(false);
+              setSearchControl(true);
             }}
           >
             <div className="search">
               <i className={"iconfont icon-chazhao"} />
-              <input type="text" placeholder={"搜索"} />
+              <input
+                type="text"
+                placeholder={"搜索"}
+                onKeyPress={this._keyDown}
+                onChange={(e) => {
+                  PubSub.publish("send-search-value", e.target.value);
+                }}
+              />
             </div>
             <Popover placement="bottomRight" content={<Skin />} trigger="click">
               <i className={"iconfont icon-yifu change-skin"} />
@@ -137,6 +145,27 @@ class Header extends React.PureComponent {
         break;
     }
   }
+
+  _keyDown(e) {
+    if (e.which === 13) {
+      let historyArray = getLocalStorage("_search_history");
+      if (historyArray === null) historyArray = [];
+      //遍历是否已经存在这个查询
+      let index = historyArray.findIndex(function (obj) {
+        return obj.first === e.target.value;
+      });
+      //如果存在 先删除再添加
+      if (index !== -1) {
+        historyArray.splice(index, 1);
+      }
+      historyArray.push({ first: e.target.value });
+      setLocalStorage("_search_history", historyArray);
+      PubSub.publish(
+        "send-enter",
+        getLocalStorage("_search_history").reverse()
+      );
+    }
+  }
 }
 
 const mapState = (state) => ({
@@ -144,6 +173,7 @@ const mapState = (state) => ({
   loading: state.getIn(["app", "searchStatus"]),
   currentHeaderIndex: state.getIn(["app", "currentHeaderIndex"]),
   headerStatus: state.getIn(["app", "headerStatus"]),
+  searchControl: state.getIn(["app", "searchControl"]),
 });
 
 const mapDispatch = (dispatch) => ({
@@ -158,6 +188,9 @@ const mapDispatch = (dispatch) => ({
   },
   changeLoading(result) {
     dispatch(changeLoading(result));
+  },
+  setSearchControl(result) {
+    dispatch(setSearchControl(result));
   },
 });
 
