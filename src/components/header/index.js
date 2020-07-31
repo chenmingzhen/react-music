@@ -93,7 +93,7 @@ class Header extends React.PureComponent {
           </div>
           <div
             className="search-wrapper"
-            onFocus={() => {
+            onClick={() => {
               setSearchControl(true);
             }}
           >
@@ -148,6 +148,7 @@ class Header extends React.PureComponent {
 
   _keyDown(e) {
     if (e.which === 13) {
+      if (e.target.value === "") return;
       let historyArray = getLocalStorage("_search_history");
       if (historyArray === null) historyArray = [];
       //遍历是否已经存在这个查询

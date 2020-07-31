@@ -25,6 +25,7 @@ const Singer = lazy(() => import("./pages/singer"));
 const SingerDetail = lazy(() => import("./pages/singerDetail"));
 const AlbumDetail = lazy(() => import("./pages/albumDetail"));
 const MvPlay = lazy(() => import("./pages/mvPlay"));
+const SearchDetail = lazy(() => import("./pages/searchDetail"));
 
 function App(props) {
   if (!props.loading) {
@@ -76,6 +77,11 @@ function App(props) {
                   component={AlbumDetail}
                 />
                 <Route path="/mvplay/:id" exact component={MvPlay} />
+                <Route
+                  path="/searchdetail/:keyword"
+                  exact
+                  component={SearchDetail}
+                />
                 <Redirect to="/discovery" />
               </Switch>
             </Suspense>

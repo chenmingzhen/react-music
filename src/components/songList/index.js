@@ -9,25 +9,36 @@ class SongList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { song: [] };
+    this._tmp = [];
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
-    this.props.songList.forEach((item) => {
-      createSong(item, this.source.token).then((data) => {
-        let tmp = [...this.state.song];
-        tmp.push(data);
-        this.setState({ song: tmp });
+    for (const item of this.props.songList) {
+      await new Promise((res) => {
+        createSong(item, this.source.token)
+          .then((data) => {
+            /*let tmp = [...this.state.song];
+            tmp.push(data);
+            this.setState({ song: tmp });
+            res();*/
+            let t = [...this._tmp];
+            t.push(data);
+            this._tmp = t;
+            res();
+          })
+          .catch((e) => {});
       });
-    });
+    }
+    this.setState({ song: this._tmp });
   }
 
   render() {
     let { song } = this.state;
     if (song.length > 0) {
       return (
-        <div className={"song-list-wrapper"}>
+        <div className={"song-list-wrapper"} style={this.props.style}>
           <div className="fix-wrapper">
             <div className="title">音乐标题</div>
             <div className="singer">歌手</div>
@@ -44,13 +55,13 @@ class SongList extends React.Component {
                 >
                   <div className={"number"}>
                     {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                    {/*  <i
+                    {/*<i
                       className={
                         item.liked
                           ? "iconfont icon-xihuan like"
                           : "iconfont icon-xihuan"
                       }
-                    /> */}
+                    />*/}
                   </div>
                   <div className="title">
                     {item.name}

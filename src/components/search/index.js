@@ -7,6 +7,7 @@ import PubSub from "pubsub-js";
 import { filterSinger } from "../../assets/js/song";
 import { withRouter } from "react-router-dom";
 import { removeLocalStorage } from "../../util/localStorage";
+import { getLocalStorage } from "../../util/localStorage";
 
 class Search extends React.PureComponent {
   constructor() {
@@ -21,6 +22,9 @@ class Search extends React.PureComponent {
   }
 
   componentDidMount() {
+    let array = getLocalStorage("_search_history") || [];
+
+    this.setState({ historySearch: array.reverse() });
     this.token = PubSub.subscribe("send-search-value", (eventName, data) => {
       //查找搜索建议
       this.setState({ search: data });
@@ -28,7 +32,10 @@ class Search extends React.PureComponent {
         this.throttle(this.handleSearchSuggestion.bind(this, data), 500)();
     });
     this.enter = PubSub.subscribe("send-enter", (eventName, data) => {
-      this.setState({ historySearch: data });
+      //this.setState({ historySearch: data });
+      this.props.setSearchControl(false);
+      if (data[0].first !== "")
+        this.props.history.push({ pathname: "/searchdetail/" + data[0].first });
     });
     getHotSearch().then((data) => {
       this.setState({ hotSearch: data.result.hots });
@@ -49,7 +56,15 @@ class Search extends React.PureComponent {
     return (
       <>
         <div className="hot-search-wrapper">
-          <div className="title">热门搜索</div>
+          <div className="top">
+            <div className="title">热门搜索</div>
+            <i
+              className={"iconfont icon-youjiantou"}
+              onClick={() => {
+                this.props.setSearchControl(false);
+              }}
+            />
+          </div>
           <div className="item-wrapper">
             {hotSearch.map((item, index) => {
               return (

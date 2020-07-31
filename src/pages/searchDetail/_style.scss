@@ -1,0 +1,38 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.search-result-wrapper {
+  > .top-wrapper {
+    margin: 2rem 0 2rem 5rem;
+
+    > .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    > .count {
+      margin-left: 1rem;
+      font-size: 1rem;
+      letter-spacing: .1rem;
+      color: $tipsColor;
+    }
+  }
+
+  > .nav-wrapper {
+    display: flex;
+    border-bottom: 0.0625rem solid $borderColor;
+    padding-bottom: 1rem;
+    > .nav-item {
+      font-size: 1.7rem;
+      margin: 0 1rem;
+      cursor: pointer;
+      padding-bottom: .3rem;
+      &:first-child{
+        margin: 0 1rem 0 5rem;
+      }
+      &.active{
+        border-bottom: 0.1rem solid $color-theme;
+      }
+    }
+  }
+}
