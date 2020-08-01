@@ -6,7 +6,9 @@ import SongList from "../../components/songList";
 import { connect } from "react-redux";
 import { Pagination } from "antd";
 import { setSearchOffset, setSearchType } from "./store/actionCreator";
-
+import PlayList from "../../components/playList";
+import SearchAlbumList from "../../components/albumList/searchAlbumList";
+import SingerList from "../../components/singerList";
 class SearchDetail extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -34,9 +36,15 @@ class SearchDetail extends React.PureComponent {
     const { searchKeyword } = this.state;
     if (keyword !== searchKeyword) {
       //读取数据
-      setTimeout(() => {
-        this.getSearchData(true);
-      });
+      if (searchKeyword !== "") {
+        setTimeout(() => {
+          this.getSearchData(true);
+        });
+      } else {
+        setTimeout(() => {
+          this.getSearchData();
+        });
+      }
     }
     return (
       <div className={"search-result-wrapper"}>
@@ -90,6 +98,12 @@ class SearchDetail extends React.PureComponent {
     switch (type) {
       case 1:
         return this.renderSong();
+      case 10:
+        return this.renderAlbumList();
+      case 100:
+        return this.renderSingerList();
+      case 1000:
+        return this.renderPlayList();
       default:
         return this.renderSong();
     }
@@ -101,6 +115,48 @@ class SearchDetail extends React.PureComponent {
       <div className={"song-wrapper"}>
         {songResult.songs && songResult.songs.length > 0 ? (
           <SongList songList={songResult.songs} style={{ padding: "1.5rem" }} />
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
+
+  renderPlayList() {
+    const { playListResult } = this.state;
+    return (
+      <div>
+        {playListResult.playlists && playListResult.playlists.length > 0 ? (
+          <PlayList playListData={playListResult.playlists} />
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
+
+  renderAlbumList() {
+    const { alumResult } = this.state;
+    return (
+      <div>
+        {alumResult.albums && alumResult.albums.length > 0 ? (
+          <SearchAlbumList
+            albumListData={alumResult.albums}
+            style={{ padding: "1rem 10rem" }}
+          />
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
+
+  renderSingerList() {
+    const { singerResult } = this.state;
+    return (
+      <div>
+        {singerResult.artists && singerResult.artists.length > 0 ? (
+          <SingerList singerListData={singerResult.artists} />
         ) : (
           ""
         )}
@@ -132,6 +188,7 @@ class SearchDetail extends React.PureComponent {
               this.getSearchData();
             });
           }}
+          showSizeChanger={false}
         />
       );
     } else {
@@ -139,7 +196,9 @@ class SearchDetail extends React.PureComponent {
     }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.setState = () => false;
+  }
 
   typeIs() {
     const { singerResult, songResult, alumResult, playListResult } = this.state;
@@ -152,7 +211,7 @@ class SearchDetail extends React.PureComponent {
       case 100:
         return singerResult.artistCount;
       case 1000:
-        return playListResult.mvCount;
+        return playListResult.playlistCount;
       default:
         return 0;
     }

@@ -48,9 +48,18 @@ class AlbumDetail extends React.PureComponent {
           <div className="name">{album.name}</div>
           <div className="singer-wrapper">
             <div className="avatar-wrapper">
-              <img src={album.artist.picUrl} alt="" />
+              <img
+                src={album.artist.picUrl}
+                alt=""
+                onClick={this.clickSinger.bind(this, album.artist.id)}
+              />
             </div>
-            <div className="name">{album.artist.name}</div>
+            <div
+              className="name"
+              onClick={this.clickSinger.bind(this, album.artist.id)}
+            >
+              {album.artist.name}
+            </div>
           </div>
           <div className="detail">
             <div className="time">
@@ -90,6 +99,10 @@ class AlbumDetail extends React.PureComponent {
   componentWillUnmount() {
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
+  }
+
+  clickSinger(id) {
+    this.props.history.push({ pathname: "/singer/singerdetail/" + id });
   }
 }
 

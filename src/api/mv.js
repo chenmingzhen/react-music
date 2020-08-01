@@ -13,9 +13,9 @@ export function getMvDetail(mvid, cancelToken) {
 }
 
 //mv comment
-export function getMvComment(id, cancelToken) {
+export function getMvComment(id, offset, cancelToken) {
   const url = "/comment/mv";
-  return request({ url, method: "get", params: { id }, cancelToken });
+  return request({ url, method: "get", params: { id, offset }, cancelToken });
 }
 
 //mv simi

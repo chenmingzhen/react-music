@@ -42,7 +42,7 @@ class PlayList extends React.PureComponent {
     }
     return (
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <Spin></Spin>
+        <Spin />
       </div>
     );
   }

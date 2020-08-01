@@ -68,7 +68,11 @@ class Search extends React.PureComponent {
           <div className="item-wrapper">
             {hotSearch.map((item, index) => {
               return (
-                <span className={"item"} key={index}>
+                <span
+                  className={"item"}
+                  key={index}
+                  onClick={this.clickItem.bind(this, item.first)}
+                >
                   {item.first}
                 </span>
               );
@@ -93,7 +97,11 @@ class Search extends React.PureComponent {
           <div className="item-wrapper">
             {historySearch.map((item, index) => {
               return (
-                <span className={"item"} key={index}>
+                <span
+                  className={"item"}
+                  key={index}
+                  onClick={this.clickItem.bind(this, item.first)}
+                >
                   {item.first}
                 </span>
               );
@@ -217,6 +225,11 @@ class Search extends React.PureComponent {
         }, wait);
       }
     };
+  }
+
+  clickItem(keyword) {
+    this.props.history.push({ pathname: "/searchdetail/" + keyword });
+    this.props.setSearchControl(false);
   }
 }
 
