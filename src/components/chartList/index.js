@@ -3,6 +3,7 @@ import "./_style.scss";
 import { createSong } from "../../assets/js/song";
 import { formatDuration } from "../../util/util";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class ChartList extends React.PureComponent {
   constructor(props) {
@@ -59,7 +60,13 @@ class ChartList extends React.PureComponent {
               ""
             )}
             {item.mvid !== 0 ? (
-              <i className={"iconfont icon-shipin"} title="播放MV" />
+              <i
+                className={"iconfont icon-shipin"}
+                title="播放MV"
+                onClick={() => {
+                  this.props.history.push({ pathname: "/mvplay/" + item.mvid });
+                }}
+              />
             ) : (
               ""
             )}
@@ -87,10 +94,10 @@ class ChartList extends React.PureComponent {
             this.setState({ songLists: tmp });
             res();
           })
-          .catch((e) => {});
+          .catch(() => {});
       });
     }
   }
 }
 
-export default ChartList;
+export default withRouter(ChartList);

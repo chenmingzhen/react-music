@@ -36,7 +36,7 @@
   > .list-wrapper {
     .list-item {
       display: flex;
-      padding: .2rem 0;
+      padding: 1rem 0;
       cursor: pointer;
 
       &:hover {
@@ -64,7 +64,8 @@
 
         > i {
           color: $color-theme;
-
+          font-size: 2rem;
+          line-height: 2rem;
         }
       }
 

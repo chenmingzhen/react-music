@@ -2,7 +2,7 @@ import React from "react";
 import "./_style.scss";
 import { Spin } from "antd";
 import PropTypes from "prop-types";
-
+import { withRouter } from "react-router-dom";
 class MvList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -16,7 +16,13 @@ class MvList extends React.PureComponent {
           {this.props.mvData &&
             this.props.mvData.map((item, index) => {
               return (
-                <div className={"mv-item"} key={index}>
+                <div
+                  className={"mv-item"}
+                  key={index}
+                  onClick={() => {
+                    this.props.history.push({ pathname: "/mvplay/" + item.id });
+                  }}
+                >
                   <div className="img-wrapper">
                     <img src={item.picUrl} alt="" loading="lazy" />
                     <div className="playCount-wrapper">
@@ -59,4 +65,4 @@ MvList.defaultProps = {
   mvData: [],
 };
 
-export default MvList;
+export default withRouter(MvList);

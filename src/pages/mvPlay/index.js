@@ -34,14 +34,20 @@ class MvPlay extends React.PureComponent {
             <>
               <div className="singer-wrapper">
                 <div className="avatar">
-                  <img src={mvDetail.cover} alt="" />
+                  <img
+                    src={mvDetail.cover}
+                    alt=""
+                    onClick={this.clickItem.bind(this)}
+                  />
                 </div>
-                <div className="name">{mvDetail.artistName}</div>
+                <div className="name" onClick={this.clickItem.bind(this)}>
+                  {mvDetail.artistName}
+                </div>
               </div>
               <div className="name">{mvDetail.name}</div>
               <div className="mv-inf">
-                <div className="time">Publish:{mvDetail.publishTime}</div>
-                <div className="count">Count:{mvDetail.playCount}</div>
+                <div className="time">发布时间:{mvDetail.publishTime}</div>
+                <div className="count">播放量:{mvDetail.playCount}</div>
               </div>
             </>
           ) : (
@@ -108,6 +114,13 @@ class MvPlay extends React.PureComponent {
       this.setState({ mvs: data.mvs });
     });
     this.setState({ stateId: id });
+  }
+
+  clickItem() {
+    const { mvDetail } = this.state;
+    this.props.history.push({
+      pathname: "/singer/singerdetail/" + mvDetail.artistId,
+    });
   }
 }
 
