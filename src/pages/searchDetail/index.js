@@ -110,11 +110,16 @@ class SearchDetail extends React.PureComponent {
   }
 
   renderSong() {
+    const { keyword } = this.props.match.params;
     const { songResult } = this.state;
     return (
       <div className={"song-wrapper"}>
         {songResult.songs && songResult.songs.length > 0 ? (
-          <SongList songList={songResult.songs} style={{ padding: "1.5rem" }} />
+          <SongList
+            songList={songResult.songs}
+            style={{ padding: "1.5rem" }}
+            search={keyword}
+          />
         ) : (
           ""
         )}
@@ -152,11 +157,12 @@ class SearchDetail extends React.PureComponent {
   }
 
   renderSingerList() {
+    const { keyword } = this.props.match.params;
     const { singerResult } = this.state;
     return (
       <div>
         {singerResult.artists && singerResult.artists.length > 0 ? (
-          <SingerList singerListData={singerResult.artists} />
+          <SingerList singerListData={singerResult.artists} search={keyword} />
         ) : (
           ""
         )}

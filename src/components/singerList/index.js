@@ -3,6 +3,8 @@ import { Spin } from "antd";
 import PropTypes from "prop-types";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
+import { highlightWord } from "../../util/util";
+
 class SingerList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -35,7 +37,17 @@ class SingerList extends React.PureComponent {
                     loading="lazy"
                   />
                 </div>
-                <div className={"text"}>{item.name}</div>
+                {this.props.search ? (
+                  <div
+                    className={"text"}
+                    dangerouslySetInnerHTML={{
+                      __html: highlightWord(item.name, this.props.search),
+                    }}
+                  />
+                ) : (
+                  <div className={"text"}>{item.name}</div>
+                )}
+
                 {item.trans ? <div className="trans">({item.trans})</div> : ""}
               </div>
             );

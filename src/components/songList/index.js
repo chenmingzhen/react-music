@@ -4,6 +4,7 @@ import { formatDuration } from "../../util/util";
 import "./_style.scss";
 import { Spin } from "antd";
 import axios from "axios";
+import { highlightWord } from "../../util/util";
 
 class SongList extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class SongList extends React.Component {
 
   render() {
     let { song } = this.state;
+    const { search } = this.props;
     if (song.length > 0) {
       return (
         <div className={"song-list-wrapper"} style={this.props.style}>
@@ -55,24 +57,31 @@ class SongList extends React.Component {
                 >
                   <div className={"number"}>
                     {index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                    {/*<i
-                      className={
-                        item.liked
-                          ? "iconfont icon-xihuan like"
-                          : "iconfont icon-xihuan"
-                      }
-                    />*/}
                   </div>
                   <div className="title">
-                    {item.name}
-                    {item.fee === 1 ? (
-                      <i className="iconfont icon-VIP"></i>
+                    {search ? (
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: highlightWord(item.name, search),
+                        }}
+                      />
                     ) : (
-                      ""
+                      item.name
                     )}
+                    {item.fee === 1 ? <i className="iconfont icon-VIP" /> : ""}
                   </div>
-                  <div className="singer">{item.singer}</div>
-                  <div className="album">{item.album.name}</div>
+                  <div
+                    className="singer"
+                    dangerouslySetInnerHTML={{
+                      __html: highlightWord(item.singer, search),
+                    }}
+                  />
+                  <div
+                    className="album"
+                    dangerouslySetInnerHTML={{
+                      __html: highlightWord(item.album.name, search),
+                    }}
+                  />
                   <div className="duration">
                     {formatDuration(item.duration)}
                   </div>

@@ -8,6 +8,7 @@ import { filterSinger } from "../../assets/js/song";
 import { withRouter } from "react-router-dom";
 import { removeLocalStorage } from "../../util/localStorage";
 import { getLocalStorage } from "../../util/localStorage";
+import { highlightWord } from "../../util/util";
 
 class Search extends React.PureComponent {
   constructor() {
@@ -29,10 +30,9 @@ class Search extends React.PureComponent {
       //查找搜索建议
       this.setState({ search: data });
       if (data !== "")
-        this.throttle(this.handleSearchSuggestion.bind(this, data), 500)();
+        this.throttle(this.handleSearchSuggestion.bind(this, data), 200)();
     });
     this.enter = PubSub.subscribe("send-enter", (eventName, data) => {
-      //this.setState({ historySearch: data });
       this.props.setSearchControl(false);
       if (data[0].first !== "")
         this.props.history.push({ pathname: "/searchdetail/" + data[0].first });
@@ -142,9 +142,10 @@ class Search extends React.PureComponent {
                   pathname: "/singer/singerdetail/" + item.id,
                 });
               }}
-            >
-              {item.name}
-            </div>
+              dangerouslySetInnerHTML={{
+                __html: highlightWord(item.name, this.state.search),
+              }}
+            />
           );
         })}
       </div>
@@ -172,8 +173,18 @@ class Search extends React.PureComponent {
                 });
               }}
             >
-              <div className="name">{item.name}</div>
-              <div className="singer-name">{item.artist.name}</div>
+              <div
+                className="name"
+                dangerouslySetInnerHTML={{
+                  __html: highlightWord(item.name, this.state.search),
+                }}
+              />
+              <div
+                className="singer-name"
+                dangerouslySetInnerHTML={{
+                  __html: highlightWord(item.artist.name, this.state.search),
+                }}
+              />
             </div>
           );
         })}
@@ -193,8 +204,21 @@ class Search extends React.PureComponent {
         {searchSuggestion.songs.map((item, index) => {
           return (
             <div className={"song-item"} key={index}>
-              <div className="name">{item.name}</div>
-              <div className="singer-name">{filterSinger(item.artists)}</div>
+              <div
+                className="name"
+                dangerouslySetInnerHTML={{
+                  __html: highlightWord(item.name, this.state.search),
+                }}
+              />
+              <div
+                className="singer-name"
+                dangerouslySetInnerHTML={{
+                  __html: highlightWord(
+                    filterSinger(item.artists),
+                    this.state.search
+                  ),
+                }}
+              />
             </div>
           );
         })}
