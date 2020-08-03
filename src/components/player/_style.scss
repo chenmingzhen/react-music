@@ -1,0 +1,169 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.player-wrapper {
+  position: fixed;
+  width: 100%;
+  height: 8vh;
+  z-index: 10;
+
+  > .normal-wrapper {
+    width: 100%;
+    height: 92vh;
+    position: absolute;
+    z-index: 100;
+    background-color: $color-theme-bg;
+  }
+
+  > .mini-wrapper {
+    width: 100%;
+    height: 8vh;
+    position: absolute;
+    bottom: 0;
+    z-index: 200;
+    background-color: $color-theme-bg;
+    display: flex;
+    padding: .5rem;
+    justify-content: space-between;
+
+    > .song-wrapper {
+      display: flex;
+      flex: 4;
+
+      > .img-wrapper {
+        position: relative;
+        width: 3.5rem;
+        padding-top: 3.5rem;
+        height: 0;
+        cursor: pointer;
+
+        > img {
+          @include imgMixin;
+          border-radius: 0.325rem;
+          transition: all .4s;
+        }
+
+        > i {
+          position: absolute;
+          top: 50%;
+          z-index: 200;
+          opacity: 0;
+          left: 50%;
+          color: $color-theme;
+          transform: translate(-50%, -50%);
+          transition: all .4s;
+        }
+
+        &:hover {
+          > i {
+            font-size: 2rem;
+            opacity: 1;
+          }
+
+          > img {
+            filter: blur(.1rem);
+          }
+        }
+      }
+
+      > .text-wrapper {
+        margin-left: 1rem;
+
+        > .inf-wrapper {
+          display: flex;
+          align-content: center;
+
+          > .song-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: $nameColor;
+            cursor: pointer;
+          }
+
+          > .singer-name {
+            font-size: .8rem;
+            margin-left: .7rem;
+            line-height: 2.2rem;
+            color: $tipsColor;
+            cursor: pointer;
+          }
+        }
+
+        > .time {
+          display: flex;
+
+          > .current, > .all, > .slash {
+            color: $tipsColor;
+            font-size: 1rem;
+            margin: 0 .2rem;
+          }
+
+          > .slash {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    > .control-wrapper {
+      display: flex;
+      align-items: center;
+
+      > span {
+        > i {
+          cursor: pointer;
+          margin: 0 .5rem;
+          font-size: 2rem;
+          color: #c7332f;
+        }
+
+        > .icon-bofang, > .icon-zanting {
+          font-size: 4rem;
+        }
+        > .icon-bofang{
+          display: block;
+          transform: scale(1.25);
+        }
+
+      }
+    }
+
+    > .mode-wrapper {
+      display: flex;
+      flex: 4;
+      justify-content: flex-end;
+      align-items: center;
+
+      > span {
+        margin-right: 2rem;
+
+        > i {
+          font-size: 2rem;
+          cursor: pointer;
+        }
+      }
+
+      > .volume-wrapper {
+        display: flex;
+        width: 10.5rem;
+        align-items: center;
+
+        > i {
+          font-size: 1.5rem;
+        }
+
+        .progress-bar-wrapper {
+          flex: 1;
+
+        }
+      }
+    }
+
+    > .progress-bar-wrapper {
+      position: absolute;
+      top: -1vh;
+      left: 0;
+      width: 100%;
+    }
+  }
+}

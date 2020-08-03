@@ -47,7 +47,10 @@ export async function createSong(musicData, cancelToken) {
   return new Song({
     id: musicData.id,
     name: musicData.name,
-    ar: filterSinger(musicData.ar) || filterSinger(musicData.artists),
+    ar:
+      filterSinger(musicData.ar) ||
+      filterSinger(musicData.artists) ||
+      musicData.singer,
     al: musicData.al || musicData.album,
     dt: musicData.dt || musicData.duration,
     image: (musicData.al && musicData.al.picUrl) || musicData.album.picUrl,

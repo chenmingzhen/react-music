@@ -13,7 +13,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
 import { setSearchControl } from "./store/actionCreator";
-
+import Player from "./components/player";
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
 const Discovery = lazy(() => import("./pages/discovery"));
@@ -95,18 +95,13 @@ function App(props) {
             unmountOnExit
             appear={true}
           >
-            <div
-              className={"search-wrapper"}
-              /*tabIndex={0}*/
-              /*onBlur={() => {
-                props.setSearchControl(false);
-              }}*/
-            >
+            <div className={"search-wrapper"}>
               <Search />
             </div>
           </CSSTransition>
         }
       </div>
+      <Player />
     </div>
   );
 }

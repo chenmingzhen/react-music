@@ -1,0 +1,38 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+
+.progress-bar{
+  height: 1.2rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  >.bar-inner{
+    position: relative;
+    background-color: rgba(0,0,0,.1);
+    height: .16rem;
+    width: 100%;
+    >.progress{
+      position: absolute;
+      height: 100%;
+      background: $color-theme
+    }
+    >.progress-btn-wrapper{
+      position: absolute;
+      left: -0.32rem;
+      top: -0.52rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      cursor: pointer;
+      >.progress-btn{
+        position: relative;
+        top: 0.28rem;
+        left: 0.28rem;
+        box-sizing: border-box;
+        width: 0.64rem;
+        height: 0.64rem;
+        border-radius: 50%;
+        background: $color-theme;
+      }
+    }
+  }
+}

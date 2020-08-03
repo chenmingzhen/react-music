@@ -68,7 +68,9 @@ class Recommend extends React.PureComponent {
             <div className={"recommend-title"}>推荐歌单</div>
             <PlayList playListData={this.state.playListData} />
             <div className={"recommend-title"}>最新音乐</div>
-            <NewSongList newSongList={this.state.newSongListData} />
+            {this.state.newSongListData.length === 10 && (
+              <NewSongList newSongList={this.state.newSongListData} />
+            )}
             <div className={"recommend-title"}>推荐mv</div>
             <MvList mvData={this.state.mvData} />
           </div>

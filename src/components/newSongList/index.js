@@ -3,20 +3,52 @@ import { AddZero } from "../../assets/js/util";
 import { Spin } from "antd";
 import "./_style.scss";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import axios from "axios";
+import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
+import { createSong } from "../../assets/js/song";
 
 class NewSongList extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      newSongList: [],
+    };
+    this._tmp = [];
+  }
+
+  async componentDidMount() {
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
+    if (this.props.newSongList.length > 0) {
+      for (const item of this.props.newSongList) {
+        await new Promise((res) => {
+          createSong(item, this.source.token)
+            .then((data) => {
+              let t = [...this._tmp];
+              t.push(data);
+              this._tmp = t;
+              res();
+            })
+            .catch(() => {});
+        });
+      }
+      this.setState({ newSongList: this._tmp });
+    }
   }
 
   render() {
-    if (this.props.newSongList.length > 0) {
+    const { newSongList } = this.state;
+    if (newSongList.length > 0) {
       return (
         <div className={"new-song-list-wrapper"}>
-          {this.props.newSongList.map((item, index) => {
+          {newSongList.map((item, index) => {
             return (
-              <div className={"new-song-list-item-wrapper"} key={index}>
+              <div
+                className={"new-song-list-item-wrapper"}
+                key={index}
+                onClick={this.clickItem.bind(this, newSongList, index)}
+              >
                 <div className="rank">{AddZero(index)}</div>
                 <div className={"img-wrapper"}>
                   <img src={item.image} alt="" loading="lazy" />
@@ -34,9 +66,15 @@ class NewSongList extends React.PureComponent {
     }
     return (
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <Spin></Spin>
+        <Spin />
       </div>
     );
+  }
+
+  clickItem(playlist, currentIndex) {
+    const { setPlaylist, setCurrentIndex } = this.props;
+    setPlaylist(playlist);
+    setCurrentIndex(currentIndex);
   }
 }
 
@@ -46,4 +84,19 @@ NewSongList.propTypes = {
 NewSongList.defaultProps = {
   newSongList: [],
 };
-export default NewSongList;
+
+const mapState = (state) => ({
+  playlist: state.getIn(["player", "playlist"]),
+  currentIndex: state.getIn(["player", "currentIndex"]),
+});
+
+const mapDispatch = (dispatch) => ({
+  setPlaylist(playlist) {
+    dispatch(setPlayList(playlist));
+  },
+  setCurrentIndex(currentIndex) {
+    dispatch(setCurrentIndex(currentIndex));
+  },
+});
+
+export default connect(mapState, mapDispatch)(NewSongList);
