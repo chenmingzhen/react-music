@@ -106,6 +106,9 @@ class Header extends React.PureComponent {
                 onChange={(e) => {
                   PubSub.publish("send-search-value", e.target.value);
                 }}
+                onClick={(e) => {
+                  e.nativeEvent.stopImmediatePropagation();
+                }}
               />
             </div>
             <Popover placement="bottomRight" content={<Skin />} trigger="click">

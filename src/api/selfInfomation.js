@@ -23,3 +23,15 @@ export function getSubscribeSinger() {
   const url = "/artist/sublist";
   return request({ url, method: "get" });
 }
+
+//已喜欢音乐id列表
+export function getLikeSongListId(id, cancelToken) {
+  const url = "/likelist";
+  return request({ url, method: "get", params: { id }, cancelToken });
+}
+
+//喜欢或不喜欢音乐
+export function likeOrDisLikeMusic(id, like, cancelToken) {
+  const url = "/like";
+  return request({ url, method: "get", params: { id, like }, cancelToken });
+}

@@ -40,12 +40,21 @@ class Search extends React.PureComponent {
     getHotSearch().then((data) => {
       this.setState({ hotSearch: data.result.hots });
     });
+    this.hideMenu = () => {
+      this.props.setSearchControl(false);
+    };
+    document.addEventListener("click", this.hideMenu);
   }
 
   render() {
     const { search } = this.state;
     return (
-      <div className={"search-wrapper"}>
+      <div
+        className={"search-wrapper"}
+        onClick={(e) => {
+          e.nativeEvent.stopImmediatePropagation();
+        }}
+      >
         {search === "" ? this.renderInitialPage() : this.renderSuggestion()}
       </div>
     );
@@ -229,6 +238,7 @@ class Search extends React.PureComponent {
   componentWillUnmount() {
     PubSub.unsubscribe(this.token);
     PubSub.unsubscribe(this.enter);
+    document.removeEventListener("click", this.hideMenu);
   }
 
   handleSearchSuggestion(data) {

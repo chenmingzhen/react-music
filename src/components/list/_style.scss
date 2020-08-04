@@ -1,0 +1,58 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+@import "./src/assets/sass/transition";
+
+.player-wrapper > .list-wrapper {
+  position: absolute;
+  width: 35.85rem;
+  height: 86vh;
+  background-color: $color-theme-bg;
+  top: -86vh;
+  right: 0;
+  box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
+  > .tab-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    > .tab {
+      font-size: 2rem;
+      color: $nameColor;
+      margin: 0 0.5rem;
+      padding-bottom: 1rem;
+      cursor: pointer;
+      &.active {
+        border-bottom: 0.125rem solid $color-theme;
+        color: $color-theme;
+      }
+    }
+  }
+  > .title-wrapper {
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    > .number,
+    > .clean-wrapper {
+      cursor: pointer;
+      font-size: 1rem;
+      color: $tipsColor;
+    }
+  }
+  > .song-wrapper {
+    height: 75vh;
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+      width:.625rem;
+      height:.625rem;
+    }
+    &::-webkit-scrollbar-track{
+      background: rgb(239, 239, 239);
+      border-radius:.125rem;
+    }
+    &::-webkit-scrollbar-thumb{
+      background: #bfbfbf;
+      border-radius:.625rem;
+    }
+  }
+}

@@ -23,7 +23,7 @@
     z-index: 200;
     background-color: $color-theme-bg;
     display: flex;
-    padding: .5rem;
+    padding: 0.5rem;
     justify-content: space-between;
 
     > .song-wrapper {
@@ -40,7 +40,7 @@
         > img {
           @include imgMixin;
           border-radius: 0.325rem;
-          transition: all .4s;
+          transition: all 0.4s;
         }
 
         > i {
@@ -51,7 +51,7 @@
           left: 50%;
           color: $color-theme;
           transform: translate(-50%, -50%);
-          transition: all .4s;
+          transition: all 0.4s;
         }
 
         &:hover {
@@ -61,7 +61,7 @@
           }
 
           > img {
-            filter: blur(.1rem);
+            filter: blur(0.1rem);
           }
         }
       }
@@ -81,8 +81,8 @@
           }
 
           > .singer-name {
-            font-size: .8rem;
-            margin-left: .7rem;
+            font-size: 0.8rem;
+            margin-left: 0.7rem;
             line-height: 2.2rem;
             color: $tipsColor;
             cursor: pointer;
@@ -92,10 +92,12 @@
         > .time {
           display: flex;
 
-          > .current, > .all, > .slash {
+          > .current,
+          > .all,
+          > .slash {
             color: $tipsColor;
             font-size: 1rem;
-            margin: 0 .2rem;
+            margin: 0 0.2rem;
           }
 
           > .slash {
@@ -112,19 +114,44 @@
       > span {
         > i {
           cursor: pointer;
-          margin: 0 .5rem;
+          margin: 0 0.5rem;
           font-size: 2rem;
           color: #c7332f;
         }
 
-        > .icon-bofang, > .icon-zanting {
+        > .icon-bofang,
+        > .icon-zanting {
           font-size: 4rem;
         }
-        > .icon-bofang{
+        > .icon-bofang {
           display: block;
           transform: scale(1.25);
         }
-
+        > .loading {
+          width: 4.75rem;
+          height: 4.75rem;
+          background-color: $color-theme;
+          border-radius: 100%;
+          -webkit-animation: scaleout 1s infinite ease-in-out;
+          animation: scaleout 1s infinite ease-in-out;
+        }
+        @-webkit-keyframes scaleout {
+          0% { -webkit-transform: scale(0.0) }
+          100% {
+            -webkit-transform: scale(1.0);
+            opacity: 0;
+          }
+        }
+        @keyframes scaleout {
+          0% {
+            transform: scale(0.0);
+            -webkit-transform: scale(0.0);
+          } 100% {
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+            opacity: 0;
+          }
+        }
       }
     }
 
@@ -141,6 +168,12 @@
           font-size: 2rem;
           cursor: pointer;
         }
+        > .icon-xihuan {
+          color: #c7332f;
+        }
+        > .icon-xihuan1 {
+          font-size: 1.5rem;
+        }
       }
 
       > .volume-wrapper {
@@ -154,7 +187,6 @@
 
         .progress-bar-wrapper {
           flex: 1;
-
         }
       }
     }
