@@ -92,3 +92,8 @@ export function getSingerDesc(id, cancelToken) {
   const url = "/artist/desc";
   return request({ url, method: "get", params: { id }, cancelToken });
 }
+
+export function getSongComment(id, offset, cancelToken) {
+  const url = "/comment/music";
+  return request({ url, method: "get", params: { id, offset }, cancelToken });
+}

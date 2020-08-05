@@ -7,7 +7,7 @@ import { timestampToTime } from "../../util/util";
 import { Spin } from "antd";
 import { withRouter } from "react-router-dom";
 
-class AlbumList extends React.PureComponent {
+class AlbumList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +23,25 @@ class AlbumList extends React.PureComponent {
     this.source = CancelToken.source();
     this.getAlbumLists();
     if (this.props.onRef) this.props.onRef(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { id } = this.props;
+    if (id !== nextProps.id) {
+      setTimeout(() => {
+        this.setState({ albumLoading: true });
+        getSingerAlbum(nextProps.id, 10, 0, this.source.token).then((data) => {
+          let tmp = data.hotAlbums;
+          this.setState({
+            albumLists: tmp,
+            moreAlbum: data.more,
+            offset: 1,
+            albumLoading: false,
+          });
+        });
+      });
+    }
+    return true;
   }
 
   render() {

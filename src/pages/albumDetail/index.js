@@ -5,7 +5,8 @@ import { timestampToTime } from "../../util/util";
 import "./_style.scss";
 import ChartList from "../../components/chartList";
 import Comment from "../../components/comment";
-class AlbumDetail extends React.PureComponent {
+
+class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +25,22 @@ class AlbumDetail extends React.PureComponent {
         this.setState({ songs: data.songs, album: data.album });
       }
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { id } = this.props.match.params;
+    if (id !== nextProps.match.params.id) {
+      setTimeout(() => {
+        getAlbumContent(nextProps.match.params.id, this.source.token).then(
+          (data) => {
+            if (data && data.code === 200) {
+              this.setState({ songs: data.songs, album: data.album });
+            }
+          }
+        );
+      });
+    }
+    return true;
   }
 
   render() {

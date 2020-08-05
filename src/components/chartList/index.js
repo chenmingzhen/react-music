@@ -5,7 +5,7 @@ import { formatDuration } from "../../util/util";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
-class ChartList extends React.PureComponent {
+class ChartList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +18,15 @@ class ChartList extends React.PureComponent {
     this.source = CancelToken.source();
     this.getSongLists();
     if (this.props.onRef) this.props.onRef(this);
+  }
+
+  //貌似有点卡顿了
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { dataLists } = this.props;
+    if (dataLists !== nextProps.dataLists) {
+      this.getSongLists(nextProps.dataLists);
+    }
+    return true;
   }
 
   render() {
@@ -80,22 +89,37 @@ class ChartList extends React.PureComponent {
   }
 
   //循环异步
-  async getSongLists() {
+  async getSongLists(lists) {
     //要将之前的请求取消 不然来回点击会出现歌曲不对应 不应该出现在这榜单的会出现
     this.source.cancel && this.source.cancel("cancel");
     this.setState({ songLists: [] });
-    const { dataLists } = this.props;
-    for (let i = 0; i < dataLists.length; i++) {
-      await new Promise((res) => {
-        createSong(dataLists[i], this.source.token)
-          .then((data) => {
-            let tmp = [...this.state.songLists];
-            tmp.push(data);
-            this.setState({ songLists: tmp });
-            res();
-          })
-          .catch(() => {});
-      });
+    if (lists !== undefined) {
+      for (let i = 0; i < lists.length; i++) {
+        await new Promise((res) => {
+          createSong(lists[i], this.source.token)
+            .then((data) => {
+              let tmp = [...this.state.songLists];
+              tmp.push(data);
+              this.setState({ songLists: tmp });
+              res();
+            })
+            .catch(() => {});
+        });
+      }
+    } else {
+      const { dataLists } = this.props;
+      for (let i = 0; i < dataLists.length; i++) {
+        await new Promise((res) => {
+          createSong(dataLists[i], this.source.token)
+            .then((data) => {
+              let tmp = [...this.state.songLists];
+              tmp.push(data);
+              this.setState({ songLists: tmp });
+              res();
+            })
+            .catch(() => {});
+        });
+      }
     }
   }
 }

@@ -10,7 +10,7 @@ import {
 import { createSong } from "../../assets/js/song";
 import { createMv } from "../../assets/js/mv";
 import axios from "axios";
-
+import { Spin } from "antd";
 const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));
@@ -68,8 +68,10 @@ class Recommend extends React.PureComponent {
             <div className={"recommend-title"}>推荐歌单</div>
             <PlayList playListData={this.state.playListData} />
             <div className={"recommend-title"}>最新音乐</div>
-            {this.state.newSongListData.length === 10 && (
+            {this.state.newSongListData.length === 10 ? (
               <NewSongList newSongList={this.state.newSongListData} />
+            ) : (
+              <Spin />
             )}
             <div className={"recommend-title"}>推荐mv</div>
             <MvList mvData={this.state.mvData} />

@@ -20,6 +20,8 @@ import List from "../list";
 import { CSSTransition } from "react-transition-group";
 import { getLocalStorage, setLocalStorage } from "../../util/localStorage";
 import PubSub from "pubsub-js";
+import classnames from "classnames";
+import Comment from "../comment";
 class Player extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -32,8 +34,10 @@ class Player extends React.PureComponent {
       likeSongListId: [],
       mode: 1,
       listOpen: false,
+      dots: 1,
     };
   }
+
   render() {
     const { user } = this.props;
     const { likeSongListId } = this.state;
@@ -44,7 +48,7 @@ class Player extends React.PureComponent {
     }
     return (
       <div className="player-wrapper">
-        <div className="normal-wrapper"></div>
+        {this.renderNormal()}
         {this.renderMini()}
         {this.renderAudio()}
         <CSSTransition
@@ -61,7 +65,13 @@ class Player extends React.PureComponent {
   }
 
   renderMini() {
-    const { playlist, currentIndex, playing, fullScreen } = this.props;
+    const {
+      playlist,
+      currentIndex,
+      playing,
+      fullScreen,
+      setFullScreen,
+    } = this.props;
     const {
       songPercent,
       volumePercent,
@@ -72,36 +82,28 @@ class Player extends React.PureComponent {
     return (
       <div className="mini-wrapper">
         <div className="song-wrapper">
-          <div className="img-wrapper">
-            {playlist.length > 0 && (
+          {playlist.length > 0 && (
+            <div
+              className="img-wrapper"
+              onClick={() => {
+                setFullScreen(!fullScreen);
+              }}
+            >
               <img src={playlist[currentIndex].image} alt="" />
-            )}
-            {playlist.length > 0 &&
-              (fullScreen ? (
+              {fullScreen ? (
                 <i className={"iconfont icon-weibiaoti11"} />
               ) : (
                 <i className={"iconfont icon-quanping"} />
-              ))}
-          </div>
+              )}
+            </div>
+          )}
           {playlist.length > 0 && (
             <div className="text-wrapper">
               <div className="inf-wrapper">
                 <div className="song-name">{playlist[currentIndex].name}</div>
                 <div
                   className="singer-name"
-                  onClick={() => {
-                    let id = 0;
-                    if (playlist[currentIndex].album.artists) {
-                      id = playlist[currentIndex].album.artists[0].id;
-                    } else {
-                      //这个情况返回的id不一定正确
-                      id = playlist[currentIndex].singerId;
-                    }
-                    if (id === 0) return;
-                    this.props.history.push({
-                      pathname: "/singer/singerdetail/" + id,
-                    });
-                  }}
+                  onClick={this.clickSinger.bind(this)}
                 >
                   -{playlist[currentIndex].singer}
                 </div>
@@ -137,7 +139,7 @@ class Player extends React.PureComponent {
                 onClick={this.clickPlayOrPause.bind(this)}
               />
             ) : (
-              <div className="loading" title="歌曲加载中"/>
+              <div className="loading" title="歌曲加载中" />
             )}
           </span>
           <span>
@@ -224,6 +226,111 @@ class Player extends React.PureComponent {
     );
   }
 
+  renderNormal() {
+    const { playlist, currentIndex, fullScreen, setFullScreen } = this.props;
+    const { dots } = this.state;
+    if (playlist.length === 0) return;
+    const item = playlist[currentIndex];
+    return (
+      <CSSTransition
+        in={fullScreen}
+        timeout={400}
+        classNames={"listUp"}
+        unmountOnExit
+        appear={true}
+      >
+        <div className="normal-wrapper">
+          <div
+            className={"bg-wrapper"}
+            style={{ backgroundImage: `url(${playlist[currentIndex].image})` }}
+          />
+          <div className={"bg-mask"} />
+          <div className={"content-wrapper"}>
+            <div className={"shrink"}>
+              <i
+                className={"iconfont icon-guanbi"}
+                onClick={() => {
+                  setFullScreen(false);
+                }}
+              />
+              <div className="dots-wrapper">
+                <div
+                  className={classnames({ dot: true, active: dots === 1 })}
+                  onClick={() => {
+                    this.setState({ dots: 1 });
+                  }}
+                />
+                <div
+                  className={classnames({ dot: true, active: dots === 2 })}
+                  onClick={() => {
+                    this.setState({ dots: 2 });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="middle">
+              <div
+                className={classnames({
+                  "middle-left": true,
+                  unactive: dots === 2,
+                })}
+              >
+                <div className={"img-wrapper"}>
+                  <img src={item.image} alt="" />
+                  <i className={"cd"} />
+                </div>
+                <div className={"text-wrapper"}>
+                  <div className={"inf-wrapper"}>
+                    <div className={"name"}>{item.name}</div>
+                    <div
+                      className={"singer"}
+                      onClick={() => {
+                        setFullScreen(false);
+                        setTimeout(() => {
+                          this.clickSinger();
+                        }, 800);
+                      }}
+                    >
+                      歌手:{item.singer}
+                    </div>
+                    <div
+                      className={"album"}
+                      onClick={() => {
+                        setFullScreen(false);
+                        setTimeout(() => {
+                          this.props.history.push({
+                            pathname: "/albumdetail/" + item.album.id,
+                          });
+                        }, 800);
+                      }}
+                    >
+                      专辑:{item.album.name}
+                    </div>
+                  </div>
+                  <div className={"lyric-wrapper"} />
+                </div>
+              </div>
+              <div
+                className={classnames({
+                  "middle-right": true,
+                  unactive: dots === 1,
+                })}
+              >
+                <div className={"text-wrapper"}>
+                  <div className={"song-name"}>{item.name}</div>
+                  <div className={"singer-name"}>歌手:{item.singer}</div>
+                </div>
+                <div className={"wrapper-content"}>
+                  <Comment isList={4} listId={item.id} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CSSTransition>
+    );
+  }
+
   renderAudio() {
     const { playlist, currentIndex } = this.props;
     if (playlist.length === 0) return;
@@ -251,6 +358,18 @@ class Player extends React.PureComponent {
     };
     document.addEventListener("click", this.listClose);
 
+    this.pauseToken = PubSub.subscribe("song-pause", (e) => {
+      if (this.refs.audio && this.refs.audio.pause) {
+        this.refs.audio.pause();
+        this.props.setPlaying(false);
+      }
+    });
+    this.playToken = PubSub.subscribe("song-play", (e) => {
+      if (this.refs.audio && this.refs.audio.play) {
+        this.refs.audio.play();
+        this.props.setPlaying(true);
+      }
+    });
     const { user } = this.props;
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
@@ -262,6 +381,14 @@ class Player extends React.PureComponent {
       });
     }
   }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.pauseToken);
+    PubSub.unsubscribe(this.playToken);
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
+  }
+
   handleSongPercent(percent) {
     const { playlist, currentIndex } = this.props;
     //audio 是秒作单位  时间戳是毫秒
@@ -369,7 +496,7 @@ class Player extends React.PureComponent {
       this.loop();
     }
     setTimeout(() => {
-      if(playlist.length===0)return;
+      if (playlist.length === 0) return;
       if (this.props.playlist[this.props.currentIndex].url === null) {
         message.error("无权限播放，切换到下一首");
         this.next(true);
@@ -463,6 +590,7 @@ class Player extends React.PureComponent {
       }
     }
   }
+
   songExistLikeList() {
     const { playlist, currentIndex } = this.props;
     return (
@@ -471,6 +599,21 @@ class Player extends React.PureComponent {
         (item) => item === playlist[currentIndex].id
       )
     );
+  }
+
+  clickSinger() {
+    const { playlist, currentIndex } = this.props;
+    let id = 0;
+    if (playlist[currentIndex].album.artists) {
+      id = playlist[currentIndex].album.artists[0].id;
+    } else {
+      //这个情况返回的id不一定正确
+      id = playlist[currentIndex].singerId;
+    }
+    if (id === 0) return;
+    this.props.history.push({
+      pathname: "/singer/singerdetail/" + id,
+    });
   }
 }
 

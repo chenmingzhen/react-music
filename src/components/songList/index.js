@@ -1,15 +1,14 @@
 import React from "react";
 import { createSong } from "../../assets/js/song";
-import { formatDuration } from "../../util/util";
+import { formatDuration, highlightWord } from "../../util/util";
 import "./_style.scss";
-import { Spin } from "antd";
+import { message, Spin } from "antd";
 import axios from "axios";
-import { highlightWord } from "../../util/util";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { setPlayList, setCurrentIndex } from "../player/store/actionCreator";
+import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
 import { connect } from "react-redux";
-import { message } from "antd";
+
 class SongList extends React.Component {
   constructor(props) {
     super(props);
@@ -20,15 +19,18 @@ class SongList extends React.Component {
   async componentDidMount() {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
+    //绑定给父组件 父组件调用该组件的playAll方法
+    if (this.props.onRef) this.props.onRef(this);
+
     if (this.props.needGet) {
       for (const item of this.props.songList) {
         await new Promise((res) => {
           createSong(item, this.source.token)
             .then((data) => {
               /*let tmp = [...this.state.song];
-              tmp.push(data);
-              this.setState({ song: tmp });
-              res();*/
+                            tmp.push(data);
+                            this.setState({ song: tmp });
+                            res();*/
               let t = [...this._tmp];
               t.push(data);
               this._tmp = t;
@@ -39,7 +41,6 @@ class SongList extends React.Component {
       }
       this.setState({ song: this._tmp });
     } else {
-      console.log(this.props.songList);
       this.setState({ song: this.props.songList });
     }
   }
@@ -99,7 +100,8 @@ class SongList extends React.Component {
                     {item.mvid !== 0 ? (
                       <i
                         className="iconfont icon-shipin"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           this.props.history.push({
                             pathname: "/mvplay/" + item.mvid,
                           });
@@ -154,6 +156,16 @@ class SongList extends React.Component {
   componentWillUnmount() {
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
+  }
+
+  playAll() {
+    const { song } = this.state;
+    if (song.length === 0) {
+      message.warn("还没准备好！！！");
+      return;
+    }
+    this.props.setPlaylist(song);
+    this.props.setCurrentIndex(0);
   }
 }
 

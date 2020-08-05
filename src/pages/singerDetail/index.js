@@ -7,7 +7,7 @@ import ChartList from "../../components/chartList";
 import AlbumList from "../../components/albumList";
 import MvList from "../../components/mvList/singerMvList";
 import BackTop from "../../components/backTop";
-class singerDetail extends React.PureComponent {
+class singerDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +26,20 @@ class singerDetail extends React.PureComponent {
     getSingerInf(id, this.source.token).then((data) => {
       this.setState({ artist: data.artist, hotSongs: data.hotSongs });
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { id } = this.props.match.params;
+    if (id !== nextProps.match.params.id) {
+      setTimeout(() => {
+        getSingerInf(nextProps.match.params.id, this.source.token).then(
+          (data) => {
+            this.setState({ artist: data.artist, hotSongs: data.hotSongs });
+          }
+        );
+      });
+    }
+    return true;
   }
 
   render() {
@@ -186,11 +200,11 @@ class singerDetail extends React.PureComponent {
   }
 
   getMoreInf() {
-    const { moreDesc } = this.state;
+    //const { moreDesc } = this.state;
     const { id } = this.props.match.params;
-    if (moreDesc.code && moreDesc.code === 200) {
+    /*if (moreDesc.code && moreDesc.code === 200) {
       return "";
-    }
+    }*/
     getSingerDesc(id, this.source.token).then((data) => {
       this.setState({ moreDesc: data });
     });

@@ -28,7 +28,7 @@
 .upIn-enter{
   transform: translateY(-100%);
 }
-.upIn-enter-active,{
+.upIn-enter-active{
   transform: translateY(0);
   transition: transform .7s;
 }
@@ -36,3 +36,30 @@
 .upIn-enter-done {
   transform: translateY(0);
 }
+
+.listUp-enter,.listUp-appear{
+  top: 0;
+}
+
+.listUp-enter-active,.listUp-appear-active{
+  top: -92vh;
+  transition: all .4s;
+}
+
+.listUp-enter-done{
+  top: -92vh;
+}
+
+.listUp-exit{
+  top: -92vh;
+}
+
+.listUp-exit-active{
+  top: 0;
+  transition: all .4s;
+}
+
+.listUp-exit-done{
+  top: 0;
+}
+

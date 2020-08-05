@@ -91,12 +91,7 @@ class Header extends React.PureComponent {
               })
             }
           </div>
-          <div
-            className="search-wrapper"
-            onClick={() => {
-              setSearchControl(true);
-            }}
-          >
+          <div className="search-wrapper">
             <div className="search">
               <i className={"iconfont icon-chazhao"} />
               <input
@@ -108,6 +103,7 @@ class Header extends React.PureComponent {
                 }}
                 onClick={(e) => {
                   e.nativeEvent.stopImmediatePropagation();
+                  setSearchControl(true);
                 }}
               />
             </div>

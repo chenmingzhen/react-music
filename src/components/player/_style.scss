@@ -1,18 +1,190 @@
 @import "./src/assets/sass/variable";
 @import "./src/assets/sass/mixin";
+@import "./src/assets/sass/transition";
 
 .player-wrapper {
   position: fixed;
   width: 100%;
   height: 8vh;
-  z-index: 10;
+  z-index: 100;
 
   > .normal-wrapper {
     width: 100%;
     height: 92vh;
     position: absolute;
     z-index: 100;
-    background-color: $color-theme-bg;
+    /* background-color: $color-theme-bg; */
+    > .bg-wrapper {
+      width: 100%;
+      height: 100%;
+      background-size: 100% 100%;
+      position: absolute;
+      /* z-index: 1; */
+    }
+    > .bg-mask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.65);
+    }
+    > .content-wrapper {
+      width: 100%;
+      height: 100%;
+      background-size: 100% 100%;
+      position: relative;
+      /* background-color: $color-theme-bg; */
+      /* 使用这个方式去掉白边 */
+      &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: inherit;
+        filter: blur(1rem);
+      }
+      > .shrink {
+        position: relative;
+        z-index: 1;
+        height: 3rem;
+        > i {
+          cursor: pointer;
+          font-size: 2rem;
+          color: $color-theme-bg;
+          position: absolute;
+          top:.5rem;
+          left:2rem;
+        }
+        > .dots-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          > .dot {
+            cursor: pointer;
+            margin: 0 0.5rem;
+            width: 2rem;
+            height: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 0.625rem;
+            &.active {
+              background-color: rgba(255, 255, 255, 0.8);
+            }
+          }
+        }
+      }
+      > .middle {
+        z-index: 1;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        > .middle-left {
+          display: flex;
+          justify-content: center;
+          position: absolute;
+          width: 100%;
+          transition: all 1s ease-in-out;
+          transform: translateX(0);
+          opacity: 1;
+          &.unactive {
+            opacity: 0;
+            transform: translateX(-100%);
+          }
+          > .img-wrapper {
+            margin: 10rem;
+            position: relative;
+            width: 30rem;
+            padding-top: 30rem;
+            height: 0;
+            > img {
+              @include imgMixin;
+              border-radius: 0.9375rem;
+              z-index: 1;
+            }
+            >.cd{
+              position: absolute;
+              right: -2.5rem;
+              top: 1rem;
+              background: url(https://y.gtimg.cn/mediastyle/yqq/img/album_cover.png?max_age=2592000&v=38b0c07…) 0 0 no-repeat;
+              background-size: contain;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          > .text-wrapper {
+            margin: 5rem 10rem;
+            > .inf-wrapper {
+              > .name {
+                /* color: $nameColor; */
+                color: $color-theme-bg;
+                text-align: center;
+                font-size: 2rem;
+                font-weight: 700;
+              }
+
+              > .album,
+              > .singer {
+                color: $tipsColor;
+                font-size: 1rem;
+                text-align: center;
+                cursor: pointer;
+              }
+            }
+            > .lyric-wrapper {
+            }
+          }
+        }
+        > .middle-right {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform: translateX(0);
+          opacity: 1;
+          transition: all 1s ease-in-out;
+          > .text-wrapper {
+            text-align: center;
+            > .song-name {
+              font-size: 1.2rem;
+              font-weight: 700;
+              color: $color-theme-bg;
+              cursor: pointer;
+            }
+            > .singer-name {
+              font-size: 0.8rem;
+              margin-left: 0.7rem;
+              line-height: 2.2rem;
+              color: $tipsColor;
+              cursor: pointer;
+            }
+          }
+          > .wrapper-content {
+            background-color: transparent;
+            height: calc(100% - 7rem);
+            overflow-y: scroll;
+            .ant-comment-content-detail {
+              color: white;
+            }
+            .ant-comment-content-author-name {
+              > a {
+                color: #1890ff !important;
+              }
+            }
+            &::-webkit-scrollbar {
+              display: none;
+            }
+          }
+          &.unactive {
+            opacity: 0;
+            transform: translateX(100%);
+          }
+        }
+      }
+    }
   }
 
   > .mini-wrapper {
@@ -136,19 +308,22 @@
           animation: scaleout 1s infinite ease-in-out;
         }
         @-webkit-keyframes scaleout {
-          0% { -webkit-transform: scale(0.0) }
+          0% {
+            -webkit-transform: scale(0);
+          }
           100% {
-            -webkit-transform: scale(1.0);
+            -webkit-transform: scale(1);
             opacity: 0;
           }
         }
         @keyframes scaleout {
           0% {
-            transform: scale(0.0);
-            -webkit-transform: scale(0.0);
-          } 100% {
-            transform: scale(1.0);
-            -webkit-transform: scale(1.0);
+            transform: scale(0);
+            -webkit-transform: scale(0);
+          }
+          100% {
+            transform: scale(1);
+            -webkit-transform: scale(1);
             opacity: 0;
           }
         }

@@ -36,10 +36,6 @@ class ProgressBar extends React.PureComponent {
   }
 
   handleMouseDown(e) {
-    /*const offsetWidth = Math.max(
-      0,
-      Math.min(e.nativeEvent.pageX, this.refs.progressBar.clientWidth) //e.nativeEvent.layerX
-    );*/
     const offsetWidth = Math.max(
       0,
       Math.min(

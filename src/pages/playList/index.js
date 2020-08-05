@@ -75,7 +75,14 @@ class PlayList extends React.Component {
                   {timestampToTime(data.createTime)}创建
                 </div>
               </div>
-              <div className="play-all">播放全部</div>
+              <div
+                className="play-all"
+                onClick={() => {
+                  this.child.playAll();
+                }}
+              >
+                播放全部
+              </div>
               <div className="tag">
                 {data.tags.map((item, index) => {
                   return item + "/";
@@ -111,7 +118,12 @@ class PlayList extends React.Component {
           </div>
           {this.state.status === 1 ? (
             <div>
-              <SongList songList={this.state.listData.tracks} />
+              <SongList
+                songList={this.state.listData.tracks}
+                onRef={(ref) => {
+                  this.child = ref;
+                }}
+              />
             </div>
           ) : (
             <Comment listId={this.state.listData.id} />

@@ -5,7 +5,7 @@ import axios from "axios";
 import { getSingerMv } from "../../api/singer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { withRouter } from "react-router-dom";
-class SingerMvList extends React.PureComponent {
+class SingerMvList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +21,27 @@ class SingerMvList extends React.PureComponent {
     this.source = CancelToken.source();
     this.getMvLists();
     if (this.props.onRef) this.props.onRef(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { id } = this.props;
+    if (id !== nextProps.id) {
+      setTimeout(() => {
+        this.setState({ mvLoading: true });
+        getSingerMv(nextProps.id, 10, 0, this.source.token).then((data) => {
+          if (data) {
+            let tmp = data.mvs;
+            this.setState({
+              mvLists: tmp,
+              moreMv: data.hasMore,
+              offset: 1,
+              mvLoading: false,
+            });
+          }
+        });
+      });
+    }
+    return true;
   }
 
   render() {

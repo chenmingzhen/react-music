@@ -16,7 +16,6 @@ class List extends React.PureComponent {
   render() {
     const { tab, historyList } = this.state;
     const { playlist } = this.props;
-    console.log(playlist.length);
     return (
       <div className="list-wrapper">
         <div className={"tab-wrapper"}>

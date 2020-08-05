@@ -6,12 +6,17 @@ import axios from "axios";
 import Comment from "../../components/comment";
 import { formatDuration } from "../../util/util";
 import BackTop from "../../components/backTop";
+import PubSub from "pubsub-js";
 class MvPlay extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = { mvUrl: "", mvDetail: {}, mvs: [], stateId: Number };
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
+  }
+
+  componentDidMount() {
+    PubSub.publish("song-pause");
   }
 
   render() {
@@ -59,6 +64,10 @@ class MvPlay extends React.PureComponent {
         <BackTop ele={"mv-wrapper"} scrollStepInPx="100" delayInMs="10" />
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    PubSub.publish("song-play");
   }
 
   renderSimi() {

@@ -6,8 +6,9 @@ import { timestampToTime } from "../../util/util";
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
 import { getAlbumComment } from "../../api/album";
 import { getMvComment } from "../../api/mv";
+import { getSongComment } from "../../api/singer";
 
-class Comment extends React.PureComponent {
+class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,11 +26,44 @@ class Comment extends React.PureComponent {
       getAlbumComment(this.props.listId, offset).then((data) => {
         this.setState({ commentData: data });
       });
-    } else {
+    } else if (this.props.isList === 3) {
       getMvComment(this.props.listId, offset).then((data) => {
         this.setState({ commentData: data });
       });
+    } else {
+      getSongComment(this.props.listId, offset).then((data) => {
+        this.setState({ commentData: data });
+      });
     }
+  }
+
+  //歌曲评论 兼容上下曲更新
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if (this.props.listId !== nextProps.listId) {
+      setTimeout(() => {
+        if (nextProps.isList === 4) {
+          getSongComment(this.props.listId, 0).then((data) => {
+            this.setState({ commentData: data, offset: 0 });
+          });
+        }
+        if (nextProps.isList === 1) {
+          getListComment(this.props.listId, 0).then((data) => {
+            this.setState({ commentData: data, offset: 0 });
+          });
+        }
+        if (nextProps.isList === 2) {
+          getAlbumComment(this.props.listId, 0).then((data) => {
+            this.setState({ commentData: data, offset: 0 });
+          });
+        }
+        if (nextProps.isList === 3) {
+          getMvComment(this.props.listId, 0).then((data) => {
+            this.setState({ commentData: data, offset: 0 });
+          });
+        }
+      });
+    }
+    return true;
   }
 
   componentDidMount() {
@@ -47,6 +81,9 @@ class Comment extends React.PureComponent {
     }
     if (this.props.isList === 3) {
       type = 1;
+    }
+    if (this.props.isList === 4) {
+      type = 0;
     }
     likeComment(this.props.listId, commentId, t, type).then((data) => {
       if (data.code === 200) {
