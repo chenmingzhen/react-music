@@ -8,6 +8,7 @@ import "./_style.scss";
 import { Spin } from "antd";
 import { changeLoading } from "../../store/actionCreator";
 import { connect } from "react-redux";
+import { getOnlyHash } from "../../assets/js/util";
 
 //FIXME 出现回流警告
 class Chart extends React.PureComponent {
@@ -16,6 +17,7 @@ class Chart extends React.PureComponent {
     this.state = {
       playLists: [],
       currentItem: {},
+      chartListKey: getOnlyHash(),
     };
   }
 
@@ -121,6 +123,7 @@ class Chart extends React.PureComponent {
                 onRef={(ref) => {
                   this.child = ref;
                 }}
+                key={this.state.chartListKey}
               />
             ) : (
               ""
@@ -135,10 +138,13 @@ class Chart extends React.PureComponent {
 
   clickSliderItem(item) {
     this.setState({ currentItem: item });
-    /* 调用子组件的方法 */
-    setTimeout(() => {
-      this.child.getSongLists();
+    this.setState({
+      chartListKey: getOnlyHash(),
     });
+    /* 调用子组件的方法 */
+    /*setTimeout(() => {
+      this.child.getSongLists();
+    });*/
   }
 }
 

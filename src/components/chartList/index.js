@@ -4,6 +4,9 @@ import { createSong } from "../../assets/js/song";
 import { formatDuration } from "../../util/util";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class ChartList extends React.Component {
   constructor(props) {
@@ -18,15 +21,6 @@ class ChartList extends React.Component {
     this.source = CancelToken.source();
     this.getSongLists();
     if (this.props.onRef) this.props.onRef(this);
-  }
-
-  //貌似有点卡顿了
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    const { dataLists } = this.props;
-    if (dataLists !== nextProps.dataLists) {
-      this.getSongLists(nextProps.dataLists);
-    }
-    return true;
   }
 
   render() {
@@ -79,9 +73,31 @@ class ChartList extends React.Component {
             ) : (
               ""
             )}
-            <i className={"iconfont icon-bofang play"} title="播放" />
+            <i
+              className={"iconfont icon-bofang play"}
+              title="播放"
+              onClick={() => {
+                const { setPlaylist, setCurrentIndex } = this.props;
+                setPlaylist(this.state.songLists);
+                setCurrentIndex(index);
+              }}
+            />
           </div>
-          <div className={"singer"}>{item.singer}</div>
+          <div
+            className={"singer"}
+            onClick={(e) => {
+              e.stopPropagation();
+              let id = 0;
+              if (item.singerId === 0)
+                id = this.props.dataLists[index].ar[0].id;
+              else id = item.singerId;
+              this.props.history.push({
+                pathname: "/singer/singerdetail/" + id,
+              });
+            }}
+          >
+            {item.singer}
+          </div>
           <div className={"duration"}>{formatDuration(item.duration)}</div>
         </div>
       );
@@ -90,9 +106,6 @@ class ChartList extends React.Component {
 
   //循环异步
   async getSongLists(lists) {
-    //要将之前的请求取消 不然来回点击会出现歌曲不对应 不应该出现在这榜单的会出现
-    this.source.cancel && this.source.cancel("cancel");
-    this.setState({ songLists: [] });
     if (lists !== undefined) {
       for (let i = 0; i < lists.length; i++) {
         await new Promise((res) => {
@@ -110,18 +123,42 @@ class ChartList extends React.Component {
       const { dataLists } = this.props;
       for (let i = 0; i < dataLists.length; i++) {
         await new Promise((res) => {
-          createSong(dataLists[i], this.source.token)
-            .then((data) => {
-              let tmp = [...this.state.songLists];
-              tmp.push(data);
-              this.setState({ songLists: tmp });
-              res();
-            })
-            .catch(() => {});
+          setTimeout(() => {
+            createSong(dataLists[i], this.source.token)
+              .then((data) => {
+                let tmp = [...this.state.songLists];
+                tmp.push(data);
+                this.setState({ songLists: tmp });
+                res();
+              })
+              .catch(() => {});
+          });
         });
       }
     }
   }
 }
 
-export default withRouter(ChartList);
+const mapState = (state) => ({
+  playlist: state.getIn(["player", "playlist"]).toJS(),
+  currentIndex: state.getIn(["player", "currentIndex"]),
+});
+
+const mapDispatch = (dispatch) => ({
+  setPlaylist(playlist) {
+    dispatch(setPlayList(playlist));
+  },
+  setCurrentIndex(currentIndex) {
+    dispatch(setCurrentIndex(currentIndex));
+  },
+});
+
+ChartList.propTypes = {
+  needCancel: PropTypes.bool,
+};
+
+ChartList.defaultProps = {
+  needCancel: true,
+};
+
+export default withRouter(connect(mapState, mapDispatch)(ChartList));

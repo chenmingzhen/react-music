@@ -7,6 +7,7 @@ import ChartList from "../../components/chartList";
 import AlbumList from "../../components/albumList";
 import MvList from "../../components/mvList/singerMvList";
 import BackTop from "../../components/backTop";
+import { getOnlyHash } from "../../assets/js/util";
 class singerDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +17,7 @@ class singerDetail extends React.Component {
       moreDesc: {},
       showAllSong: false,
       albumList: [],
+      chartListKey: getOnlyHash(15),
     };
   }
 
@@ -134,7 +136,7 @@ class singerDetail extends React.Component {
   }
 
   renderHotSongList() {
-    const { hotSongs, showAllSong } = this.state;
+    const { hotSongs, showAllSong, chartListKey } = this.state;
     if (hotSongs.length === 0) return;
     return (
       <div className={"hot-song-wrapper"} id={"hot-song-wrapper"}>
@@ -144,8 +146,10 @@ class singerDetail extends React.Component {
             className={"more"}
             onClick={() => {
               setTimeout(() => {
-                this.setState({ showAllSong: !showAllSong });
-                this.chartLists.getSongLists();
+                this.setState({
+                  showAllSong: !showAllSong,
+                  chartListKey: getOnlyHash(15),
+                });
               });
             }}
           >
@@ -154,9 +158,7 @@ class singerDetail extends React.Component {
         </div>
         <ChartList
           dataLists={showAllSong ? hotSongs : hotSongs.slice(0, 10)}
-          onRef={(ref) => {
-            this.chartLists = ref;
-          }}
+          key={chartListKey}
         />
       </div>
     );

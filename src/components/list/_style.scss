@@ -43,6 +43,7 @@
   > .song-wrapper {
     height: 75vh;
     overflow-y: auto;
+    padding-bottom: 3rem;
     &::-webkit-scrollbar{
       width:.625rem;
       height:.625rem;
