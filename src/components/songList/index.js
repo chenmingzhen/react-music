@@ -23,23 +23,32 @@ class SongList extends React.Component {
     if (this.props.onRef) this.props.onRef(this);
 
     if (this.props.needGet) {
-      for (const item of this.props.songList) {
-        await new Promise((res) => {
-          createSong(item, this.source.token)
-            .then((data) => {
-              /*let tmp = [...this.state.song];
-                            tmp.push(data);
-                            this.setState({ song: tmp });
-                            res();*/
-              let t = [...this._tmp];
-              t.push(data);
-              this._tmp = t;
-              res();
-            })
-            .catch((e) => {});
-        });
-      }
-      this.setState({ song: this._tmp });
+      //for (const item of this.props.songList) {
+      //  await new Promise((res) => {
+      //    createSong(item, this.source.token)
+      //      .then((data) => {
+      //        /*let tmp = [...this.state.song];
+      //                      tmp.push(data);
+      //                      this.setState({ song: tmp });
+      //                      res();*/
+      //        let t = [...this._tmp];
+      //        t.push(data);
+      //        this._tmp = t;
+      //        res();
+      //      })
+      //      .catch((e) => {});
+      //  });
+      //}
+      Promise.all(
+        this.props.songList.map((item, index) => {
+          return new Promise((res) => {
+            res(createSong(item, this.source.token));
+          });
+        })
+      ).then((data) => {
+        this.setState({ song: data });
+      });
+      //this.setState({ song: this._tmp });
     } else {
       this.setState({ song: this.props.songList });
     }

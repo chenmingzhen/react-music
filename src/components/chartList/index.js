@@ -107,34 +107,52 @@ class ChartList extends React.Component {
   //循环异步
   async getSongLists(lists) {
     if (lists !== undefined) {
-      for (let i = 0; i < lists.length; i++) {
-        await new Promise((res) => {
-          createSong(lists[i], this.source.token)
-            .then((data) => {
-              let tmp = [...this.state.songLists];
-              tmp.push(data);
-              this.setState({ songLists: tmp });
-              res();
-            })
-            .catch(() => {});
-        });
-      }
+      //for (let i = 0; i < lists.length; i++) {
+      //  await new Promise((res) => {
+      //    createSong(lists[i], this.source.token)
+      //      .then((data) => {
+      //        let tmp = [...this.state.songLists];
+      //        tmp.push(data);
+      //        this.setState({ songLists: tmp });
+      //        res();
+      //      })
+      //      .catch(() => {});
+      //  });
+      //}
+      Promise.all(
+        lists.map((item) => {
+          return new Promise((res) => {
+            res(createSong(item, this.source.token));
+          });
+        })
+      ).then((data) => {
+        this.setState({ songLists: data });
+      });
     } else {
       const { dataLists } = this.props;
-      for (let i = 0; i < dataLists.length; i++) {
-        await new Promise((res) => {
-          setTimeout(() => {
-            createSong(dataLists[i], this.source.token)
-              .then((data) => {
-                let tmp = [...this.state.songLists];
-                tmp.push(data);
-                this.setState({ songLists: tmp });
-                res();
-              })
-              .catch(() => {});
+      //for (let i = 0; i < dataLists.length; i++) {
+      //  await new Promise((res) => {
+      //    setTimeout(() => {
+      //      createSong(dataLists[i], this.source.token)
+      //        .then((data) => {
+      //          let tmp = [...this.state.songLists];
+      //          tmp.push(data);
+      //          this.setState({ songLists: tmp });
+      //          res();
+      //        })
+      //        .catch(() => {});
+      //    });
+      //  });
+      //}
+      Promise.all(
+        dataLists.map((item) => {
+          return new Promise((res) => {
+            res(createSong(item, this.source.token));
           });
-        });
-      }
+        })
+      ).then((data) => {
+        this.setState({ songLists: data });
+      });
     }
   }
 }
