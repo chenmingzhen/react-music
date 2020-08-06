@@ -116,12 +116,28 @@ class SongList extends React.Component {
                     dangerouslySetInnerHTML={{
                       __html: highlightWord(item.singer, search),
                     }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      let id = 0;
+                      if (item.singerId === 0)
+                        id = this.props.songList[index].ar[0].id;
+                      else id = item.singerId;
+                      this.props.history.push({
+                        pathname: "/singer/singerdetail/" + id,
+                      });
+                    }}
                   />
                   {needAlbum ? (
                     <div
                       className="album"
                       dangerouslySetInnerHTML={{
                         __html: highlightWord(item.album.name, search),
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        this.props.history.push({
+                          pathname: "/albumdetail/" + item.album.id,
+                        });
                       }}
                     />
                   ) : (
