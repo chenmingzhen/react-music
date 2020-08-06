@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const timeout = (ms) =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, ms);
+        });
+
+      const ajax1 = () =>
+        timeout(3000).then(() => {
+          console.log("1");
+          return 1;
+        });
+
+      const ajax2 = () =>
+        timeout(2000).then(() => {
+          console.log("2");
+          return 2;
+        });
+
+      const ajax3 = () =>
+        timeout(1000).then(() => {
+          console.log("3");
+          return 3;
+        });
+
+      const mergePromise = (ajaxArray) => {
+        let result = [];
+        let promise = Promise.resolve();
+        ajaxArray.forEach(function (item) {
+          promise = promise.then(item);
+          result.push(promise);
+          console.log(result);
+        });
+        return Promise.all(result);
+      };
+
+      mergePromise([ajax1, ajax2, ajax3]).then((data) => {
+        console.log("done");
+        console.log(data); //[1,2,3]
+      });
+    </script>
+  </body>
+</html>

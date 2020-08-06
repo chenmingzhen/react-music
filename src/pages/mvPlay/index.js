@@ -68,6 +68,8 @@ class MvPlay extends React.PureComponent {
 
   componentWillUnmount() {
     PubSub.publish("song-play");
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 
   renderSimi() {
@@ -114,13 +116,13 @@ class MvPlay extends React.PureComponent {
     this.setState(() => false);
     const { id } = this.props.match.params;
     getMvUrl(id, this.source.token).then((data) => {
-      this.setState({ mvUrl: data.data.url });
+      if (data !== undefined) this.setState({ mvUrl: data.data.url });
     });
     getMvDetail(id, this.source.token).then((data) => {
-      this.setState({ mvDetail: data.data });
+      if (data !== undefined) this.setState({ mvDetail: data.data });
     });
     getMvSimi(id, this.source.token).then((data) => {
-      this.setState({ mvs: data.mvs });
+      if (data !== undefined) this.setState({ mvs: data.mvs });
     });
     this.setState({ stateId: id });
   }

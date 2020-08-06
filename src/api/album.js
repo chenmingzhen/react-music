@@ -7,11 +7,12 @@ export function getAlbumContent(id, cancelToken) {
 }
 
 //获取专辑评论
-export function getAlbumComment(id, offset, limit) {
+export function getAlbumComment(id, offset, cancelToken) {
   const url = "/comment/album";
   return request({
     url,
     method: "get",
-    params: { id, limit, offset },
+    params: { id, offset },
+    cancelToken,
   });
 }

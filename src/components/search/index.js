@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom";
 import { removeLocalStorage } from "../../util/localStorage";
 import { getLocalStorage } from "../../util/localStorage";
 import { highlightWord } from "../../util/util";
-
+import axios from "axios";
 class Search extends React.PureComponent {
   constructor() {
     super();
@@ -20,6 +20,8 @@ class Search extends React.PureComponent {
       historySearch: [],
     };
     this.timer = null;
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
   }
 
   componentDidMount() {
@@ -37,8 +39,8 @@ class Search extends React.PureComponent {
       if (data[0].first !== "")
         this.props.history.push({ pathname: "/searchdetail/" + data[0].first });
     });
-    getHotSearch().then((data) => {
-      this.setState({ hotSearch: data.result.hots });
+    getHotSearch(this.source.token).then((data) => {
+      if (data) this.setState({ hotSearch: data.result.hots });
     });
     this.hideMenu = () => {
       this.props.setSearchControl(false);
@@ -239,10 +241,12 @@ class Search extends React.PureComponent {
     PubSub.unsubscribe(this.token);
     PubSub.unsubscribe(this.enter);
     document.removeEventListener("click", this.hideMenu);
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 
   handleSearchSuggestion(data) {
-    getSearchSuggestion(data).then((suggestion) => {
+    getSearchSuggestion(data, this.source.token).then((suggestion) => {
       if (suggestion) this.setState({ searchSuggestion: suggestion.result });
     });
   }

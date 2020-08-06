@@ -8,9 +8,9 @@ export function getPlayList(id, cancelToken) {
 }
 
 //歌单评论
-export function getListComment(id, offset) {
+export function getListComment(id, offset, cancelToken) {
   const url = "/comment/playlist";
-  return request({ url, method: "get", params: { id, offset } });
+  return request({ url, method: "get", params: { id, offset }, cancelToken });
 }
 
 //点赞

@@ -7,6 +7,7 @@ import { LikeFilled, LikeOutlined } from "@ant-design/icons";
 import { getAlbumComment } from "../../api/album";
 import { getMvComment } from "../../api/mv";
 import { getSongComment } from "../../api/singer";
+import axios from "axios";
 
 class Comment extends React.Component {
   constructor(props) {
@@ -15,25 +16,35 @@ class Comment extends React.Component {
       commentData: [],
       offset: 0,
     };
+    const CancelToken = axios.CancelToken;
+    this.source = CancelToken.source();
   }
 
   getComment(offset) {
     if (this.props.isList === 1) {
-      getListComment(this.props.listId, offset).then((data) => {
-        this.setState({ commentData: data });
-      });
+      getListComment(this.props.listId, offset, this.source.token).then(
+        (data) => {
+          this.setState({ commentData: data });
+        }
+      );
     } else if (this.props.isList === 2) {
-      getAlbumComment(this.props.listId, offset).then((data) => {
-        this.setState({ commentData: data });
-      });
+      getAlbumComment(this.props.listId, offset, this.source.token).then(
+        (data) => {
+          this.setState({ commentData: data });
+        }
+      );
     } else if (this.props.isList === 3) {
-      getMvComment(this.props.listId, offset).then((data) => {
-        this.setState({ commentData: data });
-      });
+      getMvComment(this.props.listId, offset, this.source.token).then(
+        (data) => {
+          this.setState({ commentData: data });
+        }
+      );
     } else {
-      getSongComment(this.props.listId, offset).then((data) => {
-        this.setState({ commentData: data });
-      });
+      getSongComment(this.props.listId, offset, this.source.token).then(
+        (data) => {
+          this.setState({ commentData: data });
+        }
+      );
     }
   }
 
@@ -156,6 +167,7 @@ class Comment extends React.Component {
 
   render() {
     const { commentData, offset } = this.state;
+    if (!commentData) return "";
     return (
       <div className={"comment-wrapper"}>
         {offset === 0 &&
@@ -169,6 +181,11 @@ class Comment extends React.Component {
         )}
       </div>
     );
+  }
+
+  componentWillUnmount() {
+    this.source.cancel && this.source.cancel("cancel");
+    this.setState = () => false;
   }
 }
 

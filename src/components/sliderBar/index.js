@@ -91,17 +91,24 @@ class SliderBar extends React.PureComponent {
     this.source = CancelToken.source();
     login(this.phone, this.password, this.source.token)
       .then((data) => {
-        //保存到localstorage中
-        setLocalStorage("user", data);
-        this.status = "退出";
-        this.setState({
-          visible: false,
-          confirmLoading: false,
-        });
-        this.props.setUser(data);
-        message.success("登录成功");
-        //更新歌单
-        this.updatePlayList();
+        if (data !== undefined) {
+          this.setState({
+            visible: false,
+            confirmLoading: false,
+          });
+          //保存到localstorage中
+          setLocalStorage("user", data);
+          this.status = "退出";
+          this.props.setUser(data);
+          message.success("登录成功");
+          //更新歌单
+          this.updatePlayList();
+        } else {
+          message.error("登陆失败 请检查手机号");
+          this.setState({
+            confirmLoading: false,
+          });
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -198,12 +205,12 @@ class SliderBar extends React.PureComponent {
       <>
         <div className="selfInf">
           <div className="avatar">
-            {this.props.user.code ? (
+            {this.props.user !== undefined && this.props.user.code ? (
               <img
                 src={this.props.user.profile.avatarUrl}
                 alt=""
                 loading="lazy"
-              ></img>
+              />
             ) : (
               <img src={"img/github-logo.png"} alt="" loading="lazy" />
             )}
