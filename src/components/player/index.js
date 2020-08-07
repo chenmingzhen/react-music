@@ -22,6 +22,8 @@ import { getLocalStorage, setLocalStorage } from "../../util/localStorage";
 import PubSub from "pubsub-js";
 import classnames from "classnames";
 import Comment from "../comment";
+import Lyric from "lyric-parser";
+import LyricScroll from "../lyricScroll";
 class Player extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -35,6 +37,9 @@ class Player extends React.PureComponent {
       mode: 1,
       listOpen: false,
       dots: 1,
+      currentLyric: null,
+      currentLineNum: 0,
+      playingLyric: "",
     };
   }
 
@@ -228,7 +233,7 @@ class Player extends React.PureComponent {
 
   renderNormal() {
     const { playlist, currentIndex, fullScreen, setFullScreen } = this.props;
-    const { dots } = this.state;
+    const { dots, currentLyric } = this.state;
     if (playlist.length === 0) return;
     const item = playlist[currentIndex];
     return (
@@ -307,7 +312,28 @@ class Player extends React.PureComponent {
                       专辑:{item.album.name}
                     </div>
                   </div>
-                  <div className={"lyric-wrapper"} />
+                  {/* <div className={"lyric-wrapper"} /> */}
+                  <LyricScroll
+                    className={"middle-wrapper"}
+                    data={currentLyric && currentLyric.lines}
+                    ref={"lyricList"}
+                  >
+                    <div className="lyric-wrapper">
+                      {currentLyric ? (
+                        <div>
+                          {currentLyric.lines.map((line, index) => {
+                            return (
+                              <p key={index} ref={"lyricLine"}>
+                                {line.txt}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </LyricScroll>
                 </div>
               </div>
               <div
@@ -539,8 +565,51 @@ class Player extends React.PureComponent {
     historyArray.push(playlist[currentIndex]);
     setLocalStorage("_playlist_history", historyArray.reverse());
     PubSub.publish("send-playlist-history", historyArray.reverse());
+
+    //获取歌词
+    if (this.state.currentLyric) {
+      this.state.currentLyric.stop();
+      //FIXME currentTime在这里是什么鬼
+      this.setState({ currentTime: 0, playingLyric: "", currentLineNum: 0 });
+    }
+    setTimeout(() => {
+      this.getLyric();
+    });
   }
 
+  getLyric() {
+    const { playlist, currentIndex, playing } = this.props;
+    playlist[currentIndex]
+      ._getLyric()
+      .then((lyric) => {
+        console.log(lyric.lrc.lyric);
+        this.setState({
+          currentLyric: new Lyric(lyric.lrc.lyric, this.handleLyric.bind(this)),
+        });
+        if (playing) this.state.currentLyric.play();
+      })
+      .catch((e) => {
+        this.setState({
+          currentLyric: null,
+          playingLyric: "",
+          currentLineNum: 0,
+        });
+        console.log(e);
+      });
+  }
+
+  handleLyric({ lineNum, txt }) {
+    this.setState({ currentLineNum: lineNum });
+    if (lineNum > 5) {
+      console.log(">5", this.refs.lyricList);
+      let lineEl = this.refs.lyricLine[lineNum - 5];
+      this.refs.lyricList.scrollToElement(lineEl, 1000);
+    } else {
+      console.log("<=5", this.refs.lyricList);
+      this.refs.lyricList.scrollTo(0, 0, 1000);
+    }
+    this.setState({ playingLyric: txt });
+  }
   clickPlayOrPause() {
     const { setPlaying, playing } = this.props;
     setPlaying(!playing);
