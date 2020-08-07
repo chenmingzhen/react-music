@@ -37,6 +37,32 @@
   transform: translateY(0);
 }
 
+.downIn-enter{
+  transform: translateY(100%);
+}
+
+.downIn-enter-active{
+  transform: translateY(0);
+  transition: transform .5s;
+}
+
+.downIn-enter-done{
+  transform: translateY(0);
+}
+
+.downIn-exit{
+  transform: translateY(0);
+}
+
+.downIn-exit-active{
+  transform: translateY(100%);
+  transition: transform .5s;
+}
+
+.downIn-exit-done{
+  transform: translateY(100%);
+}
+
 .listUp-enter,.listUp-appear{
   top: 0;
 }

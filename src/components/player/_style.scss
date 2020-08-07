@@ -10,7 +10,7 @@
 
   > .normal-wrapper {
     width: 100%;
-    height: 92vh;
+    height: 100vh;
     position: absolute;
     z-index: 100;
     /* background-color: $color-theme-bg; */
@@ -53,8 +53,8 @@
           font-size: 2rem;
           color: $color-theme-bg;
           position: absolute;
-          top:.5rem;
-          left:2rem;
+          top: 0.5rem;
+          left: 2rem;
         }
         > .dots-wrapper {
           display: flex;
@@ -71,6 +71,7 @@
             height: 0.5rem;
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 0.625rem;
+            transition: all 0.7s;
             &.active {
               background-color: rgba(255, 255, 255, 0.8);
             }
@@ -101,16 +102,19 @@
             width: 30rem;
             padding-top: 30rem;
             height: 0;
+            min-width: 327px;
+            min-height: 327px;
             > img {
               @include imgMixin;
               border-radius: 0.9375rem;
               z-index: 1;
             }
-            >.cd{
+            > .cd {
               position: absolute;
               right: -2.5rem;
               top: 1rem;
-              background: url(https://y.gtimg.cn/mediastyle/yqq/img/album_cover.png?max_age=2592000&v=38b0c07…) 0 0 no-repeat;
+              background: url(https://y.gtimg.cn/mediastyle/yqq/img/album_cover.png?max_age=2592000&v=38b0c07…)
+                0 0 no-repeat;
               background-size: contain;
               width: 100%;
               height: 100%;
@@ -120,7 +124,8 @@
             margin: 5rem 10rem;
             > .inf-wrapper {
               > .name {
-                /* color: $nameColor; */
+                width: 25rem;
+                @include ellipsis2(2);
                 color: $color-theme-bg;
                 text-align: center;
                 font-size: 2rem;
@@ -135,7 +140,31 @@
                 cursor: pointer;
               }
             }
-            > .lyric-wrapper {
+
+            > .no-lyric {
+              text-align: center;
+              user-select: none;
+              height: 30rem;
+              line-height: 30rem;
+              font-size: 1.5rem;
+              color: $lyricColor;
+              letter-spacing: 0.2rem;
+            }
+            > .lyric-wrap {
+              text-align: center;
+              margin-top: 1.2rem;
+              width: 27.14286rem;
+              height: 30rem;
+
+              .lyric-item {
+                color: $lyricColor;
+                &.active {
+                  color: $lyricColorActive;
+                }
+              }
+              .bscroll-indicator {
+                background: $lyricColor !important;
+              }
             }
           }
         }
@@ -177,6 +206,12 @@
             &::-webkit-scrollbar {
               display: none;
             }
+            .new-comment {
+              font-size: 1.5rem;
+              color: white;
+              padding-bottom: 0.5rem;
+              border-bottom: .0625rem solid rgba(255, 255, 255, 0.3);
+            }
           }
           &.unactive {
             opacity: 0;
@@ -197,7 +232,10 @@
     display: flex;
     padding: 0.5rem;
     justify-content: space-between;
-
+    transition: all 0.5s;
+    &:hover {
+      transform: translate(0);
+    }
     > .song-wrapper {
       display: flex;
       flex: 4;
