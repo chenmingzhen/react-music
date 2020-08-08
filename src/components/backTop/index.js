@@ -42,7 +42,7 @@ class BackTop extends React.Component {
           this.scrollToTop();
         }}
       >
-        <i className="arrow-up iconfont icon-youjiantou"></i>
+        <i className="arrow-up iconfont icon-fanhuidingbu" />
       </button>
     );
   }

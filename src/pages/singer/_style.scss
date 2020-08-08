@@ -2,7 +2,7 @@
 @import "./src/assets/sass/mixin";
 
 .singer-wrapper {
-  padding: 1rem 0;
+  padding: 0;
   width: 100%;
   //height: 100%;
 
@@ -197,7 +197,8 @@
       > .name {
         font-size: 1.3rem;
         margin: .7rem 0;
-        color: $nameColor;
+        //color: $nameColor;
+        @include text_color;
         cursor: pointer;
       }
     }

@@ -1,11 +1,15 @@
 @import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
 
 .header-wrapper {
   height: 6vh;
   display: flex;
 
   .header-left {
-    background: $bgColor;
+    //background: $bgColor;
+    //@include bg_color;
+    @include header;
+    transition: background-color .7s;
     flex-basis: 10%;
     padding-top: 0.625rem;
     padding-left: .4rem;
@@ -19,7 +23,6 @@
       .dot {
         box-sizing: border-box;
         margin-left: 0.3125rem;
-
         &:first-child {
           margin-left: 0;
         }
@@ -38,12 +41,15 @@
         }
 
         i {
-          visibility: hidden;
+          //visibility: hidden;
+          transition: all .4s;
+          opacity: 0;
         }
 
         &:hover {
           i {
-            visibility: visible;
+            //visibility: visible;
+            opacity: 1;
           }
         }
       }
@@ -51,7 +57,7 @@
 
     .arrow-wrapper {
       margin-right: 0.48rem;
-      margin-top: 0.48rem;
+      margin-top: -1rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -60,20 +66,28 @@
         margin-right: .4rem;
         margin-bottom: .05rem;
         transform: rotate(180deg);
+        @include tips_hover_color;
       }
-
+      .arrow-right{
+        @include tips_hover_color;
+      }
       .arrow-left:hover, .arrow-right:hover {
         i {
           border-radius: 50%;
           cursor: pointer;
-          background: $tipsHoverColor;
+          //background: $tipsHoverColor;
+          @include tips_hover_bg_color;
+          @include theme_color;
         }
       }
     }
   }
 
   .header-right {
-    background: hsla(0, 0%, 97.3%, .95);
+    //background: hsla(0, 0%, 97.3%, .95);
+    //@include bg_color;
+    @include header;
+    transition: background-color .7s;
     flex: 1;
     display: flex;
     box-sizing: border-box;
@@ -85,19 +99,22 @@
       display: flex;
 
       > span {
-        font-size: .9rem;
+        font-size: 1.5rem;
         cursor: pointer;
         margin-right: 1.7rem;
-        color: $nameColor;
+        //color: $nameColor;
+        //@include name_color;
+        @include header_title;
         padding-bottom: .5rem;
 
         &.active {
-          border-bottom: .125rem solid $color-theme;
-          color: $nameHoverColor;
+          /*border-bottom: .125rem solid $color-theme;
+          @include name_hover_color;*/
+          @include header_title_bottom;
         }
 
         &:hover {
-          color: $nameHoverColor;
+          @include name_hover_color;
         }
       }
 
@@ -108,7 +125,8 @@
       align-items: center;
 
       .search {
-        background-color: $bgColor;
+        //background-color: $bgColor;
+        @include input_search_color;
         padding: 0.4rem .6rem;
         border-radius: 0.4rem;
 
@@ -130,11 +148,13 @@
         width: 2.3125rem;
         height: 2.3125rem;
         text-align: center;
-
+        transition: all .4s;
+        @include header_title;
         &:hover {
-          background-color: $tipsHoverColor;
+          //background-color: $tipsHoverColor;
+          @include tips_hover_bg_color;
           border-radius: 50%;
-          color: white;
+          @include name_hover_color;
         }
       }
     }

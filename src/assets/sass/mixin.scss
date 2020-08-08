@@ -1,4 +1,5 @@
-//显示部分内容
+@import './variable';
+
 @mixin ellipsis {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -24,7 +25,7 @@
   white-space: nowrap;
 }
 
-@mixin imgMixin{
+@mixin imgMixin {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -33,3 +34,402 @@
   bottom: 0;
   right: 0;
 }
+
+/* ----------------------------------------------------------theme mixin */
+
+@mixin theme_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_theme;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_theme;
+  }
+  [data-theme="theme-red"] & {
+    color: $theme_red_bg;
+  }
+}
+
+@mixin bg_color {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_bg;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_bg;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_bg;
+  }
+}
+
+@mixin name_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_name;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_name;
+  }
+  [data-theme="theme-red"] & {
+    color: rgba(0, 0, 0, .65);
+  }
+
+
+}
+
+@mixin name_hover_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_name_hover;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_name_hover;
+  }
+  [ data-theme = "theme-red" ] & {
+    color: $theme_white_name_hover;
+  }
+}
+
+@mixin tips_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_tips;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_tips;
+  }
+}
+
+@mixin tips_bg_color {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_tips;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_tips;
+  }
+}
+
+@mixin tips_hover_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_tips_hover;
+  }
+  [data-theme="theme-white"] & {
+    color: black;
+  }
+}
+
+@mixin tips_hover_bg_color {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_tips_hover;
+  }
+  [data-theme="theme-white"] & {
+    background-color: white;
+  }
+  [data-theme="theme-red"] & {
+    background-color: white;
+  }
+}
+
+@mixin input_search_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_tips;
+    background-color: $theme_black_input_and_search_bg;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_tips;
+    background-color: $theme_white_input_and_search_bg;
+  }
+  [data-theme="theme-red"] & {
+    color: $theme_white_tips;
+    background-color: $theme_white_input_and_search_bg;
+  }
+}
+
+@mixin title_color {
+  [data-theme="theme-black"] & {
+    color: $theme_black_title;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_title;
+  }
+}
+
+@mixin shadow {
+  [data-theme="theme-black"] & {
+    box-shadow: -1rem -0.5rem 3rem 0 rgba(255, 255, 255, 0.1);
+  }
+  [data-theme="theme-white"] & {
+    box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
+  }
+  [data-theme="theme-red"] & {
+    box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin menu-bg {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_menu_bg;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_menu_bg;
+  }
+  [ data-theme = "theme-red" ] & {
+    background-color: $theme_red_menu_bg;
+  }
+}
+
+@mixin menu-hover {
+  [data-theme="theme-black"] & {
+    background: rgba(0, 0, 0, .05);
+  }
+  [data-theme="theme-white"] & {
+    background: rgba(0, 0, 0, .05);
+  }
+  [data-theme="theme-red"] & {
+    color: white;
+    background: rgba(0, 0, 0, .05);
+  }
+}
+
+@mixin calendar-wrapper {
+  [data-theme="theme-black"] & {
+
+  }
+  [data-theme="theme-white"] & {
+    border: 0.0625rem solid #f5f5f5;
+    box-shadow: 0 0.0625rem 0.3125rem 0.125rem #f5f5f5;
+  }
+}
+
+@mixin list_item {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_list_item;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_list_item;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_list_item;
+  }
+}
+
+@mixin list_item_hover {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_list_item_hover;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_list_item_hover;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_list_item_hover;
+  }
+}
+
+@mixin border_color {
+  [data-theme="theme-black"] & {
+    border-color: $theme_black_border;
+  }
+  [data-theme="theme-white"] & {
+    border-color: $theme_white_border;
+  }
+  [data-theme="theme-red"] & {
+    border-color: $theme_white_border;
+  }
+}
+
+@mixin border_bottom {
+  [data-theme="theme-black"] & {
+
+  }
+  [data-theme="theme-white"] & {
+    border-bottom: 0.0625rem solid $borderColor;
+  }
+}
+
+@mixin border_top {
+  [data-theme="theme-black"] & {
+
+  }
+  [data-theme="theme-white"] & {
+    border-top: 0.0625rem solid $borderColor;
+  }
+  [data-theme="theme-red"] & {
+    border-top: 0.0625rem solid $theme_red_list_item_hover;
+  }
+}
+
+
+@mixin special_name {
+  [data-theme="theme-black"] & {
+    color: white;
+  }
+  [data-theme="theme-white"] & {
+    color: #000;
+  }
+}
+
+@mixin text_color {
+  [data-theme="theme-black"] & {
+    color: #5d5d5d;
+  }
+  [data-theme="theme-white"] & {
+    color: #5d5d5d;
+  }
+  [data-theme="theme-red"] & {
+  }
+}
+
+@mixin duration_color {
+  [data-theme="theme-black"] & {
+    color: $color-grey;
+  }
+  [data-theme="theme-white"] & {
+    color: $color-grey;
+  }
+  [data-theme="theme-red"] & {
+  }
+}
+
+@mixin border_right {
+  [data-theme="theme-black"] & {
+
+  }
+  [data-theme="theme-white"] & {
+
+  }
+  [data-theme="theme-red"] & {
+    border-right: 0.0625rem solid rgba(0, 0, 0, .1)
+  }
+}
+
+@mixin thumb_color {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_thumb;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_thumb;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_thumb;
+  }
+}
+
+
+//special header
+@mixin header {
+  [data-theme="theme-black"] & {
+    background-color: $theme_black_theme;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_red_bg;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_bg;
+  }
+}
+
+@mixin header_title {
+  [data-theme="theme-black"] & {
+    color: $theme_black_name;
+  }
+  [data-theme="theme-white"] & {
+    //color: $theme_red_bg;
+  }
+  [data-theme="theme-red"] & {
+    //color: $theme_red_bg;
+  }
+}
+
+@mixin header_title_bottom {
+  [data-theme="theme-black"] & {
+    border-bottom: 0.125rem solid $color-theme;
+  }
+  [data-theme="theme-white"] & {
+    border-bottom: 0.125rem solid;
+  }
+  [data-theme="theme-red"] & {
+    border-bottom: 0.125rem solid $color-theme;
+  }
+}
+
+//-------------------------------------------
+
+//player
+@mixin play_icon {
+  [data-theme="theme-black"] & {
+    color: #c7332f;
+  }
+  [data-theme="theme-white"] & {
+    color: #c7332f;
+  }
+  [data-theme="theme-red"] & {
+    color: black;
+  }
+}
+
+@mixin mode_icon {
+  [data-theme="theme-black"] & {
+    color: $theme_black_name;
+  }
+  [data-theme="theme-white"] & {
+    color: $theme_white_name;
+  }
+  [data-theme="theme-red"] & {
+    color: black;
+  }
+}
+
+@mixin loading {
+  [data-theme="theme-black"] & {
+    background-color: #c7332f;
+  }
+  [data-theme="theme-white"] & {
+    background-color: #c7332f;
+  }
+  [data-theme="theme-red"] & {
+    background-color: black;
+  }
+}
+
+//--------------------------------------
+//back to Top
+@mixin scrollTop{
+  [data-theme="theme-black"] & {
+    background-color: $color-theme;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $color-theme;
+  }
+  [data-theme="theme-red"] & {
+    background-color: white;
+  }
+}
+
+@mixin arrow-up{
+  [data-theme="theme-black"] & {
+    color: white;
+  }
+  [data-theme="theme-white"] & {
+    color: white;
+  }
+  [data-theme="theme-red"] & {
+    color: $color-theme;
+  }
+}
+
+//list
+@mixin list_bg{
+  [data-theme="theme-black"] & {
+    background-color: #363636;
+  }
+  [data-theme="theme-white"] & {
+    background-color: $theme_white_bg;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_bg;
+  }
+}
+
+@mixin  list_right_item{
+  [data-theme="theme-black"] & {
+    color: #dcdde4;
+  }
+}
+
+

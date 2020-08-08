@@ -1,8 +1,10 @@
 @import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
 
 .scroll {
-  opacity: 0.3;
-  background-color: $color-theme;
+  opacity: 0.6;
+  //background-color: $color-theme;
+  @include scrollTop;
   width: 3.5rem;
   height: 3.5rem;
   position: fixed;
@@ -11,16 +13,12 @@
   border-radius: .3125rem;
   border: none;
   outline: none;
-
+  transition: all .4s;
   &:hover {
     opacity: 1;
   }
 }
 
 .arrow-up {
-  color: white;
-  position: absolute;
-  top: 0.7rem;
-  left: 1.1rem;
-  transform: rotate(-90deg);
+  @include arrow-up;
 }

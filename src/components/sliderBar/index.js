@@ -2,9 +2,9 @@ import React from "react";
 import "./_style.scss";
 import Cookies from "js-cookie";
 import {
-  clearLocalStorage,
   getLocalStorage,
   setLocalStorage,
+  removeLocalStorage,
 } from "../../util/localStorage";
 import {
   setCurrentHeaderIndex,
@@ -16,7 +16,7 @@ import { login, logout } from "../../api/login";
 import { Button, Input, message, Modal, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import axios from "axios";
-
+import github from "../../assets/img/github-logo.png";
 import { getPlayList } from "../../api/selfInfomation";
 import { withRouter } from "react-router-dom";
 
@@ -154,8 +154,8 @@ class SliderBar extends React.PureComponent {
     }
     //清除localstrage
     else {
-      console.log("clearLocalStorage");
-      clearLocalStorage();
+      console.log("removeLocalStorage");
+      removeLocalStorage("user");
     }
   }
 
@@ -187,7 +187,7 @@ class SliderBar extends React.PureComponent {
         Cookies.remove("MUSIC_U");
         Cookies.remove("_csrf");
         Cookies.remove("__remember_me");
-        clearLocalStorage();
+        removeLocalStorage("user");
         this.props.setUser({});
         //歌单删除
         InfData = [];
@@ -205,14 +205,23 @@ class SliderBar extends React.PureComponent {
       <>
         <div className="selfInf">
           <div className="avatar">
-            {this.props.user !== undefined && this.props.user.code ? (
-              <img
-                src={this.props.user.profile.avatarUrl}
-                alt=""
-                loading="lazy"
-              />
-            ) : (
-              <img src={"img/github-logo.png"} alt="" loading="lazy" />
+            {this.props.user !== undefined &&
+              this.props.user.code !== undefined && (
+                <img
+                  src={this.props.user.profile.avatarUrl}
+                  alt=""
+                  loading="lazy"
+                />
+              )}
+            {this.props.user.code === undefined && (
+              <a
+                href="https://github.com/chenmingzhen"
+                target={"_blank"}
+                rel="noopener noreferrer"
+                title={"See Author Github"}
+              >
+                <img src={github} alt="" loading="lazy" />
+              </a>
             )}
           </div>
           <div

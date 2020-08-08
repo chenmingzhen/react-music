@@ -1,7 +1,7 @@
 import React from "react";
 import "./_style.scss";
 import { connect } from "react-redux";
-import { Popover, message } from "antd";
+import { message, Popover } from "antd";
 import {
   setCurrentIndex,
   setFullScreen,
@@ -25,9 +25,11 @@ import Comment from "../comment";
 import Scroller from "../scroller";
 import lyricParser from "../../util/lrcparse";
 import { _getLyric } from "../../util/lyric";
+
 const WHEEL_TYPE = "wheel";
 const SCROLL_TYPE = "scroll";
 const AUTO_SCROLL_RECOVER_TIME = 1000;
+
 class Player extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -43,6 +45,7 @@ class Player extends React.PureComponent {
       dots: 1,
       lyric: [],
       noLyric: false,
+      tmpVolumePercent: 0,
     };
     this.newIndex = 0;
     this.oldIndex = 0;
@@ -102,6 +105,7 @@ class Player extends React.PureComponent {
       currentTime,
       mode,
       songReady,
+      tmpVolumePercent,
     } = this.state;
     return (
       <CSSTransition in={!fullScreen} timeout={500} classNames={"downIn"}>
@@ -226,7 +230,28 @@ class Player extends React.PureComponent {
               </Popover>
             </span>
             <div className="volume-wrapper">
-              <i className={"iconfont icon-laba"} />
+              {volumePercent > 0 ? (
+                <i
+                  className={"iconfont icon-laba"}
+                  onClick={() => {
+                    this.setState({
+                      tmpVolumePercent: volumePercent,
+                      volumePercent: 0,
+                    });
+                  }}
+                />
+              ) : (
+                <i
+                  className={"iconfont icon-jingyin"}
+                  onClick={() => {
+                    this.setState({
+                      tmpVolumePercent: 0,
+                      volumePercent: tmpVolumePercent,
+                    });
+                  }}
+                />
+              )}
+
               <div className="progress-bar-wrapper">
                 <ProgressBar
                   percentChange={(percent) => {
@@ -720,9 +745,9 @@ class Player extends React.PureComponent {
   }
 
   /*
-  *判断是否是当前时间的歌词index
-  *return boolean|-1
-  */
+   *判断是否是当前时间的歌词index
+   *return boolean|-1
+   */
   activeLyricIndex() {
     const { currentTime } = this.state;
     const lyricWithTranslation = this.lyricWithTranslation();
@@ -738,9 +763,9 @@ class Player extends React.PureComponent {
   }
 
   /**
-   * 
-   * @param {新一句的index} newIndex 
-   * @param {上一句的index} oldIndex 
+   *
+   * @param {新一句的index} newIndex
+   * @param {上一句的index} oldIndex
    * 用于滚动到当前的歌词 render中执行
    */
   watchActiveLyricIndex(newIndex, oldIndex) {
@@ -758,9 +783,9 @@ class Player extends React.PureComponent {
    * 跳到当前index歌词
    */
   scrollToActiveLyric() {
-    //注意react没有重复同名的refs 
+    //注意react没有重复同名的refs
     if (this.activeLyricIndex() !== -1) {
-      const { scroller } = this.refs; 
+      const { scroller } = this.refs;
       if (this.refs[`lyric${this.activeLyricIndex()}`]) {
         if (scroller.getScroller())
           scroller
@@ -776,8 +801,8 @@ class Player extends React.PureComponent {
   }
 
   /**
-   * 
-   * @param {初始化scroll组件} scoller 
+   *
+   * @param {初始化scroll组件} scoller
    */
   onInitScroller(scoller) {
     const onScrollStart = (type) => {

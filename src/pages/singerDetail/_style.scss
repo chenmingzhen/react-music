@@ -36,7 +36,8 @@
       > .name {
         font-size: 2.5rem;
         font-family: Roboto, Helvetica, Arial, sans-serif;
-        color: $color-black;
+        //color: $color-black;
+        @include special_name;
       }
 
       > .desc-wrapper {
@@ -151,7 +152,8 @@
       .more {
         cursor: pointer;
         font-size: .8rem;
-        color: $color-grey;
+        //color: $color-grey;
+        @include text_color;
         &:hover{
           color: $color-theme;
         }

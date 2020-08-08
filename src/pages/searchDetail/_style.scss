@@ -14,23 +14,28 @@
       margin-left: 1rem;
       font-size: 1rem;
       letter-spacing: .1rem;
-      color: $tipsColor;
+      //color: $tipsColor;
+      @include text_color;
     }
   }
 
   > .nav-wrapper {
     display: flex;
-    border-bottom: 0.0625rem solid $borderColor;
+    //border-bottom: 0.0625rem solid $borderColor;
+    @include border_bottom;
     padding-bottom: 1rem;
+
     > .nav-item {
       font-size: 1.7rem;
       margin: 0 1rem;
       cursor: pointer;
       padding-bottom: .3rem;
-      &:first-child{
+
+      &:first-child {
         margin: 0 1rem 0 5rem;
       }
-      &.active{
+
+      &.active {
         border-bottom: 0.1rem solid $color-theme;
       }
     }

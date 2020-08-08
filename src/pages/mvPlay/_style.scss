@@ -5,7 +5,9 @@
   position: absolute;
   width: 100vw;
   height: 86vh;
-  background-color: white;
+  //background-color: white;
+  @include bg_color;
+  transition: all .7s;
   overflow-y: scroll;
   overflow-x: hidden;
   display: flex;

@@ -3,9 +3,13 @@
 
 .comment-wrapper {
   padding: 1.25rem 2.5rem;
-  border-top: 0.125rem $borderColor solid;
+  //border-top: 0.125rem $borderColor solid;
+  @include border_top;
 
-  .new-comment {
+  >.new-comment {
     font-size: 1rem;
+  }
+  .ant-comment-content-author-name > *{
+    color: #1890ff !important;
   }
 }

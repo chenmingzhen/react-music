@@ -1,3 +1,5 @@
+@import './mixin';
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -61,4 +63,18 @@ li {
 body {
   -webkit-text-size-adjust: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  ::-webkit-scrollbar{
+    width:.625rem;
+    height:.625rem;
+  }
+  ::-webkit-scrollbar-track{
+    //background: rgb(239, 239, 239);
+    border-radius:.125rem;
+  }
+  ::-webkit-scrollbar-thumb{
+    transition: all .7s;
+    @include thumb_color;
+    border-radius:.625rem;
+  }
 }
+

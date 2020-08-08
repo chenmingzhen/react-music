@@ -51,7 +51,8 @@
     >.time{
       margin-top: .2rem;
       font-size: .6rem;
-      color: $color-grey;
+      //color: $color-grey;
+      @include text_color;
     }
   }
 }

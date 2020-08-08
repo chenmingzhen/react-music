@@ -8,7 +8,7 @@
   align-items: center;
   flex-wrap: wrap;
 
-  .mv-item {
+    .mv-item {
     box-sizing: border-box;
     display: flex;
     align-content: center;
@@ -76,13 +76,15 @@
       width: 90%;
       font-size: 1.2rem;
       @include ellipsis;
-      color: $nameColor;
+      //color: $nameColor;
+      @include text_color;
       margin-bottom: 0.3rem;
     }
 
     .singer {
-      color: $tipsColor;
+      //color: $tipsColor;
       width: 90%;
+      @include text_color;
       @include ellipsis;
     }
   }

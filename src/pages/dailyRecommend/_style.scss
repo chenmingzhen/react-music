@@ -1,4 +1,5 @@
 @import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
 
 .daily-recommend-wrapper {
   padding: 2rem 18rem;
@@ -11,9 +12,9 @@
     margin-bottom: 2rem;
 
     > .calendar-wrapper {
-      border: 0.0625rem solid #f5f5f5;
-      box-shadow: 0 0.0625rem 0.3125rem 0.125rem #f5f5f5;
-
+      //border: 0.0625rem solid #f5f5f5;
+      //box-shadow: 0 0.0625rem 0.3125rem 0.125rem #f5f5f5;
+      @include calendar-wrapper;
       > .day {
         text-align: center;
         background-color: $color-theme;

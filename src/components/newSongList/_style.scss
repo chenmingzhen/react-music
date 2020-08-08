@@ -33,6 +33,7 @@
       padding: 0 1.25rem;
       display: flex;
       align-items: center;
+      @include name_color;
     }
 
     .img-wrapper {
@@ -67,11 +68,14 @@
 
       .name {
         font-size: 1.2rem;
-        @include ellipsis
+        @include ellipsis;
+        @include name_color;
       }
 
       .singer {
-        @include ellipsis
+        @include ellipsis;
+        @include name_color;
+        font-size: .8rem;
       }
     }
   }

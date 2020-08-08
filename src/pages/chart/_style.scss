@@ -12,8 +12,12 @@
 
     > .chart-slider-item {
       padding: 1.8rem 0.5rem;
-      color: #000000;
+      //color: #000000;
+      @include name_color;
+      transition: all .7s;
+      @include bg_color;
       border-bottom: 0.0625rem solid #ebebeb;
+      @include border_color;
       width: 100%;
       text-align: center;
       font-size: 1.25rem;

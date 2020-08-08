@@ -228,7 +228,8 @@
     position: absolute;
     bottom: 0;
     z-index: 200;
-    background-color: $color-theme-bg;
+    //background-color: $color-theme-bg;
+    @include bg_color;
     display: flex;
     padding: 0.5rem;
     justify-content: space-between;
@@ -286,7 +287,8 @@
           > .song-name {
             font-size: 1.2rem;
             font-weight: 700;
-            color: $nameColor;
+            //color: $nameColor;
+            @include name_color;
             cursor: pointer;
           }
 
@@ -294,7 +296,8 @@
             font-size: 0.8rem;
             margin-left: 0.7rem;
             line-height: 2.2rem;
-            color: $tipsColor;
+            //color: $tipsColor;
+            @include name_color;
             cursor: pointer;
           }
         }
@@ -305,7 +308,8 @@
           > .current,
           > .all,
           > .slash {
-            color: $tipsColor;
+            //color: $tipsColor;
+            @include tips_color;
             font-size: 1rem;
             margin: 0 0.2rem;
           }
@@ -326,7 +330,8 @@
           cursor: pointer;
           margin: 0 0.5rem;
           font-size: 2rem;
-          color: #c7332f;
+          //color: #c7332f;
+          @include play_icon;
         }
 
         > .icon-bofang,
@@ -340,7 +345,8 @@
         > .loading {
           width: 4.75rem;
           height: 4.75rem;
-          background-color: $color-theme;
+          //background-color: $color-theme;
+          @include loading;
           border-radius: 100%;
           -webkit-animation: scaleout 1s infinite ease-in-out;
           animation: scaleout 1s infinite ease-in-out;
@@ -378,6 +384,7 @@
         margin-right: 2rem;
 
         > i {
+          @include mode_icon;
           font-size: 2rem;
           cursor: pointer;
         }
@@ -396,6 +403,8 @@
 
         > i {
           font-size: 1.5rem;
+          @include name_color;
+          cursor: pointer;
         }
 
         .progress-bar-wrapper {

@@ -3,9 +3,9 @@
 
 .playlist-wrapper {
   width: 100%;
-  padding: 0 14rem;
+  padding: 0 5rem;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-content: center;
   flex-wrap: wrap;
 
@@ -77,7 +77,8 @@
       margin-top: 1rem;
       width: 14.375rem;
       @include ellipsis;
-      color: $nameColor;
+     // color: $nameColor;
+      @include text_color;
       font-size: 1rem;
     }
   }

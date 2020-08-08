@@ -1,6 +1,8 @@
-
+@import "./src/assets/sass/mixin";
 .recommend-title {
   padding-left: 15.5rem;
   font-size: 1.5rem;
+  @include name_color;
+
 }
 

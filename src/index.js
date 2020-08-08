@@ -7,6 +7,7 @@ import "antd/dist/antd.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
+import { getLocalStorage } from "./util/localStorage";
 
 //resize fontsize
 // default fontsize 16
@@ -20,6 +21,12 @@ import store from "./store";
 
   a();
   window.onresize = a;
+})();
+
+//設置主題
+(function () {
+  const name = getLocalStorage("_theme");
+  window.document.documentElement.setAttribute("data-theme", name);
 })();
 
 ReactDOM.render(

@@ -1,4 +1,5 @@
 //颜色规范
+//default
 $color-theme: #c7332f;
 
 $color-dot-red: #ff5652;
@@ -28,3 +29,58 @@ $bgColor: #f2f2f3;
 $lyricColor:#b1b1b1;
 
 $lyricColorActive:white;
+
+/* ----------------------------------------theme color */
+
+//white theme
+$theme_white_theme:#c7332f;
+$theme_white_bg:white;
+$theme_white_name:#5d5d5d;
+$theme_white_name_hover:#1e1e1e;
+$theme_white_title:#4d4d4d;
+$theme_white_tips:#bababa;
+$theme_white_tips_hover:#7c7c7c;
+$theme_white_border:#f5f5f5;
+$theme_white_bg2:#f2f2f2;
+$theme_white_input_and_search_bg:white;
+$theme_white_menu_bg:white;
+$theme_white_menu_hover:white;
+$theme_white_list_item:#fafafa;
+$theme_white_list_item_hover:#fafafa;
+$theme_white_thumb:#bfbfbf;
+
+//black theme
+$theme_black_theme:#252525;
+$theme_black_bg:#252525;
+$theme_black_name:#b1b1b1;
+$theme_black_name_hover:#dcdde4;
+$theme_black_title:#dcdde4;
+$theme_black_tips:#5C5C5C;
+$theme_black_tips_hover:#727272;
+$theme_black_border:#3F3F3F;
+$theme_black_bg2:#252525;
+$theme_black_input_and_search_bg:#363636;
+$theme_black_menu_bg:#202020;
+$theme_black_menu_hover:#1d1d1d;
+$theme_black_list_item:#323232;
+$theme_black_list_item_hover:rgba(70,70,70,1);
+$theme_black_thumb:#bfbfbf;
+
+//red theme
+$theme_red_theme:#c7332f;
+$theme_red_bg:#D74D45;
+$theme_red_name:#5d5d5d;
+$theme_red_name_hover:#5d5d5d;
+$theme_red_title:#4d4d4d;
+$theme_red_tips:#bababa;
+$theme_red_tips_hover:#7c7c7c;
+$theme_red_border:#f5f5f5;
+$theme_red_bg2:#f2f2f2;
+$theme_red_input_and_search_bg:white;
+$theme_red_menu_bg:#D74D45;
+$theme_red_menu_hover:#1d1d1d;
+$theme_red_list_item:rgba(255, 204, 153, .2);
+$theme_red_list_item_hover:rgba(255, 204, 153, .3);
+$theme_red_thumb:rgba(255, 204, 153, .3);
+
+

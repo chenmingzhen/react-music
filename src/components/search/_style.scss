@@ -33,7 +33,9 @@
         padding: .3rem .5rem;
         border-radius: 0.3125rem;
         border: 0.1rem solid $borderColor;
+        @include border_color;
         cursor: pointer;
+        @include name_color;
       }
     }
   }
@@ -46,8 +48,9 @@
 
       > .title-wrapper {
         display: flex;
-        border-bottom: 0.0625rem solid $borderColor;
-
+        //border-bottom: 0.0625rem solid $borderColor;
+        @include border_bottom;
+        @include name_color;
         > i {
           font-size: 1.5rem;
         }
@@ -64,7 +67,7 @@
         padding-left: 1rem;
         margin-top: .5rem;
         @include ellipsis;
-
+        @include name_hover_color;
         &:hover {
           background-color: rgba(0, 0, 0, .05);
         }
@@ -76,8 +79,9 @@
 
       .title-wrapper {
         display: flex;
-        border-bottom: 0.0625rem solid $borderColor;
-
+        //border-bottom: 0.0625rem solid $borderColor;
+        @include border_bottom;
+        @include name_color;
         > i {
           font-size: 1.5rem;
         }
@@ -101,10 +105,12 @@
         > .name {
           flex: 1;
           @include ellipsis;
+          @include name_hover_color;
         }
 
         > .singer-name {
           @include ellipsis;
+          @include name_hover_color;
         }
       }
     }
@@ -114,8 +120,9 @@
 
       > .title-wrapper {
         display: flex;
-        border-bottom: 0.0625rem solid $borderColor;
-
+        //border-bottom: 0.0625rem solid $borderColor;
+        @include border_bottom;
+        @include name_color;
         > i {
           font-size: 1.5rem;
         }
@@ -139,10 +146,12 @@
         > .name {
           flex: 1;
           @include ellipsis;
+          @include name_hover_color;
         }
 
         > .singer-name {
           @include ellipsis;
+          @include name_hover_color;
         }
       }
     }

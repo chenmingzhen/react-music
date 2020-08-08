@@ -79,7 +79,8 @@
     .content-wrapper{
       margin: 2.4rem 0 0 1rem;
       font-size: 1rem;
-      color: $color-black;
+      //color: $color-black;
+      @include name_color;
       >p{
         font-size: 1.4rem;
       }

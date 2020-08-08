@@ -4,9 +4,10 @@
 
 .player-wrapper > .list-wrapper {
   position: absolute;
-  width: 35.85rem;
+  width: 39.85rem;
   height: 86vh;
-  background-color: $color-theme-bg;
+  //background-color: $color-theme-bg;
+  @include list_bg;
   top: -86vh;
   right: 0;
   box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
@@ -44,7 +45,8 @@
     height: 75vh;
     overflow-y: auto;
     padding-bottom: 3rem;
-    &::-webkit-scrollbar{
+    @include list_right_item;
+/*    &::-webkit-scrollbar{
       width:.625rem;
       height:.625rem;
     }
@@ -55,6 +57,6 @@
     &::-webkit-scrollbar-thumb{
       background: #bfbfbf;
       border-radius:.625rem;
-    }
+    }*/
   }
 }

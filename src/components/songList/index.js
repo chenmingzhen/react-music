@@ -77,7 +77,7 @@ class SongList extends React.Component {
                 <div
                   className="list-item"
                   key={index}
-                  style={index % 2 === 0 ? { background: "#fafafa" } : {}}
+                  //style={index % 2 === 0 ? { background: "#fafafa" } : {}}
                   onClick={() => {
                     if (item.url === null) {
                       message.error("无权限播放");

@@ -35,7 +35,7 @@
         align-items: center;
 
         > .list {
-          color: $color-theme;
+          //color: $color-theme;
           border: 0.1rem solid $color-theme;
           padding: 0 0.3rem;
           border-radius: 0.5rem;
@@ -113,7 +113,8 @@
     padding: 0 2.5rem;
     display: flex;
     align-items: center;
-    color: $nameColor;
+    //color: $nameColor;
+    @include name_color;
 
     > .song,
     > .comment {

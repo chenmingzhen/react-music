@@ -2,7 +2,8 @@
 @import "./src/assets/sass/mixin";
 
 .song-list-wrapper {
-  border-top: 0.0625rem solid $borderColor;
+  //border-top: 0.0625rem solid $borderColor;
+  @include border_top;
   width: 100%;
 
   > .fix-wrapper {
@@ -13,7 +14,8 @@
 
     > .title, > .singer, > .album, > .time {
       font-size: .8rem;
-      color: $tipsHoverColor;
+      //color: $tipsHoverColor;
+      @include text_color;
     }
 
     > .title {
@@ -38,12 +40,8 @@
   > .list-wrapper {
     .list-item {
       display: flex;
-      padding: 1rem .5rem;
+      padding: 1rem;
       cursor: pointer;
-
-      &:hover {
-        background-color: $bgColor !important;
-      }
 
       > .title,
       > .singer,
@@ -96,6 +94,16 @@
         width: 7%;
         margin-left: 1.5rem;
       }
+      &:nth-child(odd){
+        //color: $theme_white_list_hover;
+        @include list_item;
+      }
+
+      &:hover {
+        //background-color: $bgColor !important;
+       @include list_item_hover;
+      }
+
     }
   }
 }
