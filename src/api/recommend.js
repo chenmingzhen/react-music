@@ -3,9 +3,9 @@ import request from "./request";
 /*返回banner*/
 
 //https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=banner
-export function getBanner() {
+export function getBanner(cancelToken) {
   const url = "/banner";
-  return request({ url, method: "get", params: { type: "0" } });
+  return request({ url, method: "get", params: { type: "0" }, cancelToken });
 }
 
 /*官方歌单*/

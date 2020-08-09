@@ -118,7 +118,11 @@ class Player extends React.PureComponent {
                   setFullScreen(!fullScreen);
                 }}
               >
-                <img src={playlist[currentIndex].image} alt="" />
+                {playlist[currentIndex] !== undefined ? (
+                  <img src={playlist[currentIndex].image} alt="" />
+                ) : (
+                  ""
+                )}
                 {fullScreen ? (
                   <i className={"iconfont icon-weibiaoti11"} />
                 ) : (
@@ -126,7 +130,7 @@ class Player extends React.PureComponent {
                 )}
               </div>
             )}
-            {playlist.length > 0 && (
+            {playlist.length > 0 && playlist[currentIndex] !== undefined && (
               <div className="text-wrapper">
                 <div className="inf-wrapper">
                   <div className="song-name">{playlist[currentIndex].name}</div>
@@ -282,6 +286,7 @@ class Player extends React.PureComponent {
     const { dots, lyric, noLyric } = this.state;
     if (playlist.length === 0) return;
     const item = playlist[currentIndex];
+    if (item === undefined) return;
     return (
       <CSSTransition
         in={fullScreen}
@@ -293,7 +298,7 @@ class Player extends React.PureComponent {
         <div className="normal-wrapper">
           <div
             className={"bg-wrapper"}
-            style={{ backgroundImage: `url(${playlist[currentIndex].image})` }}
+            style={{ backgroundImage: `url(${item.image})` }}
           />
           <div className={"bg-mask"} />
           <div className={"content-wrapper"}>
@@ -424,11 +429,14 @@ class Player extends React.PureComponent {
     const { playlist, currentIndex } = this.props;
     if (playlist.length === 0) return;
     setTimeout(() => {
-      this.refs.audio.volume = this.state.volumePercent;
+      if (this.refs.audio !== undefined)
+        this.refs.audio.volume = this.state.volumePercent;
     });
     return (
       <audio
-        src={playlist[currentIndex].url}
+        src={
+          playlist[currentIndex] !== undefined ? playlist[currentIndex].url : ""
+        }
         controls={false}
         autoPlay={true}
         ref={"audio"}
@@ -685,6 +693,7 @@ class Player extends React.PureComponent {
     const { playlist, currentIndex } = this.props;
     return (
       playlist.length > 0 &&
+      playlist[currentIndex] !== undefined &&
       this.state.likeSongListId.some(
         (item) => item === playlist[currentIndex].id
       )

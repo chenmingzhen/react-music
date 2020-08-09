@@ -8,12 +8,13 @@
   //background-color: white;
   @include bg_color;
   transition: all .7s;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  //overflow-y: scroll;
+  //overflow-x: hidden;
   display: flex;
-  padding: 3rem 15rem;
+  padding: 3rem 10rem;
   top: 0;
   left: 0;
+  z-index: 100;
   > .left-wrapper {
     flex: 1;
 

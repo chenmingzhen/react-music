@@ -21,7 +21,7 @@ class Content extends React.Component {
   componentDidMount() {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
-    getBanner(this.source.token).then((data) => {
+    getBanner(this.source.token, this.source.token).then((data) => {
       this.setState(() => ({ bannerData: data.banners }));
     });
   }
@@ -62,7 +62,7 @@ class Content extends React.Component {
   }
 
   componentWillUnmount() {
-    this.source.cancel("cancel");
+    this.source.cancel("CANCEL BY BANNER");
     this.setState = () => false;
   }
 
@@ -74,13 +74,13 @@ class Content extends React.Component {
       // getSongDetail
       (async () => {
         let _url = "";
-        await getSong(item.targetId).then((data) => {
+        await getSong(item.targetId, this.source.token).then((data) => {
           if (data !== undefined) {
             _url = data.data[0].url;
           }
         });
         let musicData = {};
-        await getSongDetail(item.targetId).then((data) => {
+        await getSongDetail(item.targetId, this.source.token).then((data) => {
           musicData = data.songs[0];
         });
 

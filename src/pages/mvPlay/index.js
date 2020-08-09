@@ -61,7 +61,7 @@ class MvPlay extends React.PureComponent {
           <Comment listId={id} isList={3} />
         </div>
         <div className="right-wrapper">{this.renderSimi()}</div>
-        <BackTop ele={"mv-wrapper"} scrollStepInPx="100" delayInMs="10" />
+        <BackTop ele={"content-wrapper"} scrollStepInPx="100" delayInMs="10" />
       </div>
     );
   }

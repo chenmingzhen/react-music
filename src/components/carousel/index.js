@@ -1,8 +1,8 @@
 import React from "react";
 import { getFavouriteSinger } from "../../api/singer";
 import "./_style.scss";
-
-export default class Carousel extends React.PureComponent {
+import { withRouter } from "react-router-dom";
+class Carousel extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +46,11 @@ export default class Carousel extends React.PureComponent {
                 }deg) translateZ(288px)`,
               }}
               key={index}
+              onClick={() => {
+                this.props.history.push({
+                  pathname: "/singer/singerdetail/" + item.id,
+                });
+              }}
             >
               <img src={item.picUrl} alt="" />
             </div>
@@ -73,3 +78,5 @@ export default class Carousel extends React.PureComponent {
     }
   }
 }
+
+export default withRouter(Carousel);

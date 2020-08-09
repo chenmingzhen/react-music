@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import Header from "./components/header";
 import SliderBar from "./components/sliderBar";
 import Search from "./components/search";
@@ -13,6 +13,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
 import Player from "./components/player";
+import classnames from "classnames";
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
 const Discovery = lazy(() => import("./pages/discovery"));
@@ -32,16 +33,38 @@ function App(props) {
   } else {
     NProgress.done();
   }
+
+  const [packUp, setPackUp] = useState(false);
+  function clickPackUp() {
+    setPackUp(!packUp);
+  }
+
   return (
     <div className="App">
       <Header />
       <div className={"middle-wrapper"}>
         <>
-          <div className={"slider-bar-wrapper"}>
+          <div
+            className={classnames({
+              "slider-bar-wrapper": true,
+              hide: packUp,
+            })}
+          >
+            <div className={"back-up-wrapper"} onClick={clickPackUp}>
+              <span
+                className={classnames({
+                  "back-up iconfont icon-ico_leftarrow": true,
+                  "turn-right": packUp,
+                })}
+              />
+            </div>
             <SliderBar />
           </div>
           <div
-            className={"content-wrapper"}
+            className={classnames({
+              "content-wrapper": true,
+              show: packUp,
+            })}
             id="content-wrapper"
             onScroll={(e) => {
               if (e.target.scrollTop > 300) {

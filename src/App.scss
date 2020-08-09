@@ -11,7 +11,6 @@
     overflow: hidden;
     //color: $titleColor;
     @include title_color;
-    position: relative;
 
     .slider-bar-wrapper {
       width: 10%;
@@ -20,14 +19,43 @@
       @include menu-bg;
       height: 100%;
       @include border_right;
+      position: relative;
+      &.hide{
+        width: 0%;
+      }
+      >.back-up-wrapper{
+        position: absolute;
+        top: 50%;
+        transition: all .4s;
+        z-index: 1;
+        right:0;
+        >.back-up{
+          position: relative;
+          right:1rem;
+          font-size: 1.5rem;
+          cursor: pointer;
+          transform: rotateY(0);
+          transition: all .7s;
+          display: block;
+          &.turn-right{
+            transform: rotateY(180deg);
+            right:-1.5rem !important;
+          }
+        }
+      }
     }
 
     >.content-wrapper {
       width: 90%;
       overflow-y: scroll;
+      overflow-x: hidden;
       height: 100%;
       @include bg_color;
       transition: all .7s;
+      position: relative;
+      &.show{
+        width: 100%;
+      }
       .loading-wrapper {
         width: 100%;
         height: 100%;
@@ -42,7 +70,7 @@
       width: 28.125rem;
       //background-color: white;
       @include input_search_color;
-      height: 100%;
+      height: 86vh;
       right: 0;
       //box-shadow: -1rem -0.5rem 1.5rem 0 rgba(0, 0, 0, 0.2);
       @include shadow;
