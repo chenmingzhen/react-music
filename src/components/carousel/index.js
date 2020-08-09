@@ -12,7 +12,6 @@ export default class Carousel extends React.PureComponent {
 
   componentDidMount() {
     getFavouriteSinger().then((data) => {
-      console.log(data);
       if (data.data) {
         let tmp = [];
         this.getRandom(data, 9).forEach((item) => {

@@ -6,7 +6,8 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { isObjectValueEqual } from "../../assets/js/util";
+import { renderSpin } from "../../util/renderSpin";
 
 class ChartList extends React.Component {
   constructor(props) {
@@ -23,6 +24,25 @@ class ChartList extends React.Component {
     if (this.props.onRef) this.props.onRef(this);
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if (nextProps.dataLists) {
+      if (!isObjectValueEqual(nextProps.dataLists, this.props.dataLists)) {
+        setTimeout(() => {
+          this.getSongLists(nextProps.dataLists);
+        });
+        return true;
+      }
+      if (
+        this.props.currentIndex === nextProps.currentIndex &&
+        this.props.dataLists.length > 0 &&
+        nextProps.dataLists > 0
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   render() {
     const { songLists } = this.state;
     return (
@@ -32,7 +52,7 @@ class ChartList extends React.Component {
           <div className={"singer"}>歌手</div>
           <div className={"duration"}>时长</div>
         </div>
-        {songLists.length > 0 ? this.renderItem() : ""}
+        {songLists.length > 0 ? this.renderItem() : renderSpin()}
       </div>
     );
   }
@@ -107,18 +127,6 @@ class ChartList extends React.Component {
   //循环异步
   async getSongLists(lists) {
     if (lists !== undefined) {
-      //for (let i = 0; i < lists.length; i++) {
-      //  await new Promise((res) => {
-      //    createSong(lists[i], this.source.token)
-      //      .then((data) => {
-      //        let tmp = [...this.state.songLists];
-      //        tmp.push(data);
-      //        this.setState({ songLists: tmp });
-      //        res();
-      //      })
-      //      .catch(() => {});
-      //  });
-      //}
       Promise.all(
         lists.map((item) => {
           return new Promise((res) => {
@@ -130,20 +138,6 @@ class ChartList extends React.Component {
       });
     } else {
       const { dataLists } = this.props;
-      //for (let i = 0; i < dataLists.length; i++) {
-      //  await new Promise((res) => {
-      //    setTimeout(() => {
-      //      createSong(dataLists[i], this.source.token)
-      //        .then((data) => {
-      //          let tmp = [...this.state.songLists];
-      //          tmp.push(data);
-      //          this.setState({ songLists: tmp });
-      //          res();
-      //        })
-      //        .catch(() => {});
-      //    });
-      //  });
-      //}
       Promise.all(
         dataLists.map((item) => {
           return new Promise((res) => {
@@ -170,13 +164,5 @@ const mapDispatch = (dispatch) => ({
     dispatch(setCurrentIndex(currentIndex));
   },
 });
-
-ChartList.propTypes = {
-  needCancel: PropTypes.bool,
-};
-
-ChartList.defaultProps = {
-  needCancel: true,
-};
 
 export default withRouter(connect(mapState, mapDispatch)(ChartList));
