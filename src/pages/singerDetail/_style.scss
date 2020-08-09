@@ -115,7 +115,7 @@
         display: flex;
         margin-top: 1rem;
 
-        > .play-all, > .subscribe {
+        > .play-all, > .subscribe,>.unsubscribe {
           background-color: $color-theme;
           color: white;
           padding: .2rem 1rem;
@@ -127,8 +127,13 @@
           }
         }
 
-        > .subscribe {
+        > .subscribe,>.unsubscribe {
           margin-left: .5rem;
+        }
+        >.unsubscribe{
+          >i{
+            color: rgb(255, 182, 60);
+          }
         }
       }
     }

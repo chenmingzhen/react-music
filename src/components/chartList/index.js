@@ -8,7 +8,7 @@ import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
 import { connect } from "react-redux";
 import { isObjectValueEqual } from "../../assets/js/util";
 import { renderSpin } from "../../util/renderSpin";
-
+import { message } from "antd";
 class ChartList extends React.Component {
   constructor(props) {
     super(props);
@@ -148,6 +148,16 @@ class ChartList extends React.Component {
         this.setState({ songLists: data });
       });
     }
+  }
+
+  playAll() {
+    const { songLists } = this.state;
+    if (songLists.length === 0) {
+      message.warn("还没准备好！！！");
+      return;
+    }
+    this.props.setPlaylist(songLists);
+    this.props.setCurrentIndex(0);
   }
 }
 

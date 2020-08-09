@@ -1,5 +1,5 @@
 import React from "react";
-import { getSingerDesc, getSingerInf } from "../../api/singer";
+import { getSingerDesc, getSingerInf, subSinger } from "../../api/singer";
 import axios from "axios";
 import "./_style.scss";
 import { Popover, Spin } from "antd";
@@ -8,6 +8,7 @@ import AlbumList from "../../components/albumList";
 import MvList from "../../components/mvList/singerMvList";
 import BackTop from "../../components/backTop";
 import { getOnlyHash } from "../../assets/js/util";
+import { message } from "antd";
 class singerDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class singerDetail extends React.Component {
       showAllSong: false,
       albumList: [],
       chartListKey: getOnlyHash(15),
+      followed: false,
     };
   }
 
@@ -26,7 +28,11 @@ class singerDetail extends React.Component {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     getSingerInf(id, this.source.token).then((data) => {
-      this.setState({ artist: data.artist, hotSongs: data.hotSongs });
+      this.setState({
+        artist: data.artist,
+        hotSongs: data.hotSongs,
+        followed: data.artist.followed,
+      });
     });
   }
 
@@ -57,7 +63,7 @@ class singerDetail extends React.Component {
   }
 
   renderInf() {
-    const { artist } = this.state;
+    const { artist, followed } = this.state;
     if (!artist.id) {
       this.renderSpin();
     }
@@ -105,14 +111,32 @@ class singerDetail extends React.Component {
             </a>
           </div>
           <div className="button-wrapper">
-            <div className="play-all">
+            <div
+              className="play-all"
+              onClick={() => {
+                this.child.playAll();
+              }}
+            >
               <i className={"iconfont icon-bofang"} />
               播放全部
             </div>
-            <div className="subscribe">
-              <i className={"iconfont icon-collection-b"} />
-              收藏歌手
-            </div>
+            {!followed ? (
+              <div
+                className="subscribe"
+                onClick={this.handleSubscribe.bind(this, artist.id, 1)}
+              >
+                <i className={"iconfont icon-collection-b"} />
+                收藏歌手
+              </div>
+            ) : (
+              <div
+                className="unsubscribe"
+                onClick={this.handleSubscribe.bind(this, artist.id, 0)}
+              >
+                <i className={"iconfont icon-collection-b"} />
+                取消收藏
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -159,6 +183,9 @@ class singerDetail extends React.Component {
         <ChartList
           dataLists={showAllSong ? hotSongs : hotSongs.slice(0, 10)}
           key={chartListKey}
+          onRef={(ref) => {
+            this.child = ref;
+          }}
         />
       </div>
     );
@@ -253,6 +280,16 @@ class singerDetail extends React.Component {
         </div>
       );
     }
+  }
+
+  handleSubscribe(id, t) {
+    const { followed } = this.state;
+    subSinger(id, t, this.source.token).then((data) => {
+      if (data && data.code === 200) {
+        this.setState({ followed: !followed });
+        message.success("操作成功 数据存在延误！！");
+      }
+    });
   }
 }
 

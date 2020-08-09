@@ -103,3 +103,8 @@ export function getSongDetail(ids, cancelToken) {
   const url = "/song/detail";
   return request({ url, method: "get", params: { ids }, cancelToken });
 }
+
+export function subSinger(id, t, cancelToken) {
+  const url = "/artist/sub";
+  return request({ url, method: "get", params: { id, t }, cancelToken });
+}
