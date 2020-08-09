@@ -19,7 +19,7 @@ import axios from "axios";
 import github from "../../assets/img/github-logo.png";
 import { getPlayList } from "../../api/selfInfomation";
 import { withRouter } from "react-router-dom";
-
+import Publish from "pubsub-js";
 let InfData = [];
 
 class SliderBar extends React.PureComponent {
@@ -161,6 +161,9 @@ class SliderBar extends React.PureComponent {
 
   componentDidMount() {
     this.loginCheck();
+    this.subPlayList = Publish.subscribe("subPlayList", () => {
+      this.updatePlayList();
+    });
   }
 
   updatePlayList() {

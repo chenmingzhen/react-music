@@ -1,14 +1,15 @@
 import React from "react";
-import { getPlayList } from "../../api/playlist";
+import { getPlayList, subPlayList } from "../../api/playlist";
 import { timestampToTime } from "../../util/util";
 import "./_style.scss";
 import { changeLoading } from "../../store/actionCreator";
 import { connect } from "react-redux";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SongList from "../../components/songList";
 import Comment from "../../components/comment";
 import axios from "axios";
+import Publish from "pubsub-js";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
 
@@ -19,6 +20,7 @@ class PlayList extends React.Component {
       listData: {},
       id: Number,
       status: 1,
+      subscribe: false,
     };
   }
 
@@ -28,6 +30,7 @@ class PlayList extends React.Component {
         this.setState(() => ({
           listData: data.playlist,
           id: this.props.match.params.id,
+          subscribe: data.playlist.subscribed,
         }));
         this.props.changeLoadingDone(true);
       })
@@ -54,6 +57,7 @@ class PlayList extends React.Component {
   render() {
     this.getData();
     let data = this.state.listData;
+    const { subscribe } = this.state;
     if (data.creator && String(data.id) === this.props.match.params.id) {
       return (
         <div className={"self-playlist-wrapper"}>
@@ -75,13 +79,30 @@ class PlayList extends React.Component {
                   {timestampToTime(data.createTime)}创建
                 </div>
               </div>
-              <div
-                className="play-all"
-                onClick={() => {
-                  this.child.playAll();
-                }}
-              >
-                播放全部
+              <div className={"button-wrapper"}>
+                <div
+                  className="play-all"
+                  onClick={() => {
+                    this.child.playAll();
+                  }}
+                >
+                  播放全部
+                </div>
+                {subscribe ? (
+                  <div
+                    className={"subscribe"}
+                    onClick={this.handleSub.bind(this, data.id, 2)}
+                  >
+                    取消收藏
+                  </div>
+                ) : (
+                  <div
+                    className={"unsubscribe"}
+                    onClick={this.handleSub.bind(this, data.id, 1)}
+                  >
+                    收藏
+                  </div>
+                )}
               </div>
               <div className="tag">
                 {data.tags.map((item, index) => {
@@ -150,6 +171,23 @@ class PlayList extends React.Component {
   componentWillUnmount() {
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
+  }
+
+  handleSub(id, t) {
+    const { subscribe } = this.state;
+    const { user } = this.props;
+    if (user && !user.code) {
+      message.warn("尚未登陆");
+      return;
+    }
+    subPlayList(id, t, this.source.token).then((data) => {
+      if (data && data.code === 200) {
+        console.log(subscribe);
+        this.setState({ subscribe: !subscribe });
+        message.success("操作成功 数据存在延迟");
+        Publish.publish("subPlayList");
+      }
+    });
   }
 }
 

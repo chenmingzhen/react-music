@@ -24,3 +24,13 @@ export function getDailyRecommend(cancelToken) {
   const url = "/recommend/songs";
   return request({ url, method: "get", cancelToken }).catch((e) => {});
 }
+
+export function subPlayList(id, t, cancelToken) {
+  const url = "/playlist/subscribe";
+  return request({
+    url,
+    method: "get",
+    params: { id, t },
+    cancelToken,
+  }).catch((e) => {});
+}

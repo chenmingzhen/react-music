@@ -9,6 +9,7 @@ import MvList from "../../components/mvList/singerMvList";
 import BackTop from "../../components/backTop";
 import { getOnlyHash } from "../../assets/js/util";
 import { message } from "antd";
+import { connect } from "react-redux";
 class singerDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -284,6 +285,11 @@ class singerDetail extends React.Component {
 
   handleSubscribe(id, t) {
     const { followed } = this.state;
+    const { user } = this.props;
+    if (user && !user.code) {
+      message.warn("尚未登陆");
+      return;
+    }
     subSinger(id, t, this.source.token).then((data) => {
       if (data && data.code === 200) {
         this.setState({ followed: !followed });
@@ -293,4 +299,8 @@ class singerDetail extends React.Component {
   }
 }
 
-export default singerDetail;
+const mapState = (state) => ({
+  user: state.getIn(["app", "user"]),
+});
+
+export default connect(mapState, null)(singerDetail);

@@ -81,15 +81,24 @@
         }
       }
 
-      > .play-all {
-        margin-top: 0.4rem;
-        background-color: $color-theme;
-        width: 7rem;
-        text-align: center;
-        color: white;
-        border-radius: 1.25rem;
-        padding: 0.2rem 0.5rem;
-        cursor: pointer;
+      > .button-wrapper {
+        display: flex;
+        > .play-all,
+        > .subscribe,
+        > .unsubscribe {
+          margin-top: 0.4rem;
+          background-color: $color-theme;
+          width: 7rem;
+          text-align: center;
+          color: white;
+          border-radius: 1.25rem;
+          padding: 0.2rem 0.5rem;
+          cursor: pointer;
+        }
+        > .subscribe,
+        > .unsubscribe{
+          margin-left: 1rem;
+        }
       }
 
       > .tag,
