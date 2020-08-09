@@ -7,7 +7,7 @@ import "./App.scss";
 import NProgress from "react-nprogress"; // 引入nprogress插件
 import "react-nprogress/nprogress.css";
 import { connect } from "react-redux";
-
+import PubSub from "pubsub-js";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
@@ -40,7 +40,17 @@ function App(props) {
           <div className={"slider-bar-wrapper"}>
             <SliderBar />
           </div>
-          <div className={"content-wrapper"} id="content-wrapper">
+          <div
+            className={"content-wrapper"}
+            id="content-wrapper"
+            onScroll={(e) => {
+              if (e.target.scrollTop > 300) {
+                PubSub.publish("shadow", true);
+              } else {
+                PubSub.publish("shadow", false);
+              }
+            }}
+          >
             <Suspense
               fallback={
                 <div className={"loading-wrapper"}>

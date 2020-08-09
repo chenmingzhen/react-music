@@ -23,20 +23,67 @@ class Header extends React.PureComponent {
         {
           font: "iconfont  icon-shouye",
           color: "#ff5652",
+          onClick: () => {
+            this.props.history.push({ pathname: "/discovery" });
+          },
         },
-        { font: "iconfont icon-suoxiao", color: "#ffb63c" },
+        {
+          font: "iconfont icon-suoxiao",
+          color: "#ffb63c",
+          onClick: () => {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.webkitCancelFullScreen) {
+              document.webkitCancelFullScreen();
+            } else if (document.mozCancelFullScreen) {
+              document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            }
+          },
+        },
         {
           font: "iconfont icon-quanping last-icon",
           color: "#00c34c",
+          onClick: () => {
+            const element = document.documentElement;
+            if (element.requestFullscreen) {
+              element.requestFullscreen();
+            } else if (element.webkitRequestFullScreen) {
+              element.webkitRequestFullScreen();
+            } else if (element.mozRequestFullScreen) {
+              element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+              // IE11
+              element.msRequestFullscreen();
+            }
+          },
         },
       ],
+      shadowOn: false,
     };
+  }
+
+  componentDidMount() {
+    this.shadow = PubSub.subscribe("shadow", (name, result) => {
+      this.setState({ shadowOn: result });
+    });
+  }
+
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.shadow);
   }
 
   render() {
     const { setSearchControl } = this.props;
+    const { shadowOn } = this.state;
     return (
-      <div className={"header-wrapper"}>
+      <div
+        className={"header-wrapper"}
+        style={
+          shadowOn ? { boxShadow: "0.125rem 0.4rem 0.2rem rgba(0,0,0,.2)" } : {}
+        }
+      >
         <div className={"header-left"}>
           <div className="navigation">
             {
@@ -47,6 +94,7 @@ class Header extends React.PureComponent {
                     className={"dot"}
                     style={{ background: item.color }}
                     key={index}
+                    onClick={item.onClick}
                   >
                     <i className={item.font} style={{ color: "#1e1e1e" }} />
                   </span>

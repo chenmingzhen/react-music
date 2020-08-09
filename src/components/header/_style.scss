@@ -4,7 +4,10 @@
 .header-wrapper {
   height: 6vh;
   display: flex;
-
+  //box-shadow: 0.125rem 0.4rem 0.2rem rgba(0,0,0,.2);
+  transition: all .7s;
+  position: relative;
+  z-index: 1;
   .header-left {
     //background: $bgColor;
     //@include bg_color;

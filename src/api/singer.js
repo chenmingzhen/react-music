@@ -97,3 +97,9 @@ export function getSongComment(id, offset, cancelToken) {
   const url = "/comment/music";
   return request({ url, method: "get", params: { id, offset }, cancelToken });
 }
+
+//歌曲详情
+export function getSongDetail(ids, cancelToken) {
+  const url = "/song/detail";
+  return request({ url, method: "get", params: { ids }, cancelToken });
+}

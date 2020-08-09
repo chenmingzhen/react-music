@@ -1,6 +1,6 @@
 import React from "react";
 import { AddZero } from "../../assets/js/util";
-import { Spin } from "antd";
+import { renderSpin } from "../../util/renderSpin";
 import "./_style.scss";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -64,11 +64,7 @@ class NewSongList extends React.PureComponent {
         </div>
       );
     }
-    return (
-      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <Spin />
-      </div>
-    );
+    return renderSpin();
   }
 
   clickItem(playlist, currentIndex) {

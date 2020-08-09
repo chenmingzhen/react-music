@@ -78,7 +78,7 @@ export async function createSong(musicData, cancelToken) {
   });
 }
 
-function filterMv(musicData) {
+export function filterMv(musicData) {
   let mvid = 0;
   if (musicData.mvid && musicData.mvid !== 0) {
     mvid = musicData.mvid;
