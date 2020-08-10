@@ -14,6 +14,7 @@ import { CSSTransition } from "react-transition-group";
 import "./assets/sass/transition.scss";
 import Player from "./components/player";
 import classnames from "classnames";
+
 const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
 
 const Discovery = lazy(() => import("./pages/discovery"));
@@ -26,6 +27,7 @@ const SingerDetail = lazy(() => import("./pages/singerDetail"));
 const AlbumDetail = lazy(() => import("./pages/albumDetail"));
 const MvPlay = lazy(() => import("./pages/mvPlay"));
 const SearchDetail = lazy(() => import("./pages/searchDetail"));
+const Shared = lazy(() => import("./pages/shared"));
 
 function App(props) {
   if (!props.loading) {
@@ -56,6 +58,7 @@ function App(props) {
                   "back-up iconfont icon-ico_leftarrow": true,
                   "turn-right": packUp,
                 })}
+                title={!packUp ? "收起" : "展开"}
               />
             </div>
             <SliderBar />
@@ -114,6 +117,7 @@ function App(props) {
                   exact
                   component={SearchDetail}
                 />
+                <Route path="/shared" component={Shared} />
                 <Redirect to="/discovery" />
               </Switch>
             </Suspense>

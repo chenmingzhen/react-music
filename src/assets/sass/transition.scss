@@ -89,3 +89,14 @@
   top: 0;
 }
 
+.upOut-exit{
+  transform: translate(0);
+}
+.upOut-exit-active{
+  transform: translate(-100%);
+  transition: all .7s;
+}
+.upOut-exit-done{
+  transform: translate(-100%);
+}
+

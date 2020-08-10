@@ -16,3 +16,8 @@ export function logout() {
   const url = "/logout";
   return request({ url, method: "get" });
 }
+
+export function getUserInf(uid, cancelToken) {
+  const url = "/user/detail";
+  return request({ url, method: "get", params: { uid }, cancelToken });
+}

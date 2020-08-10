@@ -1,7 +1,7 @@
 import React from "react";
 import "./_style.scss";
 import { connect } from "react-redux";
-import { message, Popover } from "antd";
+import { message, Popover, Modal } from "antd";
 import {
   setCurrentIndex,
   setFullScreen,
@@ -25,7 +25,8 @@ import Comment from "../comment";
 import Scroller from "../scroller";
 import lyricParser from "../../util/lrcparse";
 import { _getLyric } from "../../util/lyric";
-
+import { sharedModal } from "../../util/sharedModal";
+import { SHARED_URL } from "../../assets/js/constants";
 const WHEEL_TYPE = "wheel";
 const SCROLL_TYPE = "scroll";
 const AUTO_SCROLL_RECOVER_TIME = 1000;
@@ -46,6 +47,7 @@ class Player extends React.PureComponent {
       lyric: [],
       noLyric: false,
       tmpVolumePercent: 0,
+      sharedVisible: false,
     };
     this.newIndex = 0;
     this.oldIndex = 0;
@@ -67,7 +69,7 @@ class Player extends React.PureComponent {
     this.newIndex = this.activeLyricIndex();
     this.watchActiveLyricIndex(this.newIndex, this.oldIndex);
     const { user } = this.props;
-    const { likeSongListId } = this.state;
+    const { likeSongListId, sharedVisible } = this.state;
     if (user.code === 200 && likeSongListId.length === 0) {
       setTimeout(() => {
         this.getLikeMusic();
@@ -87,6 +89,18 @@ class Player extends React.PureComponent {
         >
           <List />
         </CSSTransition>
+        <Modal
+          title="分享"
+          okText={"确定"}
+          cancelText={"取消"}
+          visible={sharedVisible}
+          onCancel={() => {
+            this.setState({ sharedVisible: false });
+          }}
+          onOk={this.handleOk.bind(this)}
+        >
+          {sharedModal()}
+        </Modal>
       </div>
     );
   }
@@ -98,6 +112,7 @@ class Player extends React.PureComponent {
       playing,
       fullScreen,
       setFullScreen,
+      user,
     } = this.props;
     const {
       songPercent,
@@ -184,6 +199,18 @@ class Player extends React.PureComponent {
             </span>
           </div>
           <div className="mode-wrapper">
+            {user.code && playlist.length !== 0 && playlist[currentIndex] && (
+              <span>
+                <Popover content={"分享歌曲"} trigger="hover">
+                  <i
+                    className={"iconfont icon-share_icon"}
+                    onClick={() => {
+                      this.setState({ sharedVisible: true });
+                    }}
+                  />
+                </Popover>
+              </span>
+            )}
             <span>
               <Popover
                 content={this.songExistLikeList() ? "取消喜欢" : "喜欢"}
@@ -664,7 +691,9 @@ class Player extends React.PureComponent {
       return;
     } else {
       getLikeSongListId(user.account.id, this.source.token).then((_data) => {
-        this.setState({ likeSongListId: _data.ids });
+        if (_data && _data.ids) {
+          this.setState({ likeSongListId: _data.ids });
+        }
       });
     }
   }
@@ -858,6 +887,36 @@ class Player extends React.PureComponent {
         }
       })
       .catch((e) => {});
+  }
+
+  /**
+   * Modal Ok callback
+   */
+  handleOk() {
+    const { user, playlist, currentIndex } = this.props;
+    const msg = document.getElementById("textarea-shared").value || "";
+    let search =
+      SHARED_URL +
+      "userId=" +
+      user.account.id +
+      "&songId=" +
+      playlist[currentIndex].id;
+    if (msg === "") {
+    } else {
+      search = search + "&msg=" + encodeURI(msg);
+    }
+
+    //复制文本
+    const tag = document.createElement("input");
+    tag.setAttribute("id", "copy_input");
+    tag.value = search;
+    document.getElementsByTagName("body")[0].appendChild(tag);
+    document.getElementById("copy_input").select();
+    document.execCommand("copy");
+    document.getElementById("copy_input").remove();
+
+    message.success("复制成功 发送给你的小伙伴吧！");
+    this.setState({ sharedVisible: false });
   }
 }
 

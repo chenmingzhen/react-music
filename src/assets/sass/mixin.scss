@@ -291,7 +291,7 @@
 
   }
   [data-theme="theme-white"] & {
-
+    border-right: 0.0625rem solid rgba(0, 0, 0, .1)
   }
   [data-theme="theme-red"] & {
     border-right: 0.0625rem solid rgba(0, 0, 0, .1)
@@ -429,6 +429,19 @@
 @mixin  list_right_item{
   [data-theme="theme-black"] & {
     color: #dcdde4;
+  }
+}
+
+//shared
+@mixin shared_bg{
+  [data-theme="theme-black"] & {
+    background-color: $theme_white_bg;
+  }
+  [data-theme="theme-white"] & {
+    background-color: #ffb63c;
+  }
+  [data-theme="theme-red"] & {
+    background-color: $theme_red_bg;
   }
 }
 

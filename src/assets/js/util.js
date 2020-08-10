@@ -89,3 +89,18 @@ export const compareObj = {
     return Object.prototype.toString.call(arr) === "[object Array]";
   },
 };
+
+/**
+ * 分割路由
+ * @param {路由search} route
+ * @returns Map对象
+ */
+export function routeBreakUp(route) {
+  let map = new Map();
+  route = route.split("?").join("").split("&");
+  route.forEach((item) => {
+    const tmp = item.split("=");
+    map.set(tmp[0], tmp[1]);
+  });
+  return map;
+}

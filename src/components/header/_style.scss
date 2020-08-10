@@ -1,6 +1,6 @@
 @import "./src/assets/sass/variable";
 @import "./src/assets/sass/mixin";
-
+@import url("https://fonts.googleapis.com/css?family=Hind:700");
 .header-wrapper {
   height: 6vh;
   display: flex;
@@ -8,6 +8,7 @@
   transition: all .7s;
   position: relative;
   z-index: 1;
+  font-family: Hind;
   .header-left {
     //background: $bgColor;
     //@include bg_color;
