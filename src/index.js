@@ -8,7 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { getLocalStorage } from "./util/localStorage";
-
+import { getBrowser } from "./util/browser";
+import { message } from "antd";
 //resize fontsize
 // default fontsize 16
 (function () {
@@ -28,6 +29,9 @@ import { getLocalStorage } from "./util/localStorage";
   const name = getLocalStorage("_theme");
   window.document.documentElement.setAttribute("data-theme", name);
 })();
+
+//浏览器检查
+message.success(getBrowser());
 
 ReactDOM.render(
   <React.Fragment>

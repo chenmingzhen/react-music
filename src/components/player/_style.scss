@@ -121,7 +121,7 @@
             }
           }
           > .text-wrapper {
-            margin: 5rem 10rem;
+            margin: 3rem 10rem;
             > .inf-wrapper {
               > .name {
                 width: 25rem;
@@ -134,6 +134,9 @@
 
               > .album,
               > .singer {
+                width: 25rem;
+                @include ellipsis2(2);
+                margin: .5rem 0;
                 color: $tipsColor;
                 font-size: 1rem;
                 text-align: center;
@@ -251,7 +254,7 @@
         padding-top: 3.5rem;
         height: 0;
         cursor: pointer;
-
+        min-width: 3.5rem;
         > img {
           @include imgMixin;
           border-radius: 0.325rem;
