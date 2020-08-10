@@ -240,6 +240,9 @@
   [data-theme="theme-white"] & {
     border-bottom: 0.0625rem solid $borderColor;
   }
+  [data-theme="theme-red"] & {
+    border-bottom: 0.0625rem solid $theme_black_border;
+  }
 }
 
 @mixin border_top {
@@ -307,6 +310,18 @@
   }
   [data-theme="theme-red"] & {
     background-color: $theme_red_thumb;
+  }
+}
+
+@mixin subTitle{
+  [data-theme="theme-black"] & {
+    color: $color-grey;
+  }
+  [data-theme="theme-white"] & {
+    color: $color-grey;
+  }
+  [data-theme="theme-red"] & {
+
   }
 }
 

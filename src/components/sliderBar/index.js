@@ -214,6 +214,9 @@ class SliderBar extends React.PureComponent {
                   src={this.props.user.profile.avatarUrl}
                   alt=""
                   loading="lazy"
+                  onClick={() => {
+                    this.props.history.push({ pathname: "/userInf" });
+                  }}
                 />
               )}
             {this.props.user.code === undefined && (

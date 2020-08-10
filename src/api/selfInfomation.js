@@ -11,9 +11,9 @@ export function getLikeMusic(id) {
 /*获取用户歌单*/
 
 //https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e8%8e%b7%e5%8f%96%e7%94%a8%e6%88%b7%e6%ad%8c%e5%8d%95
-export function getPlayList(uid) {
+export function getPlayList(uid, cancelToken) {
   const url = "/user/playlist";
-  return request({ url, method: "get", params: { uid } });
+  return request({ url, method: "get", params: { uid }, cancelToken });
 }
 
 /*获取收藏的歌手*/
@@ -34,4 +34,9 @@ export function getLikeSongListId(id, cancelToken) {
 export function likeOrDisLikeMusic(id, like, cancelToken) {
   const url = "/like";
   return request({ url, method: "get", params: { id, like }, cancelToken });
+}
+
+export function getSubAlbum(cancelToken) {
+  const url = "/album/sublist";
+  return request({ url, method: "get", params: { limit: 50 }, cancelToken });
 }

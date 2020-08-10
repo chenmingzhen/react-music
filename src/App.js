@@ -28,6 +28,7 @@ const AlbumDetail = lazy(() => import("./pages/albumDetail"));
 const MvPlay = lazy(() => import("./pages/mvPlay"));
 const SearchDetail = lazy(() => import("./pages/searchDetail"));
 const Shared = lazy(() => import("./pages/shared"));
+const UserInf = lazy(() => import("./pages/userInf"));
 
 function App(props) {
   if (!props.loading) {
@@ -118,6 +119,7 @@ function App(props) {
                   component={SearchDetail}
                 />
                 <Route path="/shared" component={Shared} />
+                <Route path="/userInf" component={UserInf} />
                 <Redirect to="/discovery" />
               </Switch>
             </Suspense>

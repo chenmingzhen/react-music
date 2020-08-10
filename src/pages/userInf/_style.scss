@@ -1,0 +1,304 @@
+@import "./src/assets/sass/variable";
+@import "./src/assets/sass/mixin";
+@import url("https://fonts.googleapis.com/css?family=Hind:700");
+
+.user-inf-wrapper {
+  > .profile-wrapper {
+    margin: 2rem 0;
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    > .profile-bg {
+      width: 100%;
+      height: 20rem;
+      position: absolute;
+    }
+
+    > .img-wrapper {
+      position: relative;
+      margin-top: 2rem;
+      width: 10rem;
+      padding-top: 10rem;
+      height: 0;
+
+      > img {
+        @include imgMixin;
+        border-radius: 50%;
+      }
+    }
+
+    > .name {
+      margin-top: 2rem;
+      position: relative;
+      font-family: Hind;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  > .nav-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 5rem;
+    padding: 1rem 10rem;
+    @include border_bottom;
+
+    > .nav-item {
+      cursor: pointer;
+      margin: 0 1rem;
+      font-family: Hind;
+      font-size: 1.6rem;
+      padding: .5rem 0;
+
+      &.active {
+        border-bottom: 0.1rem solid $color-theme;
+      }
+
+      > .text {
+        margin: 0 .2rem;
+      }
+
+      > .count {
+
+      }
+    }
+  }
+
+  > .playlist-wrapper {
+    margin-top: 1rem;
+    padding: 0 12rem;
+
+    > .fix-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.03);
+      @include text_color;
+      padding: .5rem 1rem;
+      font-size: 1.2rem;
+
+      > .title {
+
+        &:nth-child(1) {
+          flex: 1;
+        }
+
+        &:nth-child(2) {
+          flex-basis: 10%;
+          text-align: center;
+        }
+
+        &:nth-child(3) {
+          text-align: center;
+          flex-basis: 30%;
+        }
+      }
+    }
+
+    > .item-wrapper {
+      width: 100%;
+
+      > .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem .5rem;
+        cursor: pointer;
+        margin: .5rem;
+        font-size: 1.2rem;
+        @include header_title;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+
+        > .img-wrapper {
+          position: relative;
+          width: 4rem;
+          padding-top: 4rem;
+          height: 0;
+
+          > img {
+            @include imgMixin;
+            border-radius: 0.3125rem;
+          }
+        }
+
+        > .title {
+          margin-left: 1rem;
+          flex: 1;
+          @include ellipsis;
+        }
+
+        > .count {
+          flex-basis: 10%;
+          text-align: center;
+        }
+
+        > .creator {
+          text-align: center;
+          flex-basis: 30%;
+          @include ellipsis;
+        }
+      }
+    }
+  }
+
+  > .album-wrapper {
+    margin-top: 1rem;
+    padding: 0 12rem;
+
+    > .fix-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.03);
+      @include text_color;
+      padding: .5rem 1rem;
+      font-size: 1.2rem;
+
+      > .title {
+
+        &:nth-child(1) {
+          flex: 1;
+        }
+
+        &:nth-child(2) {
+          flex-basis: 5%;
+          text-align: center;
+        }
+
+        &:nth-child(3) {
+          text-align: center;
+          flex-basis: 30%;
+        }
+
+        &:nth-child(4) {
+          text-align: center;
+          flex-basis: 10%;
+        }
+      }
+    }
+
+    > .item-wrapper {
+      width: 100%;
+
+      > .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem .5rem;
+        cursor: pointer;
+        margin: .5rem;
+        font-size: 1.2rem;
+        @include header_title;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+
+        > .img-wrapper {
+          position: relative;
+          width: 4rem;
+          padding-top: 4rem;
+          height: 0;
+
+          > img {
+            @include imgMixin;
+            border-radius: 0.3125rem;
+          }
+        }
+
+        > .title {
+          margin-left: 1rem;
+          flex: 1;
+          @include ellipsis;
+          display: flex;
+
+          > .original {
+
+          }
+
+          > .trans {
+            margin-left: .7rem;
+            @include subTitle;
+          }
+        }
+
+
+        > .count {
+          flex-basis: 5%;
+          text-align: center;
+        }
+
+        > .singer {
+          flex-basis: 30%;
+          text-align: center;
+        }
+
+        > .time {
+          text-align: center;
+          flex-basis: 10%;
+        }
+
+      }
+    }
+  }
+
+  > .singer-wrapper {
+    margin-top: 1rem;
+    padding: 0 12rem;
+
+    > .item-wrapper {
+      width: 100%;
+
+      > .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem .5rem;
+        cursor: pointer;
+        margin: .5rem;
+        font-size: 1.2rem;
+        @include header_title;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+
+        > .img-wrapper {
+          position: relative;
+          width: 4rem;
+          padding-top: 4rem;
+          height: 0;
+
+          > img {
+            @include imgMixin;
+            border-radius: 0.3125rem;
+          }
+        }
+
+        > .title {
+          margin-left: 1rem;
+          flex: 1;
+          @include ellipsis;
+          display: flex;
+
+          > .original {
+
+          }
+
+          > .trans {
+            margin-left: .7rem;
+            @include subTitle;
+          }
+        }
+      }
+    }
+  }
+}

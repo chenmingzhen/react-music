@@ -43,7 +43,7 @@
       align-items: center;
       box-sizing: border-box;
       width: 100%;
-
+      @include header_title;
       .subtitle {
         font-size: .7rem;
         padding-left: 0.8rem;
@@ -51,6 +51,7 @@
         /*&:hover{
           color: $color-theme;
         }*/
+
       }
 
       &:hover, &.active {
