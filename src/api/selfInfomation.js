@@ -19,9 +19,9 @@ export function getPlayList(uid, cancelToken) {
 /*获取收藏的歌手*/
 //https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e6%94%b6%e8%97%8f%e7%9a%84%e6%ad%8c%e6%89%8b%e5%88%97%e8%a1%a8
 /*需要登陆才能获取*/
-export function getSubscribeSinger() {
+export function getSubscribeSinger(cancelToken) {
   const url = "/artist/sublist";
-  return request({ url, method: "get" });
+  return request({ url, method: "get", cancelToken });
 }
 
 //已喜欢音乐id列表

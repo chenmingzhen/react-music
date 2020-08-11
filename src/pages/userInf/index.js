@@ -10,7 +10,7 @@ import {
 import { message } from "antd";
 import { renderSpin } from "../../util/renderSpin";
 import "./_style.scss";
-import { getOnlyHash } from "../../assets/js/util";
+import { getOnlyHash, routeBreakUp } from "../../assets/js/util";
 import classnames from "classnames";
 import { timestampToTime } from "../../util/util";
 
@@ -23,31 +23,85 @@ class UserInf extends React.Component {
       subAlbum: {},
       subscribeSinger: {},
       tab: 0,
+      id: null,
     };
   }
 
   componentDidMount() {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
-    const { user } = this.props;
-    if (!user || !user.account || !user.account.id) {
-      this.props.history.replace({ pathname: "/discovery" });
-      return;
+
+    const { search } = this.props.location;
+    const routeMap = routeBreakUp(search);
+    if (routeMap.get("id")) {
+      //非本人查看
+      this.setState({ id: routeMap.get("id") });
+    } else {
+      //仅本人可见
+      const { user } = this.props;
+      if (!user || !user.account || !user.account.id) {
+        this.props.history.replace({ pathname: "/discovery" });
+        return;
+      }
     }
-    this.getData();
+    setTimeout(() => {
+      this.getData();
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const currentRouteMap = routeBreakUp(this.props.location.search);
+    const nextRouteMap = routeBreakUp(nextProps.location.search);
+    const currentId = currentRouteMap.get("id");
+    const nextId = nextRouteMap.get("id");
+    console.log(currentId, nextId);
+    if (currentId && nextId && currentId !== nextId) {
+      setTimeout(() => {
+        this.setState({
+          id: nextId,
+          userData: null,
+          playList: [],
+          subAlbum: [],
+          subscribeSinger: [],
+        });
+        setTimeout(() => {
+          this.getData();
+        });
+      });
+    }
+    if (currentId && nextId === undefined) {
+      //渲染自己的数据
+      setTimeout(() => {
+        this.setState({
+          id: null,
+          userData: null,
+          playList: [],
+          subAlbum: [],
+          subscribeSinger: [],
+        });
+        setTimeout(() => {
+          this.getData();
+        });
+      });
+    }
+    return true;
   }
 
   render() {
-    const { userData, playList, subAlbum, subscribeSinger, tab } = this.state;
+    const {
+      userData,
+      playList,
+      subAlbum,
+      subscribeSinger,
+      tab,
+      id,
+    } = this.state;
     if (userData === null) return renderSpin();
     return (
       <div className={"user-inf-wrapper"}>
         <div className={"profile-wrapper"}>
           <div
             className={"profile-bg"}
-            /*style={{
-                                      background: `url(${userData.profile.backgroundUrl}) 50% 0 no-repeat`,
-                                    }}*/
             style={{
               background: `url(${userData.profile.backgroundUrl})`,
               backgroundSize: "100%",
@@ -71,24 +125,30 @@ class UserInf extends React.Component {
             <span className={"text"}>歌单</span>
             <span className={"count"}>{playList.length}</span>
           </div>
-          <div
-            className={classnames({ "nav-item": true, active: tab === 1 })}
-            onClick={() => {
-              this.setState({ tab: 1 });
-            }}
-          >
-            <span className={"text"}>专辑</span>
-            <span className={"count"}>{subAlbum.length}</span>
-          </div>
-          <div
-            className={classnames({ "nav-item": true, active: tab === 2 })}
-            onClick={() => {
-              this.setState({ tab: 2 });
-            }}
-          >
-            <span className={"text"}>歌手</span>
-            <span className={"count"}>{subscribeSinger.length}</span>
-          </div>
+          {id === null ? (
+            <>
+              <div
+                className={classnames({ "nav-item": true, active: tab === 1 })}
+                onClick={() => {
+                  this.setState({ tab: 1 });
+                }}
+              >
+                <span className={"text"}>专辑</span>
+                <span className={"count"}>{subAlbum.length}</span>
+              </div>
+              <div
+                className={classnames({ "nav-item": true, active: tab === 2 })}
+                onClick={() => {
+                  this.setState({ tab: 2 });
+                }}
+              >
+                <span className={"text"}>歌手</span>
+                <span className={"count"}>{subscribeSinger.length}</span>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
         {tab === 0 && (
           <div className={"playlist-wrapper"}>
@@ -104,6 +164,10 @@ class UserInf extends React.Component {
                     className="item"
                     key={getOnlyHash()}
                     onClick={() => {
+                      if (!this.props.user || !this.props.user.code) {
+                        message.warn("登陆后可查看");
+                        return;
+                      }
                       this.props.history.push({
                         pathname: `/playlist/${item.id}`,
                       });
@@ -121,7 +185,7 @@ class UserInf extends React.Component {
             </div>
           </div>
         )}
-        {tab === 1 && (
+        {tab === 1 && id === null && (
           <div className="album-wrapper">
             <div className={"fix-wrapper"}>
               <span className={"title"}>专辑</span>
@@ -159,7 +223,7 @@ class UserInf extends React.Component {
             </div>
           </div>
         )}
-        {tab === 2 && (
+        {tab === 2 && id === null && (
           <div className={"singer-wrapper"}>
             <div className="item-wrapper">
               {subscribeSinger.map((item) => {
@@ -198,25 +262,42 @@ class UserInf extends React.Component {
   }
 
   async getData() {
-    const { user } = this.props;
-    const id = user.account.id;
-    const p = Promise.all([
-      getUserInf(id, this.source.token),
-      getPlayList(id, this.source.token),
-      getSubAlbum(this.source.token),
-      getSubscribeSinger(id, this.source.token),
-    ]);
-    p.then((array) => {
-      console.log(array);
-      this.setState({
-        userData: array[0],
-        playList: array[1].playlist,
-        subAlbum: array[2].data,
-        subscribeSinger: array[3].data,
+    const { id } = this.state;
+    if (id === null) {
+      const { user } = this.props;
+      const userId = user.account.id;
+      const p = Promise.all([
+        getUserInf(userId, this.source.token),
+        getPlayList(userId, this.source.token),
+        getSubAlbum(this.source.token),
+        getSubscribeSinger(this.source.token),
+      ]);
+      p.then((array) => {
+        console.log(array);
+        this.setState({
+          userData: array[0],
+          playList: array[1].playlist,
+          subAlbum: array[2].data,
+          subscribeSinger: array[3].data,
+        });
+      }).catch((e) => {
+        message.error("出错啦 请刷新页面再试一次");
       });
-    }).catch((e) => {
-      message.error("出错啦 请刷新页面再试一次");
-    });
+    } else {
+      const p = Promise.all([
+        getUserInf(id, this.source.token),
+        getPlayList(id, this.source.token),
+      ]);
+      p.then((array) => {
+        console.log(array);
+        this.setState({
+          userData: array[0],
+          playList: array[1].playlist,
+        });
+      }).catch((e) => {
+        message.error("出错啦 请刷新页面再试一次");
+      });
+    }
   }
 }
 

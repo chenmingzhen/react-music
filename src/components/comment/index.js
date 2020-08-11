@@ -8,7 +8,9 @@ import { getAlbumComment } from "../../api/album";
 import { getMvComment } from "../../api/mv";
 import { getSongComment } from "../../api/singer";
 import axios from "axios";
-
+import { withRouter, Link } from "react-router-dom";
+import { setFullScreen } from "../player/store/actionCreator";
+import { connect } from "react-redux";
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -126,7 +128,18 @@ class Comment extends React.Component {
                       <span className="comment-action">{item.likedCount}</span>
                     </span>,
                   ]}
-                  author={<a href={"none"}>{item.user.nickname}</a>}
+                  author={
+                    <Link to={"/userInf?id=" + item.user.userId}>
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          this.props.setFullScreen(false);
+                        }}
+                      >
+                        {item.user.nickname}
+                      </span>
+                    </Link>
+                  }
                   avatar={
                     <Avatar
                       src={item.user.avatarUrl}
@@ -193,4 +206,10 @@ Comment.defaultProps = {
   isList: 1,
 };
 
-export default Comment;
+const mapDispatch = (dispatch) => ({
+  setFullScreen(result) {
+    dispatch(setFullScreen(result));
+  },
+});
+
+export default withRouter(connect(null, mapDispatch)(Comment));

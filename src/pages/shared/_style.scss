@@ -19,9 +19,11 @@
   justify-content: center;
   flex-direction: column;
   transition: all .7s;
-  &.out{
+
+  &.out {
     transform: translateY(100%);
   }
+
   .music-case {
     width: 18.75rem;
     height: 18.75rem;
@@ -222,10 +224,12 @@
       width: 10rem;
       margin-bottom: 1rem;
 
-      > img {
-        @include imgMixin;
-        border-radius: 50%;
-        cursor: pointer;
+      > a {
+        > img {
+          @include imgMixin;
+          border-radius: 50%;
+          cursor: pointer;
+        }
       }
     }
 
@@ -233,13 +237,13 @@
 
       @include ellipsis;
       font-size: 2rem;
-      color: rgba(0,0,0,.65);
+      color: rgba(0, 0, 0, .65);
     }
 
     > .text {
       font-size: 1.5rem;
       font-weight: 600;
-      color: rgba(0,0,0,.65);
+      color: rgba(0, 0, 0, .65);
     }
   }
 
@@ -249,10 +253,10 @@
     width: 20rem;
     text-align: center;
     @include ellipsis2(2);
-    color: rgba(0,0,0,.65);
+    color: rgba(0, 0, 0, .65);
   }
 
-  >.msg-wrapper{
+  > .msg-wrapper {
     text-align: center;
     margin-top: 1rem;
     font-size: 1.2rem;
@@ -260,6 +264,6 @@
     width: 40rem;
     height: 10rem;
     @include ellipsis2(4);
-    color: rgba(0,0,0,.65);
+    color: rgba(0, 0, 0, .65);
   }
 }

@@ -14,6 +14,7 @@ import { message } from "antd";
 import { renderSpin } from "../../util/renderSpin";
 import classnames from "classnames";
 import { changeLoading } from "../../store/actionCreator";
+import { Link } from "react-router-dom";
 class Shared extends React.Component {
   constructor(props) {
     super(props);
@@ -102,13 +103,15 @@ class Shared extends React.Component {
   }
 
   render() {
-    const { userImg, nickname, song, msg, out } = this.state;
+    const { userImg, nickname, song, msg, out, userId } = this.state;
     return (
       <div className={classnames({ "shared-wrapper": true, out: out })}>
         <div className="inf-wrapper">
           {userImg ? (
             <div className="img-wrapper">
-              <img src={userImg} alt="" />
+              <Link to={"/userInf?id=" + userId}>
+                <img src={userImg} alt="" />
+              </Link>
             </div>
           ) : (
             renderSpin()
