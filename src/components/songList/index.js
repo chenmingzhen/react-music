@@ -88,6 +88,7 @@ class SongList extends React.Component {
                   }}
                 >
                   {playlist.length !== 0 &&
+                  playlist[currentIndex] &&
                   playlist[currentIndex].id === item.id ? (
                     <i className={"iconfont icon-laba"} />
                   ) : (

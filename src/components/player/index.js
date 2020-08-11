@@ -1,7 +1,7 @@
 import React from "react";
 import "./_style.scss";
 import { connect } from "react-redux";
-import { message, Popover, Modal } from "antd";
+import { message, Modal, Popover } from "antd";
 import {
   setCurrentIndex,
   setFullScreen,
@@ -27,11 +27,14 @@ import lyricParser from "../../util/lrcparse";
 import { _getLyric } from "../../util/lyric";
 import { sharedModal } from "../../util/sharedModal";
 import { SHARED_URL } from "../../assets/js/constants";
+import { isObjectValueEqual } from "../../assets/js/util";
+import { loading } from "../loading";
+
 const WHEEL_TYPE = "wheel";
 const SCROLL_TYPE = "scroll";
 const AUTO_SCROLL_RECOVER_TIME = 1000;
 
-class Player extends React.PureComponent {
+class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,9 +68,16 @@ class Player extends React.PureComponent {
     this.oldIndex = this.activeLyricIndex();
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //用户检查loading是否需要更新
+    this.lastList = this.props.playlist;
+    return true;
+  }
+
   render() {
     this.newIndex = this.activeLyricIndex();
     this.watchActiveLyricIndex(this.newIndex, this.oldIndex);
+    this.watchPlayList();
     const { user } = this.props;
     const { likeSongListId, sharedVisible } = this.state;
     if (user.code === 200 && likeSongListId.length === 0) {
@@ -646,6 +656,7 @@ class Player extends React.PureComponent {
   }
 
   ready() {
+    if (this._loading !== undefined) this._loading();
     this.getLyric();
     const { playlist, currentIndex } = this.props;
     this.setState({ songReady: true });
@@ -917,6 +928,18 @@ class Player extends React.PureComponent {
 
     message.success("复制成功 发送给你的小伙伴吧！");
     this.setState({ sharedVisible: false });
+  }
+
+  //更新loading
+  watchPlayList() {
+    if (this.lastList === undefined) return;
+    const { playlist } = this.props;
+    const result = isObjectValueEqual(playlist, this.lastList);
+    if (result) {
+      return;
+    } else {
+      this._loading = loading();
+    }
   }
 }
 

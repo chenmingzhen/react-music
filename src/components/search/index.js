@@ -10,6 +10,14 @@ import { removeLocalStorage } from "../../util/localStorage";
 import { getLocalStorage } from "../../util/localStorage";
 import { highlightWord } from "../../util/util";
 import axios from "axios";
+import { createSong } from "../../assets/js/song";
+import {
+  setCurrentIndex,
+  setPlaying,
+  setPlayList,
+} from "../player/store/actionCreator";
+import { loading } from "../loading";
+
 class Search extends React.PureComponent {
   constructor() {
     super();
@@ -214,7 +222,11 @@ class Search extends React.PureComponent {
         </div>
         {searchSuggestion.songs.map((item, index) => {
           return (
-            <div className={"song-item"} key={index}>
+            <div
+              className={"song-item"}
+              key={index}
+              onClick={this.clickSong.bind(this, item)}
+            >
               <div
                 className="name"
                 dangerouslySetInnerHTML={{
@@ -269,6 +281,20 @@ class Search extends React.PureComponent {
     this.props.history.push({ pathname: "/searchdetail/" + keyword });
     this.props.setSearchControl(false);
   }
+
+  clickSong(item) {
+    const { setPlaylist, setCurrentIndex, setSearchControl } = this.props;
+    setPlaying(false);
+    //const _loading = loading();
+    createSong(item, this.source.token).then((data) => {
+      let tmp = [];
+      tmp.push(data);
+      setPlaylist(tmp);
+      setCurrentIndex(0);
+      setSearchControl(false);
+      // _loading();
+    });
+  }
 }
 
 const mapState = (state) => ({
@@ -278,6 +304,12 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   setSearchControl(result) {
     dispatch(setSearchControl(result));
+  },
+  setPlaylist(playlist) {
+    dispatch(setPlayList(playlist));
+  },
+  setCurrentIndex(currentIndex) {
+    dispatch(setCurrentIndex(currentIndex));
   },
 });
 

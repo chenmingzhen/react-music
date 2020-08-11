@@ -91,7 +91,7 @@ class ProgressBar extends React.PureComponent {
   }
   setProgressOffset(percent) {
     setTimeout(() => {
-      if (percent > 0) {
+      if (percent > 0 && this.refs.progressBar) {
         const barWidth = this.refs.progressBar.clientWidth;
         const offsetWidth = percent * barWidth;
         this._offset(offsetWidth);
