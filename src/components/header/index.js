@@ -18,7 +18,7 @@ class Header extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      title: ["个性推荐", "每日歌曲推荐", "歌单", "排行榜", "歌手", "最新音乐"],
+      title: ["个性推荐", "每日歌曲推荐", "歌单", "排行榜", "歌手"],
       dots: [
         {
           font: "iconfont  icon-shouye",
@@ -141,7 +141,7 @@ class Header extends React.PureComponent {
           </div>
           <div className="search-wrapper">
             <div className="search">
-              <i className={"iconfont icon-chazhao"} />
+              <i className={"iconfont icon-chazhao"} title="按回车!!!" />
               <input
                 type="text"
                 placeholder={"搜索"}

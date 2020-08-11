@@ -81,5 +81,9 @@
   /* globla scss */
   .ant-pagination {
     text-align: center;
+    .ant-pagination-item-link,.ant-pagination-item{
+      border-radius: 50%;
+    }
   }
+
 }

@@ -4,7 +4,7 @@
 .selfInf {
   display: flex;
   align-items: center;
-  height: 15%;
+  height: 10%;
 
   .avatar {
     img {
@@ -25,7 +25,7 @@
 .list-scroll {
   padding-top: 0.8rem;
   overflow-y: auto;
-  height: 85%;
+  height: 90%;
   position: relative;
 
   .item-wrapper {

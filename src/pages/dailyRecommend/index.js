@@ -42,7 +42,9 @@ class DailyRecommend extends React.PureComponent {
             </div>
             <div className={"desc"}>根据你的音乐口味生成，每天6:00更新</div>
           </div>
-          <div className={"play-all"}>播放全部</div>
+          <div className={"play-all"} onClick={this.clickPlay.bind(this)}>
+            播放全部
+          </div>
         </div>
         {this.renderSongList()}
       </div>
@@ -73,7 +75,12 @@ class DailyRecommend extends React.PureComponent {
     return (
       <>
         {listData.length > 0 ? (
-          <SongList songList={listData}></SongList>
+          <SongList
+            songList={listData}
+            onRef={(ref) => {
+              this.child = ref;
+            }}
+          />
         ) : (
           <div
             style={{
@@ -110,6 +117,12 @@ class DailyRecommend extends React.PureComponent {
         return "星期日";
       default:
         break;
+    }
+  }
+
+  clickPlay() {
+    if (this.child) {
+      this.child.playAll();
     }
   }
 }
