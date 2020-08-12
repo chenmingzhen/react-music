@@ -1,68 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <a href="https://ant.design">
+    <img width="200" src="https://camo.githubusercontent.com/dfbc53b28e2cbd8c1548e98b07edfc69170add2a/687474703a2f2f3139332e3131322e3137352e3139382f6d757369632f6d75736963616c2e706e67">
+  </a>
+</p>
 
-## Available Scripts
+<h1 align="center">🎵🎵React Music</h1>
 
-In the project directory, you can run:
+<div align="center">
 
-### `npm start`
+<h2>React类组件构建的ReactAPP</h2>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Stars](https://img.shields.io/github/stars/chenmingzhen/React-music.svg?style=social)
+![Forks](https://img.shields.io/github/forks/chenmingzhen/React-music.svg?style=social)
+![Watch](https://img.shields.io/github/watchers/chenmingzhen/React-music.svg?style=social)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+[npm-image]: http://img.shields.io/npm/v/antd.svg?style=flat-square
+</div>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📷 Photo
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 😘 支持库
+- 🍇 React 全家桶
+- 🎨 antd 用过就知道爽
+- 🛴 immutable 管理Redux数据
+- 🍎 autoprefixer 打包带前缀
+- 🛠 prettier 代码规范
+- 👍 publish.js 事件派发
+- 🌈 sass css 预处理语言
+- 🎄 js-cookie 管理Cookie
+- ✈ better-scroll 歌词滚动(这库超强)
+- 🤣 classnames 三目运算符再见
+- 💍 web-storage-cache 管理localStorage
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## ✈ 已完成功能
+- [x] 手机号码登录
+- [x] 播放
+- [x] 点赞收藏
+- [x] 喜欢歌曲 收藏歌单
+- [x] 收藏歌单
+- [x] 个性推荐
+- [x] 每日推荐
+- [x] 歌单列表
+- [x] 排行榜
+- [x] 歌手筛选
+- [x] 歌手详情页
+- [x] 专辑页
+- [x] MV播放
+- [x] 分享
+- [x] 搜索 搜索页面
+- [x] 用户页面
+- [x] 换肤
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ❌ Todo
+- [ ] 性能优化
+- [ ] 错误边界
+- [ ] hooks重构部分组件
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🖥 运行环境
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+首选Chrome FF 部分浏览器无法进去浏览地址 
+手机端点击全屏再横屏效果更佳 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🚀 后台数据
+[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🎉 预览地址
+[Ethan](http://193.112.175.198/Ethan/#/)
 
-## Learn More
+## 📦 运行
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm install 
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run start
+```
 
-### Code Splitting
+## 🔈 说明
+1.clone到本地后,使用自己的node后台,修改[request.js](https://github.com/chenmingzhen/react-music/blob/master/src/api/request.js)的默认url,修改分享的Url[Shared](https://github.com/chenmingzhen/react-music/blob/master/src/assets/js/constants.js)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+2.本项目默认使用Hash模式，若想去掉丑陋的#，请修改Route的Path ，push要带上Nginx或Tomcat或其他配置的地址 ，如果有需要 issue联系
 
-### Analyzing the Bundle Size
+3.欢迎clone与提出改善意见
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+4.本项目用于学习！绝不可用于违犯 使用盗版链接
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
