@@ -5,7 +5,8 @@ import { timestampToTime } from "../../util/util";
 import "./_style.scss";
 import ChartList from "../../components/chartList";
 import Comment from "../../components/comment";
-
+import { subAlbum, albumDynamic } from "../../api/album";
+import { message } from "antd";
 class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ class AlbumDetail extends React.Component {
       album: {},
       songs: [],
       hotComments: [],
+      isSub: false,
     };
   }
 
@@ -25,6 +27,11 @@ class AlbumDetail extends React.Component {
         this.setState({ songs: data.songs, album: data.album });
       }
     });
+    albumDynamic(id, this.source.token).then((data) => {
+      if (data) {
+        this.setState({ isSub: data.isSub });
+      }
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -35,6 +42,13 @@ class AlbumDetail extends React.Component {
           (data) => {
             if (data && data.code === 200) {
               this.setState({ songs: data.songs, album: data.album });
+            }
+          }
+        );
+        albumDynamic(nextProps.match.params.id, this.source.token).then(
+          (data) => {
+            if (data) {
+              this.setState({ isSub: data.isSub });
             }
           }
         );
@@ -53,7 +67,7 @@ class AlbumDetail extends React.Component {
     );
   }
   renderTop() {
-    const { album } = this.state;
+    const { album, isSub } = this.state;
     if (!album.name) return;
     return (
       <div className={"top-wrapper"}>
@@ -62,7 +76,12 @@ class AlbumDetail extends React.Component {
           <i className={"cd"} />
         </div>
         <div className="text-wrapper">
-          <div className="name">{album.name}</div>
+          <div className="title">
+            <div className="name">{album.name}</div>
+            <div className="sub" onClick={this._subAlbum.bind(this)}>
+              {isSub ? "取消收藏" : "收藏"}
+            </div>
+          </div>
           <div className="singer-wrapper">
             <div className="avatar-wrapper">
               <img
@@ -120,6 +139,22 @@ class AlbumDetail extends React.Component {
 
   clickSinger(id) {
     this.props.history.push({ pathname: "/singer/singerdetail/" + id });
+  }
+
+  _subAlbum() {
+    //连续解构
+    const {
+      album: { id },
+      isSub,
+    } = this.state;
+    let t = 1;
+    if (isSub === true) t = 2;
+    subAlbum(id, t, this.source.token).then((data) => {
+      if (data && data.code === 200) {
+        message.success("操作成功，数据存在延迟");
+        this.setState({ isSub: !isSub });
+      }
+    });
   }
 }
 

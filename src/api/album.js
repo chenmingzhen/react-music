@@ -16,3 +16,23 @@ export function getAlbumComment(id, offset, cancelToken) {
     cancelToken,
   });
 }
+
+export function subAlbum(id, t, cancelToken) {
+  const url = "/album/sub";
+  return request({
+    url,
+    method: "get",
+    params: { id, t },
+    cancelToken,
+  });
+}
+
+export function albumDynamic(id, cancelToken) {
+  const url = "/album/detail/dynamic";
+  return request({
+    url,
+    method: "get",
+    params: { id },
+    cancelToken,
+  });
+}

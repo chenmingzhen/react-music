@@ -6,6 +6,8 @@ import {
   getPlayList,
   getSubAlbum,
   getSubscribeSinger,
+  subUser,
+  userFollow,
 } from "../../api/selfInfomation";
 import { message } from "antd";
 import { renderSpin } from "../../util/renderSpin";
@@ -24,6 +26,8 @@ class UserInf extends React.Component {
       subscribeSinger: {},
       tab: 0,
       id: null,
+      followed: false,
+      userFollow: [],
     };
   }
 
@@ -94,7 +98,10 @@ class UserInf extends React.Component {
       subscribeSinger,
       tab,
       id,
+      followed,
+      userFollow,
     } = this.state;
+    console.log(userData);
     if (userData === null) return renderSpin();
     return (
       <div className={"user-inf-wrapper"}>
@@ -112,6 +119,21 @@ class UserInf extends React.Component {
               alt={userData.profile.nickname}
             />
           </div>
+          {id === null ? (
+            ""
+          ) : (
+            <div
+              className={classnames({ sub: true, active: followed })}
+              onClick={this.clickSub.bind(this, userData.profile.userId)}
+            >
+              {followed ? "取消关注" : "关注"}
+            </div>
+          )}
+          <div className="number-wrapper">
+            <div className="follows">关注:{userData.profile.follows}</div>
+            <div className="followed">粉丝:{userData.profile.followeds}</div>
+          </div>
+          <div className="signature">{userData.profile.signature}</div>
           <div className={"name"}>{userData.profile.nickname}</div>
         </div>
         <div className={"nav-wrapper"}>
@@ -143,6 +165,15 @@ class UserInf extends React.Component {
               >
                 <span className={"text"}>歌手</span>
                 <span className={"count"}>{subscribeSinger.length}</span>
+              </div>
+              <div
+                className={classnames({ "nav-item": true, active: tab === 3 })}
+                onClick={() => {
+                  this.setState({ tab: 3 });
+                }}
+              >
+                <span className={"text"}>用户</span>
+                <span className={"count"}>{userFollow.length}</span>
               </div>
             </>
           ) : (
@@ -251,6 +282,43 @@ class UserInf extends React.Component {
             </div>
           </div>
         )}
+        {tab === 3 && id === null && (
+          <div className="follow-wrapper">
+            <item className="item-wrapper">
+              {userFollow.map((item) => {
+                return (
+                  <div
+                    className="item"
+                    key={getOnlyHash()}
+                    onClick={() => {
+                      this.setState({
+                        id: item.userId,
+                        userData: null,
+                        playList: [],
+                        subAlbum: [],
+                        subscribeSinger: [],
+                        tab: 0,
+                        followed: false,
+                        userFollow: [],
+                      });
+                      setTimeout(() => {
+                        this.getData();
+                      });
+                    }}
+                  >
+                    <div className="img-wrapper">
+                      <img src={item.avatarUrl} alt={item.nickname} />
+                    </div>
+                    <div className="name">{item.nickname}</div>
+                    <div className="signature" title={item.signature}>
+                      {item.signature}
+                    </div>
+                  </div>
+                );
+              })}
+            </item>
+          </div>
+        )}
       </div>
     );
   }
@@ -270,14 +338,15 @@ class UserInf extends React.Component {
         getPlayList(userId, this.source.token),
         getSubAlbum(this.source.token),
         getSubscribeSinger(this.source.token),
+        userFollow(userId, 50, this.source.token),
       ]);
       p.then((array) => {
-        console.log(array);
         this.setState({
           userData: array[0],
           playList: array[1].playlist,
           subAlbum: array[2].data,
           subscribeSinger: array[3].data,
+          userFollow: array[4].follow,
         });
       }).catch((e) => {
         message.error("出错啦 请刷新页面再试一次");
@@ -288,15 +357,27 @@ class UserInf extends React.Component {
         getPlayList(id, this.source.token),
       ]);
       p.then((array) => {
-        console.log(array);
         this.setState({
           userData: array[0],
           playList: array[1].playlist,
+          followed: array[0].profile.followed,
         });
       }).catch((e) => {
         message.error("出错啦 请刷新页面再试一次");
       });
     }
+  }
+
+  clickSub(id) {
+    const { followed } = this.state;
+    let t = 1;
+    if (followed === true) t = 2;
+    subUser(id, t, this.source.token).then((data) => {
+      if (data && data.code === 200) {
+        message.success("操作成功 数据存在延迟");
+        this.setState({ followed: !followed });
+      }
+    });
   }
 }
 

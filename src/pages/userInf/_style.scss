@@ -14,7 +14,7 @@
 
     > .profile-bg {
       width: 100%;
-      height: 20rem;
+      height: 30rem;
       position: absolute;
     }
 
@@ -31,8 +31,55 @@
       }
     }
 
-    > .name {
+    > .sub {
+      position: relative;
       margin-top: 2rem;
+      cursor: pointer;
+      padding: .2rem .7rem;
+      background-color: white;
+      border-radius: 0.625rem;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background-color .4s;
+
+      &:hover {
+        background-color: $color-theme;
+      }
+
+      &.active {
+        background-color: $color-theme;
+      }
+    }
+
+    > .number-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 1rem;
+      cursor: pointer;
+
+      > .followed, > .follows {
+        margin: 0 .2rem;
+        font-size: 1rem;
+        color: #4D4D4D;
+      }
+    }
+
+    > .signature {
+      position: relative;
+      margin-top: 1rem;
+      width: 30rem;
+      max-height: 3.5rem;
+      font-size: 1.2rem;
+      font-family: Hind;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.65);
+      @include ellipsis2(3)
+    }
+
+    > .name {
+      margin-top: 1.5rem;
       position: relative;
       font-family: Hind;
       font-size: 2rem;
@@ -44,7 +91,7 @@
   > .nav-wrapper {
     display: flex;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 10rem;
     padding: 1rem 10rem;
     @include border_bottom;
 
@@ -297,6 +344,53 @@
             margin-left: .7rem;
             @include subTitle;
           }
+        }
+      }
+    }
+  }
+
+  > .follow-wrapper {
+    margin-top: 1rem;
+    padding: 0 12rem;
+
+    > .item-wrapper {
+      width: 100%;
+
+      > .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem .5rem;
+        cursor: pointer;
+        margin: .5rem;
+        font-size: 1.2rem;
+        @include header_title;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+
+        > .img-wrapper {
+          position: relative;
+          width: 4rem;
+          padding-top: 4rem;
+          height: 0;
+
+          > img {
+            @include imgMixin;
+            border-radius: 0.3125rem;
+          }
+        }
+
+        > .name {
+          margin-left: 1rem;
+        }
+
+        > .signature {
+          flex: 1;
+          margin-left: 2rem;
+          @include ellipsis;
+          @include text_color;
         }
       }
     }

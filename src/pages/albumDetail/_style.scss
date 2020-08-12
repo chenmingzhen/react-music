@@ -31,8 +31,21 @@
     > .text-wrapper {
       margin-left: 4rem;
 
-      > .name {
-        font-size: 2rem;
+      >.title{
+        display: flex;
+        align-items: center;
+        > .name {
+          font-size: 2rem;
+        }
+        >.sub{
+          margin-left: 2rem;
+          font-size: 1.2rem;
+          color: rgba(255,255,255,.8);
+          cursor: pointer;
+          padding: .2rem 1rem;
+          background-color: #c7332f;
+          border-radius: 0.3125rem;
+        }
       }
 
       > .singer-wrapper {

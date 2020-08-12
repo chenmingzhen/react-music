@@ -40,3 +40,13 @@ export function getSubAlbum(cancelToken) {
   const url = "/album/sublist";
   return request({ url, method: "get", params: { limit: 50 }, cancelToken });
 }
+
+export function subUser(id, t, cancelToken) {
+  const url = "/follow";
+  return request({ url, method: "get", params: { id, t }, cancelToken });
+}
+
+export function userFollow(uid, limit, cancelToken) {
+  const url = "/user/follows";
+  return request({ url, method: "get", params: { uid, limit }, cancelToken });
+}
