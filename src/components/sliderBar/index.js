@@ -133,7 +133,7 @@ class SliderBar extends React.PureComponent {
     //如果存在cookie
     if (
       Cookies.get("MUSIC_U") &&
-      Cookies.get("_csrf") &&
+      Cookies.get("__csrf") &&
       Cookies.get("__remember_me")
     ) {
       //localstorage没有被清除
@@ -148,7 +148,7 @@ class SliderBar extends React.PureComponent {
       } else {
         //localstorage被清除了 移除所有信息
         Cookies.remove("MUSIC_U");
-        Cookies.remove("_csrf");
+        Cookies.remove("__csrf");
         Cookies.remove("__remember_me");
       }
     }
@@ -188,7 +188,7 @@ class SliderBar extends React.PureComponent {
         message.success("成功退出");
         this.status = "未登录";
         Cookies.remove("MUSIC_U");
-        Cookies.remove("_csrf");
+        Cookies.remove("__csrf");
         Cookies.remove("__remember_me");
         removeLocalStorage("user");
         this.props.setUser({});
