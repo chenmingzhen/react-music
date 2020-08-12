@@ -11,7 +11,10 @@ import { createSong } from "../../assets/js/song";
 import { createMv } from "../../assets/js/mv";
 import axios from "axios";
 import { Spin } from "antd";
-import Banner from "../../components/content";
+import { getBanner } from "../../api/recommend";
+
+import Banner from "../../components/content/banner";
+import { loading } from "../../components/loading";
 //const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));
@@ -24,6 +27,7 @@ class Recommend extends React.PureComponent {
       playListData: [],
       newSongListData: [],
       mvData: [],
+      bannerData: [],
     };
   }
 
@@ -31,6 +35,13 @@ class Recommend extends React.PureComponent {
     this.props.changeLoadingDone(true);
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
+
+    getBanner(this.source.token, this.source.token).then((data) => {
+      if (data) {
+        this.setState(() => ({ bannerData: data.banners }));
+      }
+    });
+
     getOfficialColumn(10, this.source.token)
       .then((data) => {
         this.setState({ playListData: data.result });
@@ -61,40 +72,28 @@ class Recommend extends React.PureComponent {
   }
 
   render() {
-    const { playListData, newSongListData, mvData } = this.state;
+    const { playListData, newSongListData, mvData, bannerData } = this.state;
     return (
       <React.Fragment>
-        <Suspense fallback={<React.Fragment />}>
-          {playListData.length > 0 &&
-          newSongListData.length > 0 &&
-          mvData.length > 0 ? (
-            <div>
-              <Banner />
-              <div className={"recommend-title"}>推荐歌单</div>
-              <PlayList playListData={this.state.playListData} />
-              <div className={"recommend-title"}>最新音乐</div>
-              {this.state.newSongListData.length === 10 ? (
-                <NewSongList newSongList={this.state.newSongListData} />
-              ) : (
-                <Spin />
-              )}
-              <div className={"recommend-title"}>推荐mv</div>
-              <MvList mvData={this.state.mvData} />
-            </div>
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Spin />
-            </div>
-          )}
-        </Suspense>
+        {playListData.length > 0 &&
+        newSongListData.length > 0 &&
+        mvData.length > 0 &&
+        bannerData.length > 0 ? (
+          <div>
+            {this._loading()}
+            <Banner bannerData={bannerData} />
+            <div className={"recommend-title"}>推荐歌单</div>
+            <PlayList playListData={this.state.playListData} />
+            <div className={"recommend-title"}>最新音乐</div>
+            {this.state.newSongListData.length === 10 && (
+              <NewSongList newSongList={this.state.newSongListData} />
+            )}
+            <div className={"recommend-title"}>推荐mv</div>
+            <MvList mvData={this.state.mvData} />
+          </div>
+        ) : (
+          (this._loading = loading())
+        )}
       </React.Fragment>
     );
   }

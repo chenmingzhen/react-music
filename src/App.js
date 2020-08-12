@@ -15,7 +15,7 @@ import "./assets/sass/transition.scss";
 import Player from "./components/player";
 import classnames from "classnames";
 
-const antIcon = <LoadingOutlined style={{ fontSize: 48, color: "red" }} spin />;
+const antIcon = <LoadingOutlined style={{ fontSize: 64, color: "red" }} spin />;
 
 const Discovery = lazy(() => import("./pages/discovery"));
 const PlayList = lazy(() => import("./pages/playList"));
@@ -81,7 +81,7 @@ function App(props) {
             <Suspense
               fallback={
                 <div className={"loading-wrapper"}>
-                  <Spin tip={"loading"} indicator={antIcon} />
+                  <Spin tip={"加载中"} indicator={antIcon} />
                 </div>
               }
             >

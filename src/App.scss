@@ -85,5 +85,12 @@
       border-radius: 50%;
     }
   }
+  .ant-spin-spinning{
+    color:$color-theme !important;
+    .ant-spin-text{
+      font-weight: 700 !important;
+      font-size: 1.2rem !important;
+    }
+  }
 
 }
