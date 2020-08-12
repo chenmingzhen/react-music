@@ -54,7 +54,6 @@ class UserInf extends React.Component {
     const nextRouteMap = routeBreakUp(nextProps.location.search);
     const currentId = currentRouteMap.get("id");
     const nextId = nextRouteMap.get("id");
-    console.log(currentId, nextId);
     if (currentId && nextId && currentId !== nextId) {
       setTimeout(() => {
         this.setState({

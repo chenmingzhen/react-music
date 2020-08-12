@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import "./_style.scss";
 import { changeLoading } from "../../store/actionCreator";
 import { connect } from "react-redux";
@@ -14,7 +14,6 @@ import { renderSpin } from "../../util/renderSpin";
 import { getBanner } from "../../api/recommend";
 
 import Banner from "../../components/content/banner";
-import { loading } from "../../components/loading";
 //const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));

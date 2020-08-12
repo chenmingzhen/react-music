@@ -16,7 +16,6 @@ import {
   setPlaying,
   setPlayList,
 } from "../player/store/actionCreator";
-import { loading } from "../loading";
 
 class Search extends React.PureComponent {
   constructor() {

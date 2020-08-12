@@ -98,7 +98,11 @@ class SongSheet extends React.PureComponent {
             <div className={"top-wrapper"}>
               <div
                 className={"img-wrapper"}
-                onClick={this.clickRandom.bind(this, randomList.id)}
+                onClick={() => {
+                  if (randomList && randomList.id) {
+                    this.clickRandom.bind(this, randomList.id);
+                  }
+                }}
               >
                 {randomList && randomList.coverImgUrl && (
                   <img src={randomList.coverImgUrl} alt="" loading="lazy" />
