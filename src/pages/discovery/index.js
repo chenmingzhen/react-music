@@ -10,7 +10,7 @@ import {
 import { createSong } from "../../assets/js/song";
 import { createMv } from "../../assets/js/mv";
 import axios from "axios";
-import { Spin } from "antd";
+import { renderSpin } from "../../util/renderSpin";
 import { getBanner } from "../../api/recommend";
 
 import Banner from "../../components/content/banner";
@@ -80,7 +80,6 @@ class Recommend extends React.PureComponent {
         mvData.length > 0 &&
         bannerData.length > 0 ? (
           <div>
-            {this._loading()}
             <Banner bannerData={bannerData} />
             <div className={"recommend-title"}>推荐歌单</div>
             <PlayList playListData={this.state.playListData} />
@@ -92,7 +91,7 @@ class Recommend extends React.PureComponent {
             <MvList mvData={this.state.mvData} />
           </div>
         ) : (
-          (this._loading = loading())
+          renderSpin()
         )}
       </React.Fragment>
     );

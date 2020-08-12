@@ -183,7 +183,7 @@ class PlayList extends React.Component {
             height: "100%",
           }}
         >
-          <Spin tip={"loading"} indicator={antIcon} />
+          <Spin tip={"加载中"} indicator={antIcon} />
         </div>
       );
     }
