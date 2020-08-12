@@ -1,5 +1,6 @@
 import React from "react";
 import { getPlayList, subPlayList } from "../../api/playlist";
+import { getSongDetail } from "../../api/singer";
 import { timestampToTime } from "../../util/util";
 import "./_style.scss";
 import { changeLoading } from "../../store/actionCreator";
@@ -21,18 +22,31 @@ class PlayList extends React.Component {
       id: Number,
       status: 1,
       subscribe: false,
+      //trackIds:[],
+      tracks: null,
     };
   }
 
-  getData() {
-    getPlayList(this.props.match.params.id, this.source.token)
+  async getData() {
+    await getPlayList(this.props.match.params.id, this.source.token)
       .then((data) => {
         if (data) {
-          this.setState(() => ({
-            listData: data.playlist,
-            id: this.props.match.params.id,
-            subscribe: data.playlist.subscribed,
-          }));
+          /*  this.setState(() => ({
+            
+            //trackIds:data.playlist.trackIds
+          })); */
+          setTimeout(async () => {
+            const trackIds = data.playlist.trackIds.map(({ id }) => id);
+            await getSongDetail(trackIds.join()).then((tracks) => {
+              this.setState({
+                tracks,
+                listData: data.playlist,
+                id: this.props.match.params.id,
+                subscribe: data.playlist.subscribed,
+              });
+              return;
+            });
+          });
           this.props.changeLoadingDone(true);
         }
       })
@@ -59,8 +73,12 @@ class PlayList extends React.Component {
   render() {
     this.getData();
     let data = this.state.listData;
-    const { subscribe } = this.state;
-    if (data.creator && String(data.id) === this.props.match.params.id) {
+    const { subscribe, tracks } = this.state;
+    if (
+      data.creator &&
+      String(data.id) === this.props.match.params.id &&
+      tracks !== null
+    ) {
       return (
         <div className={"self-playlist-wrapper"}>
           <div className={"detail-wrapper"}>
@@ -141,8 +159,9 @@ class PlayList extends React.Component {
           </div>
           {this.state.status === 1 ? (
             <div>
+              {/* tracks !== null  */}
               <SongList
-                songList={this.state.listData.tracks}
+                songList={tracks.songs}
                 onRef={(ref) => {
                   this.child = ref;
                 }}
