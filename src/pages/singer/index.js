@@ -77,7 +77,7 @@ class Singer extends React.PureComponent {
       });
     } else {
       getSinger(this.getParams(true), this.source.token).then((data) => {
-        this.setState({ singerList: data.artists });
+        if (data) this.setState({ singerList: data.artists });
       });
     }
   }
@@ -278,7 +278,7 @@ class Singer extends React.PureComponent {
     //异步setState 需要等待state更新
     setTimeout(() => {
       getSinger(this.getParams(), this.source.token).then((data) => {
-        this.setState({ singerList: data.artists });
+        if (data) this.setState({ singerList: data.artists });
       });
     });
   }

@@ -26,7 +26,8 @@ import { message } from "antd";
 
 //設置主題
 (function () {
-  const name = getLocalStorage("_theme");
+  let name = getLocalStorage("_theme");
+  if (name === null) name = "theme-white";
   window.document.documentElement.setAttribute("data-theme", name);
 })();
 
@@ -35,11 +36,11 @@ message.success(getBrowser());
 
 ReactDOM.render(
   <React.Fragment>
-    <BrowserRouter>
+    <HashRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   </React.Fragment>,
   document.getElementById("root")
 );

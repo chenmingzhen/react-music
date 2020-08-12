@@ -28,7 +28,14 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-  line-height: 1;
+  //line-height: 1;
+  //注意这个行高 重要
+  line-height: 1.5715;
+}
+
+p{
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 
 ol, ul {

@@ -27,12 +27,14 @@ class PlayList extends React.Component {
   getData() {
     getPlayList(this.props.match.params.id, this.source.token)
       .then((data) => {
-        this.setState(() => ({
-          listData: data.playlist,
-          id: this.props.match.params.id,
-          subscribe: data.playlist.subscribed,
-        }));
-        this.props.changeLoadingDone(true);
+        if (data) {
+          this.setState(() => ({
+            listData: data.playlist,
+            id: this.props.match.params.id,
+            subscribe: data.playlist.subscribed,
+          }));
+          this.props.changeLoadingDone(true);
+        }
       })
       .catch((e) => {});
   }

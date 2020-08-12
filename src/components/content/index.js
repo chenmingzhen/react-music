@@ -14,7 +14,7 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bannerData: {},
+      bannerData: [],
     };
   }
 
@@ -22,7 +22,9 @@ class Content extends React.Component {
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
     getBanner(this.source.token, this.source.token).then((data) => {
-      this.setState(() => ({ bannerData: data.banners }));
+      if (data) {
+        this.setState(() => ({ bannerData: data.banners }));
+      }
     });
   }
 

@@ -11,7 +11,8 @@ import { createSong } from "../../assets/js/song";
 import { createMv } from "../../assets/js/mv";
 import axios from "axios";
 import { Spin } from "antd";
-const Banner = lazy(() => import("../../components/content"));
+import Banner from "../../components/content";
+//const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));
 const MvList = lazy(() => import("../../components/mvList"));
@@ -60,22 +61,39 @@ class Recommend extends React.PureComponent {
   }
 
   render() {
+    const { playListData, newSongListData, mvData } = this.state;
     return (
       <React.Fragment>
         <Suspense fallback={<React.Fragment />}>
-          <div>
-            <Banner />
-            <div className={"recommend-title"}>推荐歌单</div>
-            <PlayList playListData={this.state.playListData} />
-            <div className={"recommend-title"}>最新音乐</div>
-            {this.state.newSongListData.length === 10 ? (
-              <NewSongList newSongList={this.state.newSongListData} />
-            ) : (
+          {playListData.length > 0 &&
+          newSongListData.length > 0 &&
+          mvData.length > 0 ? (
+            <div>
+              <Banner />
+              <div className={"recommend-title"}>推荐歌单</div>
+              <PlayList playListData={this.state.playListData} />
+              <div className={"recommend-title"}>最新音乐</div>
+              {this.state.newSongListData.length === 10 ? (
+                <NewSongList newSongList={this.state.newSongListData} />
+              ) : (
+                <Spin />
+              )}
+              <div className={"recommend-title"}>推荐mv</div>
+              <MvList mvData={this.state.mvData} />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Spin />
-            )}
-            <div className={"recommend-title"}>推荐mv</div>
-            <MvList mvData={this.state.mvData} />
-          </div>
+            </div>
+          )}
         </Suspense>
       </React.Fragment>
     );
