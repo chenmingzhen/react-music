@@ -107,7 +107,14 @@ class Singer extends React.PureComponent {
           <div className="carousel-wrapper">
             <div className={"text-wrapper"}>
               <div className={"text"}>我关注的歌手</div>
-              <div className={"text-more"}>更多</div>
+              <div
+                className={"text-more"}
+                onClick={() => {
+                  this.props.history.push({ pathname: "/userInf" });
+                }}
+              >
+                更多
+              </div>
             </div>
             <Carousel />
           </div>

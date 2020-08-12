@@ -2,14 +2,15 @@ import React from "react";
 import { getSingerDesc, getSingerInf, subSinger } from "../../api/singer";
 import axios from "axios";
 import "./_style.scss";
-import { Popover, Spin } from "antd";
+import { message, Popover, Spin } from "antd";
 import ChartList from "../../components/chartList";
 import AlbumList from "../../components/albumList";
 import MvList from "../../components/mvList/singerMvList";
 import BackTop from "../../components/backTop";
 import { getOnlyHash } from "../../assets/js/util";
-import { message } from "antd";
 import { connect } from "react-redux";
+import { ScrollTo } from "../../util/scrollTo";
+
 class singerDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -52,6 +53,8 @@ class singerDetail extends React.Component {
   }
 
   render() {
+    this.recordHeight();
+
     return (
       <div className={"singer-detail-wrapper"}>
         {this.renderInf()}
@@ -69,7 +72,7 @@ class singerDetail extends React.Component {
       this.renderSpin();
     }
     return (
-      <div className={"singer-inf"}>
+      <div className={"singer-inf"} id={"inf"}>
         <div className={"img-wrapper"}>
           <img src={artist.picUrl} alt="" title={artist.name} />
         </div>
@@ -95,18 +98,33 @@ class singerDetail extends React.Component {
             </Popover>
           </div>
           <div className="work">
-            <a href="#hot-song-wrapper">
-              <div className="song">
+            <a>
+              <div
+                className="song"
+                onClick={() => {
+                  ScrollTo("content-wrapper", this.songHeight, 10, 30);
+                }}
+              >
                 单曲 <strong title={"单曲"}>{artist.musicSize}</strong>
               </div>
             </a>
-            <a href="#album-wrapper">
-              <div className="album">
+            <a>
+              <div
+                className="album"
+                onClick={() => {
+                  ScrollTo("content-wrapper", this.albumHeight, 10, 30);
+                }}
+              >
                 专辑 <strong title={"专辑"}>{artist.albumSize}</strong>
               </div>
             </a>
-            <a href="#mv-wrapper">
-              <div className="mv">
+            <a>
+              <div
+                className="mv"
+                onClick={() => {
+                  ScrollTo("content-wrapper", this.mvHeight, 10, 30);
+                }}
+              >
                 Mv <strong title={"Mv"}>{artist.mvSize}</strong>
               </div>
             </a>
@@ -164,7 +182,7 @@ class singerDetail extends React.Component {
     const { hotSongs, showAllSong, chartListKey } = this.state;
     if (hotSongs.length === 0) return;
     return (
-      <div className={"hot-song-wrapper"} id={"hot-song-wrapper"}>
+      <div className={"hot-song-wrapper"} id={"hot-song-wrapper"} ref={"hot"}>
         <div className="text-wrapper">
           <div className={"title"}>热门歌曲</div>
           <div
@@ -233,8 +251,8 @@ class singerDetail extends React.Component {
     //const { moreDesc } = this.state;
     const { id } = this.props.match.params;
     /*if (moreDesc.code && moreDesc.code === 200) {
-      return "";
-    }*/
+          return "";
+        }*/
     getSingerDesc(id, this.source.token).then((data) => {
       this.setState({ moreDesc: data });
     });
@@ -296,6 +314,20 @@ class singerDetail extends React.Component {
         message.success("操作成功 数据存在延误！！");
       }
     });
+  }
+
+  recordHeight() {
+    setTimeout(() => {
+      const song = document.getElementById("hot-song-wrapper");
+      const album = document.getElementById("album-wrapper");
+      const mv = document.getElementById("mv-wrapper");
+      const infHeight = document.getElementById("inf").offsetHeight;
+      if (song && mv && album) {
+        this.songHeight = infHeight;
+        this.albumHeight = this.songHeight + song.offsetHeight;
+        this.mvHeight = this.albumHeight + album.offsetHeight;
+      }
+    }, 1000);
   }
 }
 
