@@ -19,7 +19,20 @@
 </div>
 
 ## 📷 Photo
-
+![pic_1](src/resource/discovery.png)
+![pic_2](src/resource/daily.png)
+![pic_3](src/resource/playlist2.png)
+![pic_4](src/resource/rank.png)
+![pic_5](src/resource/singer.png)
+![pic_6](src/resource/singerdetail.png)
+![pic_7](src/resource/search.png)
+![pic_8](src/resource/searchdetail.png)
+![pic_9](src/resource/user.png)
+![pic_10](src/resource/mvdetail.png)
+![pic_11](src/resource/albumdetail.png)
+![pic_12](src/resource/playlist.png)
+![pic_13](src/resource/play.png)
+![pic_14](src/resource/comment.png)
 
 ## 😘 支持库
 - 🍇 React 全家桶
@@ -60,6 +73,11 @@
 - [ ] 错误边界
 - [ ] hooks重构部分组件
 
+## 🐛 Bug
+- ❌ 谷歌浏览器最小字体12px限制 导致缩小一定范围内容样式异常 点击progress-bar出现异常
+- ❌ Edge 点击progress-bar点击无反应
+- ❌ 点击历史记录再点击搜索框出现加载中message
+- ❌ 线上每日推荐获取偶尔301 需要先登录再点击才有数据
 
 ## 🖥 运行环境
 
@@ -87,8 +105,8 @@ npm run start
 
 2.本项目默认使用Hash模式，若想去掉丑陋的#，请修改Route的Path ，push要带上Nginx或Tomcat或其他配置的地址 ，如果有需要 issue联系
 
-3.欢迎clone与提出改善意见
+3.😜😜欢迎clone与提出改善意见
 
-4.本项目用于学习！绝不可用于违犯 使用盗版链接
+4.❗❗本项目用于学习！绝不可用于违犯 使用盗版链接❗❗
 
 
