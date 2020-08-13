@@ -14,16 +14,22 @@ import { renderSpin } from "../../util/renderSpin";
 import "./_style.scss";
 import { getOnlyHash, routeBreakUp } from "../../assets/js/util";
 import classnames from "classnames";
-import { timestampToTime } from "../../util/util";
+import { getsubMv } from "../../api/mv";
+import {
+  filterCreator,
+  formatDuration,
+  timestampToTime,
+} from "../../util/util";
 
 class UserInf extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userData: null,
-      playList: {},
-      subAlbum: {},
-      subscribeSinger: {},
+      playList: [],
+      subAlbum: [],
+      subMv: [],
+      subscribeSinger: [],
       tab: 0,
       id: null,
       followed: false,
@@ -66,6 +72,7 @@ class UserInf extends React.Component {
           playList: [],
           subAlbum: [],
           subscribeSinger: [],
+          subMv: [],
         });
         setTimeout(() => {
           this.getData();
@@ -81,6 +88,7 @@ class UserInf extends React.Component {
           playList: [],
           subAlbum: [],
           subscribeSinger: [],
+          subMv: [],
         });
         setTimeout(() => {
           this.getData();
@@ -91,95 +99,133 @@ class UserInf extends React.Component {
   }
 
   render() {
+    const { userData } = this.state;
+    if (userData === null) return renderSpin();
+    return (
+      <div className={"user-inf-wrapper"}>
+        {this.renderInf()}
+        {this.renderFixTitle()}
+        {this.renderList()}
+      </div>
+    );
+  }
+
+  renderFixTitle() {
     const {
-      userData,
       playList,
       subAlbum,
       subscribeSinger,
       tab,
       id,
-      followed,
       userFollow,
+      subMv,
     } = this.state;
-    console.log(userData);
-    if (userData === null) return renderSpin();
     return (
-      <div className={"user-inf-wrapper"}>
-        <div className={"profile-wrapper"}>
-          <div
-            className={"profile-bg"}
-            style={{
-              background: `url(${userData.profile.backgroundUrl})`,
-              backgroundSize: "100%",
-            }}
-          />
-          <div className={"img-wrapper"}>
-            <img
-              src={userData.profile.avatarUrl}
-              alt={userData.profile.nickname}
-            />
-          </div>
-          {id === null ? (
-            ""
-          ) : (
+      <div className={"nav-wrapper"}>
+        <div
+          className={classnames({ "nav-item": true, active: tab === 0 })}
+          onClick={() => {
+            this.setState({ tab: 0 });
+          }}
+        >
+          <span className={"text"}>歌单</span>
+          <span className={"count"}>{playList.length}</span>
+        </div>
+        {id === null ? (
+          <>
             <div
-              className={classnames({ sub: true, active: followed })}
-              onClick={this.clickSub.bind(this, userData.profile.userId)}
+              className={classnames({ "nav-item": true, active: tab === 1 })}
+              onClick={() => {
+                this.setState({ tab: 1 });
+              }}
             >
-              {followed ? "取消关注" : "关注"}
+              <span className={"text"}>专辑</span>
+              <span className={"count"}>{subAlbum.length}</span>
             </div>
-          )}
-          <div className="number-wrapper">
-            <div className="follows">关注:{userData.profile.follows}</div>
-            <div className="followed">粉丝:{userData.profile.followeds}</div>
-          </div>
-          <div className="signature">{userData.profile.signature}</div>
-          <div className={"name"}>{userData.profile.nickname}</div>
+            <div
+              className={classnames({ "nav-item": true, active: tab === 2 })}
+              onClick={() => {
+                this.setState({ tab: 2 });
+              }}
+            >
+              <span className={"text"}>歌手</span>
+              <span className={"count"}>{subscribeSinger.length}</span>
+            </div>
+            <div
+              className={classnames({ "nav-item": true, active: tab === 3 })}
+              onClick={() => {
+                this.setState({ tab: 3 });
+              }}
+            >
+              <span className={"text"}>用户</span>
+              <span className={"count"}>{userFollow.length}</span>
+            </div>
+            <div
+              className={classnames({ "nav-item": true, active: tab === 4 })}
+              onClick={() => {
+                this.setState({ tab: 4 });
+              }}
+            >
+              <span className={"text"}>MV</span>
+              <span className={"count"}>{subMv.length}</span>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
+
+  renderInf() {
+    const { userData, id, followed } = this.state;
+    return (
+      <div className={"profile-wrapper"}>
+        <div
+          className={"profile-bg"}
+          style={{
+            background: `url(${userData.profile.backgroundUrl})`,
+            backgroundSize: "100%",
+          }}
+        />
+        <div className={"img-wrapper"}>
+          <img
+            src={userData.profile.avatarUrl}
+            alt={userData.profile.nickname}
+          />
         </div>
-        <div className={"nav-wrapper"}>
+        {id === null ? (
+          ""
+        ) : (
           <div
-            className={classnames({ "nav-item": true, active: tab === 0 })}
-            onClick={() => {
-              this.setState({ tab: 0 });
-            }}
+            className={classnames({ sub: true, active: followed })}
+            onClick={this.clickSub.bind(this, userData.profile.userId)}
           >
-            <span className={"text"}>歌单</span>
-            <span className={"count"}>{playList.length}</span>
+            {followed ? "取消关注" : "关注"}
           </div>
-          {id === null ? (
-            <>
-              <div
-                className={classnames({ "nav-item": true, active: tab === 1 })}
-                onClick={() => {
-                  this.setState({ tab: 1 });
-                }}
-              >
-                <span className={"text"}>专辑</span>
-                <span className={"count"}>{subAlbum.length}</span>
-              </div>
-              <div
-                className={classnames({ "nav-item": true, active: tab === 2 })}
-                onClick={() => {
-                  this.setState({ tab: 2 });
-                }}
-              >
-                <span className={"text"}>歌手</span>
-                <span className={"count"}>{subscribeSinger.length}</span>
-              </div>
-              <div
-                className={classnames({ "nav-item": true, active: tab === 3 })}
-                onClick={() => {
-                  this.setState({ tab: 3 });
-                }}
-              >
-                <span className={"text"}>用户</span>
-                <span className={"count"}>{userFollow.length}</span>
-              </div>
-            </>
-          ) : (
-            ""
-          )}
+        )}
+        <div className="number-wrapper">
+          <div className="follows">关注:{userData.profile.follows}</div>
+          <div className="followed">粉丝:{userData.profile.followeds}</div>
         </div>
+        <div className="signature">{userData.profile.signature}</div>
+        <div className={"name"}>{userData.profile.nickname}</div>
+      </div>
+    );
+  }
+
+  renderList() {
+    const {
+      playList,
+      subAlbum,
+      subscribeSinger,
+      tab,
+      id,
+      userFollow,
+      subMv,
+    } = this.state;
+    return (
+      <>
         {tab === 0 && (
           <div className={"playlist-wrapper"}>
             <div className={"fix-wrapper"}>
@@ -319,10 +365,42 @@ class UserInf extends React.Component {
             </item>
           </div>
         )}
-      </div>
+        {tab === 4 && id === null && (
+          <div className="mv-wrapper">
+            <div className="fix-wrapper">
+              <span className="title">MV</span>
+              <span className="title">歌手</span>
+              <span className="title">时长</span>
+            </div>
+            <div className="item-wrapper">
+              {subMv.map((item) => {
+                return (
+                  <div
+                    className="item"
+                    key={getOnlyHash()}
+                    onClick={() => {
+                      this.props.history.push({
+                        pathname: "/mvplay/" + item.vid,
+                      });
+                    }}
+                  >
+                    <div className="img-wrapper">
+                      <img src={item.coverUrl} title={item.title} alt="" />
+                    </div>
+                    <div className="title">{item.title}</div>
+                    <div className="singer">{filterCreator(item.creator)}</div>
+                    <div className="duration">
+                      {formatDuration(item.durationms)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </>
     );
   }
-
   componentWillUnmount() {
     this.source.cancel && this.source.cancel("cancel");
     this.setState = () => false;
@@ -339,6 +417,7 @@ class UserInf extends React.Component {
         getSubAlbum(this.source.token),
         getSubscribeSinger(this.source.token),
         userFollow(userId, 50, this.source.token),
+        getsubMv(this.source.token),
       ]);
       p.then((array) => {
         this.setState({
@@ -347,6 +426,7 @@ class UserInf extends React.Component {
           subAlbum: array[2].data,
           subscribeSinger: array[3].data,
           userFollow: array[4].follow,
+          subMv: array[5].data,
         });
       }).catch((e) => {
         message.error("出错啦 请刷新页面再试一次");
@@ -370,6 +450,11 @@ class UserInf extends React.Component {
 
   clickSub(id) {
     const { followed } = this.state;
+    const { user } = this.props;
+    if (!user.code) {
+      message.error("尚未登陆");
+      return;
+    }
     let t = 1;
     if (followed === true) t = 2;
     subUser(id, t, this.source.token).then((data) => {

@@ -43,3 +43,9 @@ export function highlightWord(text, search) {
   const tmp = new RegExp(search, "ig").exec(keywords); //用于英文的大小写
   return cut.join('<span style="color:#1E90FF;">' + tmp + "</span>");
 }
+
+//MV creator数组分割
+export function filterCreator(creator) {
+  const array = creator.map(({ userName }) => userName);
+  return array.join().replace(new RegExp(",", "g"), "/");
+}

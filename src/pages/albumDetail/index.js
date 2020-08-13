@@ -7,6 +7,7 @@ import ChartList from "../../components/chartList";
 import Comment from "../../components/comment";
 import { subAlbum, albumDynamic } from "../../api/album";
 import { message } from "antd";
+import { connect } from "react-redux";
 class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -147,6 +148,11 @@ class AlbumDetail extends React.Component {
       album: { id },
       isSub,
     } = this.state;
+    const { user } = this.props;
+    if (!user.code) {
+      message.error("尚未登陆");
+      return;
+    }
     let t = 1;
     if (isSub === true) t = 2;
     subAlbum(id, t, this.source.token).then((data) => {
@@ -157,5 +163,7 @@ class AlbumDetail extends React.Component {
     });
   }
 }
-
-export default AlbumDetail;
+const mapState = (state) => ({
+  user: state.getIn(["app", "user"]),
+});
+export default connect(mapState, null)(AlbumDetail);

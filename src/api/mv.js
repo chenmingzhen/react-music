@@ -23,3 +23,14 @@ export function getMvSimi(mvid, cancelToken) {
   const url = "/simi/mv";
   return request({ url, method: "get", params: { mvid }, cancelToken });
 }
+
+export function getsubMv(cancelToken) {
+  const url = "/mv/sublist";
+  return request({ url, method: "get", cancelToken });
+}
+
+//收藏MV
+export function subMv(mvid, t, cancelToken) {
+  const url = "/mv/sub";
+  return request({ url, method: "get", params: { mvid, t }, cancelToken });
+}

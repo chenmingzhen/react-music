@@ -1,27 +1,48 @@
 import React from "react";
 import "./_style.scss";
 import { getMvUrl } from "../../api/singer";
-import { getMvDetail, getMvSimi } from "../../api/mv";
+import { getMvDetail, getMvSimi, getsubMv, subMv } from "../../api/mv";
 import axios from "axios";
 import Comment from "../../components/comment";
 import { formatDuration } from "../../util/util";
 import BackTop from "../../components/backTop";
 import PubSub from "pubsub-js";
+import { connect } from "react-redux";
+import { message } from "antd";
 class MvPlay extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { mvUrl: "", mvDetail: {}, mvs: [], stateId: Number };
+    this.state = {
+      mvUrl: "",
+      mvDetail: {},
+      mvs: [],
+      stateId: Number,
+      subMvId: null,
+      isSub: false,
+    };
     const CancelToken = axios.CancelToken;
     this.source = CancelToken.source();
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const { user: currentUser } = this.props;
+    const { user: nextUser } = nextProps;
+    if (!currentUser.account && nextUser.account) {
+      setTimeout(() => {
+        this.getSubMv();
+      });
+    }
+    return true;
+  }
+
   componentDidMount() {
     PubSub.publish("song-pause");
+    this.getSubMv();
   }
 
   render() {
     const { id } = this.props.match.params;
-    const { mvUrl, mvDetail, stateId } = this.state;
+    const { mvUrl, mvDetail, stateId, isSub } = this.state;
     if (stateId !== id) {
       // render中执行setstate会警告 添加异步去除警告
       setTimeout(() => {
@@ -49,7 +70,12 @@ class MvPlay extends React.PureComponent {
                   {mvDetail.artistName}
                 </div>
               </div>
-              <div className="name">{mvDetail.name}</div>
+              <div className="title-wrapper">
+                <div className="name">{mvDetail.name}</div>
+                <div className="sub" onClick={this.subMv.bind(this)}>
+                  {isSub ? "取消收藏" : "收藏"}
+                </div>
+              </div>
               <div className="mv-inf">
                 <div className="time">发布时间:{mvDetail.publishTime}</div>
                 <div className="count">播放量:{mvDetail.playCount}</div>
@@ -115,6 +141,7 @@ class MvPlay extends React.PureComponent {
   getData() {
     this.setState(() => false);
     const { id } = this.props.match.params;
+    const { subMvId } = this.state;
     getMvUrl(id, this.source.token).then((data) => {
       if (data !== undefined) this.setState({ mvUrl: data.data.url });
     });
@@ -124,7 +151,24 @@ class MvPlay extends React.PureComponent {
     getMvSimi(id, this.source.token).then((data) => {
       if (data !== undefined) this.setState({ mvs: data.mvs });
     });
-    this.setState({ stateId: id });
+    this.setState({
+      stateId: id,
+      isSub: subMvId && subMvId.some((item) => item === id),
+    });
+  }
+
+  getSubMv() {
+    const { user } = this.props;
+    const { stateId } = this.state;
+    if (!user.code) return;
+    getsubMv(this.source.token).then((subMvList) => {
+      if (subMvList) {
+        this.setState({
+          subMvId: subMvList.data.map(({ vid }) => vid),
+          isSub: subMvList.data.some(({ vid }) => vid === stateId),
+        });
+      }
+    });
   }
 
   clickItem() {
@@ -133,6 +177,26 @@ class MvPlay extends React.PureComponent {
       pathname: "/singer/singerdetail/" + mvDetail.artistId,
     });
   }
+
+  subMv() {
+    const { subMvId, stateId, isSub } = this.state;
+    const { user } = this.props;
+    let t = 1;
+    if (!user.code) {
+      message.error("尚未登陆");
+      return;
+    }
+    if (subMvId.some((item) => item === stateId)) t = 2;
+    subMv(stateId, t, this.source.token).then((data) => {
+      if (data && data.code === 200) {
+        message.success("操作成功，数据存在延迟");
+        this.setState({ isSub: !isSub });
+      }
+    });
+  }
 }
 
-export default MvPlay;
+const mapState = (state) => ({
+  user: state.getIn(["app", "user"]),
+});
+export default connect(mapState, null)(MvPlay);

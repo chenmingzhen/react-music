@@ -58,10 +58,24 @@
       }
     }
 
-    > .name {
+    >.title-wrapper{
+      display: flex;
+      align-items: center;
       margin-top: 1.5rem;
-      font-size: 2.5rem;
-      font-weight: bold;
+      > .name {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+      >.sub{
+        margin-left: 2rem;
+        font-size: 1.2rem;
+        color: rgba(255,255,255,.8);
+        cursor: pointer;
+        padding: .2rem 1rem;
+        background-color: #c7332f;
+        min-width: 4rem;
+        border-radius: 0.3125rem;
+      }
     }
 
     > .mv-inf {
