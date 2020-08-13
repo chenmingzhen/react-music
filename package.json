@@ -156,6 +156,8 @@
     "last 2 versions",
     "> 1%",
     "iOS 7",
-    "last 3 iOS versions"
+    "last 3 iOS versions",
+    "Firefox >= 20",
+    "Android > 4.4"
   ]
 }

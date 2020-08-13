@@ -53,8 +53,6 @@ export const compareObj = {
         if (oldData.hasOwnProperty(key)) {
           if (!compareObj.compare(oldData[key], newData[key])) {
             // 对象中具有不相同属性 返回false
-            console.log(oldData[key]);
-            console.log(newData[key]);
             return false;
           }
         }
@@ -68,8 +66,6 @@ export const compareObj = {
       for (let i = 0, length = oldData.length; i < length; i++) {
         if (!compareObj.compare(oldData[i], newData[i])) {
           // 如果数组元素中具有不相同元素,
-          console.log(oldData[i]);
-          console.log(newData[i]);
           return false;
         }
       }

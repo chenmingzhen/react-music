@@ -203,7 +203,6 @@ class PlayList extends React.Component {
     }
     subPlayList(id, t, this.source.token).then((data) => {
       if (data && data.code === 200) {
-        console.log(subscribe);
         this.setState({ subscribe: !subscribe });
         message.success("操作成功 数据存在延迟");
         Publish.publish("subPlayList");
