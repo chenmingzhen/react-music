@@ -5,7 +5,7 @@ import { timestampToTime } from "../../util/util";
 import "./_style.scss";
 import { changeLoading } from "../../store/actionCreator";
 import { connect } from "react-redux";
-import { Spin, message } from "antd";
+import { message, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import SongList from "../../components/songList";
 import Comment from "../../components/comment";
@@ -91,10 +91,15 @@ class PlayList extends React.Component {
                 <div className="name">{data.name}</div>
               </div>
               <div className="creator-wrapper">
-                <div className={"img-wrapper"}>
+                <div
+                  className={"img-wrapper"}
+                  onClick={this.clickCreator.bind(this)}
+                >
                   <img src={data.creator.avatarUrl} alt="" loading="lazy" />
                 </div>
-                <div className="name">{data.creator.nickname}</div>
+                <div className="name" onClick={this.clickCreator.bind(this)}>
+                  {data.creator.nickname}
+                </div>
                 <div className="time">
                   {timestampToTime(data.createTime)}创建
                 </div>
@@ -208,6 +213,13 @@ class PlayList extends React.Component {
         Publish.publish("subPlayList");
       }
     });
+  }
+
+  clickCreator() {
+    const {
+      creator: { userId },
+    } = this.state.listData;
+    this.props.history.push({ pathname: "/userInf", search: "id=" + userId });
   }
 }
 
