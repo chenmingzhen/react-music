@@ -91,6 +91,15 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
+  "keywords": [
+    "网易云音乐",
+    "网易云",
+    "音乐",
+    "react",
+    "music",
+    "NeteaseCloudMusic",
+    "NeteaseCloud"
+  ],
   "eslintConfig": {
     "extends": "react-app"
   },

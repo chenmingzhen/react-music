@@ -65,12 +65,13 @@
 - [x] 搜索 搜索页面
 - [x] 用户页面
 - [x] 换肤
+- [x] 错误边界
+- [x] PWA
 
 ## ❌ Todo
 - [ ] 歌曲定位
-- [ ] 歌单内搜索歌词
+- [ ] 歌单内搜索歌曲
 - [ ] 性能优化
-- [ ] 错误边界
 - [ ] hooks重构部分组件
 
 ## 🐛 Bug
@@ -88,7 +89,7 @@
 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
 ## 🎉 预览地址
-[Ethan](http://193.112.175.198/Ethan/#/)
+[Ethan](https://www.isonepoch.cn/Ethan/#/discovery)
 
 ## 📦 运行
 

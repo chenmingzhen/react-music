@@ -24,7 +24,12 @@ class SongSheet extends React.PureComponent {
       currentName: "全部",
       offset: 0,
       total: 0,
+      hasError: false,
     };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
   }
 
   componentDidMount() {
@@ -46,8 +51,11 @@ class SongSheet extends React.PureComponent {
   }
 
   render() {
-    const { showList } = this.state;
+    const { showList, hasError } = this.state;
     const { position } = this.props;
+    if (hasError) {
+      return <div>出错了 请刷新页面再试试</div>;
+    }
     return (
       <div className={"song-sheet-wrapper"}>
         {this.renderBanner()}

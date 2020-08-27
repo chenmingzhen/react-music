@@ -3,8 +3,8 @@ import "./_style.scss";
 import Cookies from "js-cookie";
 import {
   getLocalStorage,
-  setLocalStorage,
   removeLocalStorage,
+  setLocalStorage,
 } from "../../util/localStorage";
 import {
   setCurrentHeaderIndex,
@@ -20,6 +20,7 @@ import github from "../../assets/img/github-logo.png";
 import { getPlayList } from "../../api/selfInfomation";
 import { withRouter } from "react-router-dom";
 import Publish from "pubsub-js";
+
 let InfData = [];
 
 class SliderBar extends React.PureComponent {
@@ -97,7 +98,7 @@ class SliderBar extends React.PureComponent {
             confirmLoading: false,
           });
           //保存到localstorage中
-          setLocalStorage("user", data);
+          setLocalStorage("user", JSON.stringify(data));
           this.status = "退出";
           this.props.setUser(data);
           message.success("登录成功");
@@ -137,11 +138,11 @@ class SliderBar extends React.PureComponent {
       Cookies.get("__remember_me")
     ) {
       //localstorage没有被清除
-      let user = getLocalStorage("_session");
+      let user = getLocalStorage("user");
       if (user) {
         //直接获取信息
         //存储到redux中
-        this.props.setUser(user);
+        this.props.setUser(JSON.parse(user));
         this.status = "退出";
         //更新歌单
         this.updatePlayList();
@@ -154,7 +155,6 @@ class SliderBar extends React.PureComponent {
     }
     //清除localstrage
     else {
-      console.log("removeLocalStorage");
       removeLocalStorage("user");
     }
   }
@@ -167,17 +167,19 @@ class SliderBar extends React.PureComponent {
   }
 
   updatePlayList() {
-    getPlayList(this.props.user.account.id).then((data) => {
-      let list = { title: "我的收藏", content: [] };
-      data.playlist.forEach((item, index) => {
-        let tmp = { icon: "iconfont icon-liebiao" };
-        tmp.subTitle = item.name;
-        tmp.listid = item.id;
-        list.content.push(tmp);
+    setTimeout(() => {
+      getPlayList(this.props.user.account.id).then((data) => {
+        let list = { title: "我的收藏", content: [] };
+        data.playlist.forEach((item, index) => {
+          let tmp = { icon: "iconfont icon-liebiao" };
+          tmp.subTitle = item.name;
+          tmp.listid = item.id;
+          list.content.push(tmp);
+        });
+        //InfData不是该类的属性 深拷贝出来 放到state才会重新渲染
+        InfData.push(list);
+        this.setState({ data: InfData.concat() });
       });
-      //InfData不是该类的属性 深拷贝出来 放到state才会重新渲染
-      InfData.push(list);
-      this.setState({ data: InfData.concat() });
     });
   }
 
