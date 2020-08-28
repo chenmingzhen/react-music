@@ -15,6 +15,7 @@ import { renderSpin } from "../../util/renderSpin";
 import classnames from "classnames";
 import { changeLoading } from "../../store/actionCreator";
 import { Link } from "react-router-dom";
+
 class Shared extends React.Component {
   constructor(props) {
     super(props);

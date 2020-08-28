@@ -6,6 +6,7 @@ import "./_style.scss";
 import { timestampToTime } from "../../util/util";
 import { Spin } from "antd";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
 
 class AlbumList extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class AlbumList extends React.Component {
                   }}
                 >
                   <div className="img-wrapper">
-                    <img src={item.picUrl} alt="" />
+                    <img src={transHttp(item.picUrl)} alt="" />
                     <i className={"iconfont icon-bofang"} />
                   </div>
                   <div className={"album-name"} title={item.name}>

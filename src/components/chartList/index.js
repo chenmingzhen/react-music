@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { isObjectValueEqual } from "../../assets/js/util";
 import { renderSpin } from "../../util/renderSpin";
 import { message } from "antd";
+import { transHttp } from "../../util/util";
+
 class ChartList extends React.Component {
   constructor(props) {
     super(props);
@@ -70,7 +72,7 @@ class ChartList extends React.Component {
           <div className={index <= 2 ? "rank hot" : "rank"}>{index + 1}</div>
           <div className={"song-wrapper"}>
             <div className={"img-wrapper"}>
-              <img src={item.image} alt="" loading="lazy" />
+              <img src={transHttp(item.image)} alt="" loading="lazy" />
             </div>
             <div className={"name"}>{item.name}</div>
             {item.fee === 1 ? (

@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import PropTypes from "prop-types";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
 
 class SearchAlbumList extends React.PureComponent {
   constructor(props) {
@@ -27,7 +28,7 @@ class SearchAlbumList extends React.PureComponent {
                 key={index}
               >
                 <div className="img-wrapper">
-                  <img src={item.picUrl} alt="" />
+                  <img src={transHttp(item.picUrl)} alt="" />
                   <i className={"iconfont icon-bofang"} />
                 </div>
                 <div className={"album-name"} title={item.name}>

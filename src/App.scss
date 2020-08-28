@@ -15,6 +15,7 @@
 
     .slider-bar-wrapper {
       width: 10%;
+      min-width: 200px;
       //background-color: $bgColor;
       transition: all .7s;
       @include menu-bg;
@@ -48,6 +49,7 @@
 
     >.content-wrapper {
       width: 90%;
+      min-width: 1000px;
       overflow-y: scroll;
       overflow-x: hidden;
       height: 100%;

@@ -9,6 +9,7 @@ import { getSong, getSongDetail } from "../../api/singer";
 import { connect } from "react-redux";
 import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
 import { isObjectValueEqual } from "../../assets/js/util";
+import { transHttp } from "../../util/util";
 
 class Content extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Content extends React.Component {
               {this.state.bannerData.map((item, index) => {
                 return (
                   <div key={index} onClick={this.handleClick.bind(this, item)}>
-                    <img src={item.imageUrl} alt="" loading="lazy" />
+                    <img src={transHttp(item.imageUrl)} alt="" loading="lazy" />
                   </div>
                 );
               })}

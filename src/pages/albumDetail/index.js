@@ -8,6 +8,8 @@ import Comment from "../../components/comment";
 import { subAlbum, albumDynamic } from "../../api/album";
 import { message } from "antd";
 import { connect } from "react-redux";
+import { transHttp } from "../../util/util";
+
 class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -73,7 +75,7 @@ class AlbumDetail extends React.Component {
     return (
       <div className={"top-wrapper"}>
         <div className="img-wrapper">
-          <img src={album.picUrl} alt="" />
+          <img src={transHttp(album.picUrl)} alt="" />
           <i className={"cd"} />
         </div>
         <div className="text-wrapper">
@@ -86,7 +88,7 @@ class AlbumDetail extends React.Component {
           <div className="singer-wrapper">
             <div className="avatar-wrapper">
               <img
-                src={album.artist.picUrl}
+                src={transHttp(album.artist.picUrl)}
                 alt=""
                 onClick={this.clickSinger.bind(this, album.artist.id)}
               />

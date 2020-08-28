@@ -20,6 +20,7 @@ import {
   formatDuration,
   timestampToTime,
 } from "../../util/util";
+import { transHttp } from "../../util/util";
 
 class UserInf extends React.Component {
   constructor(props) {
@@ -184,13 +185,13 @@ class UserInf extends React.Component {
         <div
           className={"profile-bg"}
           style={{
-            background: `url(${userData.profile.backgroundUrl})`,
+            background: `url(${transHttp(userData.profile.backgroundUrl)})`,
             backgroundSize: "100%",
           }}
         />
         <div className={"img-wrapper"}>
           <img
-            src={userData.profile.avatarUrl}
+            src={transHttp(userData.profile.avatarUrl)}
             alt={userData.profile.nickname}
           />
         </div>
@@ -250,7 +251,7 @@ class UserInf extends React.Component {
                     }}
                   >
                     <div className="img-wrapper">
-                      <img src={item.coverImgUrl} alt="" />
+                      <img src={transHttp(item.coverImgUrl)} alt="" />
                     </div>
                     <div className="title">{item.name}</div>
                     <div className="count">{item.trackCount}</div>
@@ -282,7 +283,7 @@ class UserInf extends React.Component {
                     }}
                   >
                     <div className="img-wrapper">
-                      <img src={item.picUrl} alt="" />
+                      <img src={transHttp(item.picUrl)} alt="" />
                     </div>
                     <div className="title">
                       <div className="original">{item.name}</div>{" "}
@@ -314,7 +315,7 @@ class UserInf extends React.Component {
                     }}
                   >
                     <div className="img-wrapper">
-                      <img src={item.picUrl} alt="" />
+                      <img src={transHttp(item.picUrl)} alt="" />
                     </div>
                     <div className="title">
                       <div className="original">{item.name}</div>{" "}
@@ -353,7 +354,10 @@ class UserInf extends React.Component {
                     }}
                   >
                     <div className="img-wrapper">
-                      <img src={item.avatarUrl} alt={item.nickname} />
+                      <img
+                        src={transHttp(item.avatarUrl)}
+                        alt={item.nickname}
+                      />
                     </div>
                     <div className="name">{item.nickname}</div>
                     <div className="signature" title={item.signature}>
@@ -385,7 +389,11 @@ class UserInf extends React.Component {
                     }}
                   >
                     <div className="img-wrapper">
-                      <img src={item.coverUrl} title={item.title} alt="" />
+                      <img
+                        src={transHttp(item.coverUrl)}
+                        title={item.title}
+                        alt=""
+                      />
                     </div>
                     <div className="title">{item.title}</div>
                     <div className="singer">{filterCreator(item.creator)}</div>

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
 import { highlightWord } from "../../util/util";
+import { transHttp } from "../../util/util";
 
 class SingerList extends React.PureComponent {
   constructor(props) {
@@ -29,8 +30,8 @@ class SingerList extends React.PureComponent {
                 <div className="img-wrapper">
                   <img
                     src={
-                      item.picUrl ||
-                      item.coverImgUrl ||
+                      transHttp(item.picUrl) ||
+                      transHttp(item.coverImgUrl) ||
                       "http://p3.music.126.net/VnZiScyynLG7atLIZ2YPkw==/18686200114669622.jpg?param=130y130"
                     }
                     alt="none"

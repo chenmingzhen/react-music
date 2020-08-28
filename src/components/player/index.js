@@ -29,6 +29,7 @@ import { sharedModal } from "../../util/sharedModal";
 import { SHARED_URL } from "../../assets/js/constants";
 import { isObjectValueEqual } from "../../assets/js/util";
 import { loading } from "../loading";
+import { transHttp } from "../../util/util";
 
 const WHEEL_TYPE = "wheel";
 const SCROLL_TYPE = "scroll";
@@ -144,7 +145,7 @@ class Player extends React.Component {
                 }}
               >
                 {playlist[currentIndex] !== undefined ? (
-                  <img src={playlist[currentIndex].image} alt="" />
+                  <img src={transHttp(playlist[currentIndex].image)} alt="" />
                 ) : (
                   ""
                 )}
@@ -369,7 +370,7 @@ class Player extends React.Component {
                 })}
               >
                 <div className={"img-wrapper"}>
-                  <img src={item.image} alt="" />
+                  <img src={transHttp(item.image)} alt="" />
                   <i className={"cd"} />
                 </div>
                 <div className={"text-wrapper"}>
@@ -472,7 +473,9 @@ class Player extends React.Component {
     return (
       <audio
         src={
-          playlist[currentIndex] !== undefined ? playlist[currentIndex].url : ""
+          playlist[currentIndex] !== undefined
+            ? transHttp(playlist[currentIndex].url)
+            : ""
         }
         controls={false}
         autoPlay={true}

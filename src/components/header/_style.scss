@@ -12,6 +12,7 @@
   .header-left {
     //background: $bgColor;
     //@include bg_color;
+    min-width: 200px;
     @include header;
     transition: background-color .7s;
     flex-basis: 10%;
@@ -91,6 +92,7 @@
     //background: hsla(0, 0%, 97.3%, .95);
     //@include bg_color;
     @include header;
+    min-width: 21.875rem;
     transition: background-color .7s;
     flex: 1;
     display: flex;
@@ -101,7 +103,7 @@
     .title-wrapper {
       margin-left: 0.8rem;
       display: flex;
-
+      min-width: 350px;
       > span {
         font-size: 1.5rem;
         cursor: pointer;
@@ -127,7 +129,7 @@
     .search-wrapper {
       display: flex;
       align-items: center;
-
+      min-width: 250px;
       .search {
         //background-color: $bgColor;
         @include input_search_color;

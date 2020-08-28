@@ -7,6 +7,7 @@ import { changeLoading } from "../../store/actionCreator";
 import { setSongSheetPosition } from "./store/actionCreator";
 import axios from "axios";
 import "./_style.scss";
+import { transHttp } from "../../util/util";
 
 class SongSheet extends React.PureComponent {
   constructor(props) {
@@ -99,7 +100,9 @@ class SongSheet extends React.PureComponent {
             {randomList && randomList.coverImgUrl && (
               <div
                 className={"bg-wrpper"}
-                style={{ background: `url(${randomList.coverImgUrl})` }}
+                style={{
+                  background: `url(${transHttp(randomList.coverImgUrl)})`,
+                }}
               />
             )}
             <div className={"bg-mask"} />
@@ -113,7 +116,11 @@ class SongSheet extends React.PureComponent {
                 }}
               >
                 {randomList && randomList.coverImgUrl && (
-                  <img src={randomList.coverImgUrl} alt="" loading="lazy" />
+                  <img
+                    src={transHttp(randomList.coverImgUrl)}
+                    alt=""
+                    loading="lazy"
+                  />
                 )}
               </div>
               <div className={"text-wrapper"}>

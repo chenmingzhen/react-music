@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import PropTypes from "prop-types";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
 
 class PlayList extends React.PureComponent {
   constructor(props) {
@@ -24,7 +25,7 @@ class PlayList extends React.PureComponent {
               >
                 <div className="img-wrap">
                   <img
-                    src={item.picUrl || item.coverImgUrl}
+                    src={transHttp(item.picUrl) || transHttp(item.coverImgUrl)}
                     alt="none"
                     loading="lazy"
                   />

@@ -49,3 +49,10 @@ export function filterCreator(creator) {
   const array = creator.map(({ userName }) => userName);
   return array.join().replace(new RegExp(",", "g"), "/");
 }
+
+//http转https
+export function transHttp(url) {
+  if (!url) return undefined;
+  if (new RegExp("https").test(url)) return url;
+  return url.replace("http", "https");
+}

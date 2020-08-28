@@ -11,6 +11,8 @@ import axios from "axios";
 import { withRouter, Link } from "react-router-dom";
 import { setFullScreen } from "../player/store/actionCreator";
 import { connect } from "react-redux";
+import { transHttp } from "../../util/util";
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -142,7 +144,7 @@ class Comment extends React.Component {
                   }
                   avatar={
                     <Avatar
-                      src={item.user.avatarUrl}
+                      src={transHttp(item.user.avatarUrl)}
                       alt={item.user.nickname}
                     />
                   }

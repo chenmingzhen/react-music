@@ -11,6 +11,7 @@ import SongList from "../../components/songList";
 import Comment from "../../components/comment";
 import axios from "axios";
 import Publish from "pubsub-js";
+import { transHttp } from "../../util/util";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />;
 
@@ -83,7 +84,7 @@ class PlayList extends React.Component {
         <div className={"self-playlist-wrapper"}>
           <div className={"detail-wrapper"}>
             <div className={"img-wrapper"}>
-              <img src={data.coverImgUrl} alt="" loading="lazy" />
+              <img src={transHttp(data.coverImgUrl)} alt="" loading="lazy" />
             </div>
             <div className="text-wrapper">
               <div className="title-wrapper">
@@ -95,7 +96,11 @@ class PlayList extends React.Component {
                   className={"img-wrapper"}
                   onClick={this.clickCreator.bind(this)}
                 >
-                  <img src={data.creator.avatarUrl} alt="" loading="lazy" />
+                  <img
+                    src={transHttp(data.creator.avatarUrl)}
+                    alt=""
+                    loading="lazy"
+                  />
                 </div>
                 <div className="name" onClick={this.clickCreator.bind(this)}>
                   {data.creator.nickname}

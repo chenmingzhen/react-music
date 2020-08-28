@@ -13,8 +13,8 @@ import axios from "axios";
 import { renderSpin } from "../../util/renderSpin";
 import { getBanner } from "../../api/recommend";
 
-import Banner from "../../components/content/banner";
-//const Banner = lazy(() => import("../../components/content"));
+//import Banner from "../../components/content/banner";
+const Banner = lazy(() => import("../../components/content"));
 const PlayList = lazy(() => import("../../components/playList"));
 const NewSongList = lazy(() => import("../../components/newSongList"));
 const MvList = lazy(() => import("../../components/mvList"));

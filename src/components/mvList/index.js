@@ -3,6 +3,8 @@ import "./_style.scss";
 import { Spin } from "antd";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
+
 class MvList extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ class MvList extends React.PureComponent {
                   }}
                 >
                   <div className="img-wrapper">
-                    <img src={item.picUrl} alt="" loading="lazy" />
+                    <img src={transHttp(item.picUrl)} alt="" loading="lazy" />
                     <div className="playCount-wrapper">
                       <i className={"iconfont icon-ai-video"} />
                       <p className="playCount"> {item.playCount}</p>

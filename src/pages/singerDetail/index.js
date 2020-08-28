@@ -10,6 +10,7 @@ import BackTop from "../../components/backTop";
 import { getOnlyHash } from "../../assets/js/util";
 import { connect } from "react-redux";
 import { ScrollTo } from "../../util/scrollTo";
+import { transHttp } from "../../util/util";
 
 class singerDetail extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class singerDetail extends React.Component {
     return (
       <div className={"singer-inf"} id={"inf"}>
         <div className={"img-wrapper"}>
-          <img src={artist.picUrl} alt="" title={artist.name} />
+          <img src={transHttp(artist.picUrl)} alt="" title={artist.name} />
         </div>
         <div className="text-wrapper">
           <div className="name" title={artist.name}>

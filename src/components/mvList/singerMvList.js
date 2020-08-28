@@ -5,6 +5,8 @@ import axios from "axios";
 import { getSingerMv } from "../../api/singer";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
+
 class SingerMvList extends React.Component {
   constructor(props) {
     super(props);
@@ -66,7 +68,7 @@ class SingerMvList extends React.Component {
                   }}
                 >
                   <div className="img-wrapper">
-                    <img src={item.imgurl} alt="" />
+                    <img src={transHttp(item.imgurl)} alt="" />
                     <i className={"iconfont icon-bofang"} />
                   </div>
                   <div className={"mv-name"} title={item.name}>

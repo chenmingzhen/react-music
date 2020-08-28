@@ -9,6 +9,8 @@ import BackTop from "../../components/backTop";
 import PubSub from "pubsub-js";
 import { connect } from "react-redux";
 import { message } from "antd";
+import { transHttp } from "../../util/util";
+
 class MvPlay extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -54,14 +56,18 @@ class MvPlay extends React.PureComponent {
         <div className="left-wrapper">
           <div className={"title"}>mv 详情</div>
           <div className="video-wrapper">
-            {mvUrl !== "" ? <video controls={"video"} src={mvUrl} /> : ""}
+            {mvUrl !== "" ? (
+              <video controls={"video"} src={transHttp(mvUrl)} />
+            ) : (
+              ""
+            )}
           </div>
           {mvDetail.id ? (
             <>
               <div className="singer-wrapper">
                 <div className="avatar">
                   <img
-                    src={mvDetail.cover}
+                    src={transHttp(mvDetail.cover)}
                     alt=""
                     onClick={this.clickItem.bind(this)}
                   />
@@ -119,7 +125,7 @@ class MvPlay extends React.PureComponent {
               }}
             >
               <div className="img-wrapper">
-                <img src={item.cover} alt="" />
+                <img src={transHttp(item.cover)} alt="" />
                 <div className="time">{formatDuration(item.duration)}</div>
                 <i className={"iconfont icon-bofang center"} />
                 <div className="count">

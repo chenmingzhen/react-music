@@ -2,6 +2,8 @@ import React from "react";
 import { getFavouriteSinger } from "../../api/singer";
 import "./_style.scss";
 import { withRouter } from "react-router-dom";
+import { transHttp } from "../../util/util";
+
 class Carousel extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -52,7 +54,7 @@ class Carousel extends React.PureComponent {
                 });
               }}
             >
-              <img src={item.picUrl} alt="" />
+              <img src={transHttp(item.picUrl)} alt="" />
             </div>
           );
         })}

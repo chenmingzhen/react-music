@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { setCurrentIndex, setPlayList } from "../player/store/actionCreator";
 import { createSong } from "../../assets/js/song";
+import { transHttp } from "../../util/util";
 
 class NewSongList extends React.PureComponent {
   constructor(props) {
@@ -51,7 +52,7 @@ class NewSongList extends React.PureComponent {
               >
                 <div className="rank">{AddZero(index)}</div>
                 <div className={"img-wrapper"}>
-                  <img src={item.image} alt="" loading="lazy" />
+                  <img src={transHttp(item.image)} alt="" loading="lazy" />
                   <i className={"iconfont icon-bofang"} />
                 </div>
                 <div className="text-wrapper">

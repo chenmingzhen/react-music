@@ -18,6 +18,7 @@ import {
   setOffset,
   setSingerList,
 } from "./store/actionCreator";
+import { transHttp } from "../../util/util";
 
 class Singer extends React.PureComponent {
   constructor(props) {
@@ -203,7 +204,11 @@ class Singer extends React.PureComponent {
                   }}
                 >
                   <div className="img-wrapper">
-                    <img src={item.picUrl} title={item.name} alt={item.name} />
+                    <img
+                      src={transHttp(item.picUrl)}
+                      title={item.name}
+                      alt={item.name}
+                    />
                   </div>
                   <div className="name" title={item.name}>
                     {item.name}
