@@ -24,7 +24,7 @@ import Publish from "pubsub-js";
 let InfData = [];
 
 class SliderBar extends React.PureComponent {
-  //----------------------------------------------登陆框逻辑
+  //登陆框逻辑
   state = {
     ModalText: (
       <div>

@@ -52,7 +52,7 @@ class Content extends React.Component {
               {this.state.bannerData.map((item, index) => {
                 return (
                   <div key={index} onClick={this.handleClick.bind(this, item)}>
-                    <img src={transHttp(item.imageUrl)} alt="" loading="lazy" />
+                    <img src={transHttp(item.imageUrl)} alt="" />
                   </div>
                 );
               })}
