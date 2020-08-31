@@ -8,7 +8,7 @@ import {
   setPlaying,
   setPlayList,
 } from "./store/actionCreator";
-import { formatDuration } from "../../util/util";
+import { formatDuration, transHttp } from "../../util/util";
 import ProgressBar from "../progressBar";
 import { withRouter } from "react-router-dom";
 import {
@@ -29,7 +29,6 @@ import { sharedModal } from "../../util/sharedModal";
 import { SHARED_URL } from "../../assets/js/constants";
 import { isObjectValueEqual } from "../../assets/js/util";
 import { loading } from "../loading";
-import { transHttp } from "../../util/util";
 
 const WHEEL_TYPE = "wheel";
 const SCROLL_TYPE = "scroll";
@@ -685,9 +684,42 @@ class Player extends React.Component {
     setPlaying(!playing);
     setTimeout(() => {
       if (this.refs.audio) {
-        this.props.playing ? this.refs.audio.play() : this.refs.audio.pause();
+        this.props.playing ? this.graduallyUp() : this.graduallyDown(); // this.refs.audio.play():this.refs.audio.pause()
       }
     });
+  }
+
+  graduallyUp() {
+    let volume = 0;
+    const originalVolume = this.refs.audio.volume;
+    const timer = setInterval(() => {
+      volume = volume + 0.02;
+      if (volume >= originalVolume) {
+        this.refs.audio.volume = originalVolume;
+        clearInterval(timer);
+      } else {
+        this.refs.audio.volume = volume;
+        this.refs.audio.play();
+      }
+    }, 10);
+  }
+
+  graduallyDown() {
+    let volume = this.refs.audio.volume;
+    const originalVolume = this.refs.audio.volume;
+    const timer = setInterval(() => {
+      volume = volume - 0.02;
+      if (volume <= 0) {
+        this.refs.audio.volume = 0;
+        setTimeout(() => {
+          this.refs.audio.pause();
+          this.refs.audio.volume = originalVolume;
+        });
+        clearInterval(timer);
+      } else {
+        this.refs.audio.volume = volume;
+      }
+    }, 10);
   }
 
   togglePlaying() {
